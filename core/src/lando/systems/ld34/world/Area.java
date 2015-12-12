@@ -8,7 +8,7 @@ import lando.systems.ld34.screens.GameScreen;
  */
 public abstract class Area {
 
-    public enum Type { PYRAMID, MGMT, QUARRY, FIELD, FOREST }
+    public enum Type { PYRAMID, MGMT, QUARRY, FIELD, WOODS }
 
     protected final GameScreen gameScreen;
     protected final Type type;

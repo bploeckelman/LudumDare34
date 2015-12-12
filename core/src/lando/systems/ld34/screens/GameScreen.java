@@ -4,8 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ObjectMap;
 import lando.systems.ld34.LudumDare34;
 import lando.systems.ld34.utils.Assets;
-import lando.systems.ld34.world.Area;
-import lando.systems.ld34.world.AreaMgmt;
+import lando.systems.ld34.world.*;
 
 /**
  * Brian Ploeckelman created on 12/9/2015.
@@ -24,7 +23,10 @@ public class GameScreen extends AbstractScreen {
         layout = new NavigationLayout(this);
         areaMap = new ObjectMap<Area.Type, Area>();
         areaMap.put(Area.Type.MGMT, new AreaMgmt(this));
-        // TODO: add other areas
+        areaMap.put(Area.Type.PYRAMID, new AreaPyramid(this));
+        areaMap.put(Area.Type.QUARRY, new AreaQuarry(this));
+        areaMap.put(Area.Type.FIELD, new AreaField(this));
+        areaMap.put(Area.Type.WOODS, new AreaWoods(this));
         currentArea = areaMap.get(Area.Type.MGMT);
     }
 
