@@ -26,6 +26,7 @@ public class Assets {
     public static BitmapFont   font;
 
     public static Texture testTexture;
+    public static Texture whiteTexture;
 
     public static void load() {
         if (tween == null) {
@@ -42,12 +43,14 @@ public class Assets {
         font = new BitmapFont();
 
         testTexture = new Texture("badlogic.jpg");
+        whiteTexture = new Texture("pixel.png");
     }
 
     public static void dispose() {
         batch.dispose();
         font.dispose();
         testTexture.dispose();
+        whiteTexture.dispose();
     }
 
     private static ShaderProgram compileShaderProgram(FileHandle vertSource, FileHandle fragSource) {
