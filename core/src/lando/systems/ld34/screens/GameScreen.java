@@ -12,26 +12,30 @@ import lando.systems.ld34.utils.Assets;
 public class GameScreen extends AbstractScreen {
 
     final SpriteBatch batch;
+    final NavigationLayout layout;
 
     public GameScreen(LudumDare34 game) {
         super(game);
         batch = Assets.batch;
+        layout = new NavigationLayout(this);
     }
 
     @Override
     public void update(float delta) {
+
         super.update(delta);
+        layout.update();
     }
 
     @Override
     public void render(float delta) {
         update(delta);
 
-        Gdx.gl.glClearColor(0f, 191f / 255f, 255f / 255f, 1f);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batch.begin();
-        batch.draw(Assets.testTexture, 0, 0);
-        batch.end();
+        batch.setProjectionMatrix(camera.combined);
+
+        // draw
+
+        layout.render(batch, uiCamera);
     }
 
 }
