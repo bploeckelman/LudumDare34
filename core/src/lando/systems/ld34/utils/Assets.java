@@ -56,6 +56,8 @@ public class Assets {
     public static NinePatch niceNinePatch;
     public static NinePatch nice2NinePatch;
 
+    public static ShaderProgram motivationBarShader;
+
 
     public static void load() {
         if (tween == null) {
@@ -100,6 +102,8 @@ public class Assets {
         upIconOff = new Texture("up_white.png");
         downIconOn = new Texture("down_orange.png");
         downIconOff = new Texture("down_white.png");
+
+        motivationBarShader = compileShaderProgram(Gdx.files.internal("shaders/default.vert"), Gdx.files.internal("shaders/motivation_bar.frag"));
     }
 
     public static void dispose() {

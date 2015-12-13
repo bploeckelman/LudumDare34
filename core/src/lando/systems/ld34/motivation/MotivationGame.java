@@ -154,29 +154,34 @@ public class MotivationGame {
         batch.setColor(Color.GRAY);
         batch.draw(Assets.whiteTexture, bg.x, bg.y, bg.width, bg.height);
 
+        batch.setShader(Assets.motivationBarShader);
+        Assets.motivationBarShader.setUniformf("u_time", resourceManager.getEfficiency(resourceType));
+        batch.draw(Assets.testTexture, bar.x, bar.y, bar.width, bar.height);
+        batch.setShader(null);
+
         // Bar
-        batch.setColor(Color.BLUE);
-        batch.draw(Assets.whiteTexture, bar.x, bar.y, bar.width, bar.height);
+//        batch.setColor(Color.BLUE);
+//        batch.draw(Assets.whiteTexture, bar.x, bar.y, bar.width, bar.height);
 
 
-        // Target
-        batch.setColor(Color.ORANGE);
-        batch.draw(
-                Assets.whiteTexture,
-                targetFalloff.x,
-                targetFalloff.y,
-                targetFalloff.width,
-                targetFalloff.height
-        );
-        batch.setColor(Color.RED);
-        batch.draw(
-                Assets.whiteTexture,
-                target.x,
-                target.y,
-                target.width,
-                target.height
-        );
-
+//        // Target
+//        batch.setColor(Color.ORANGE);
+//        batch.draw(
+//                Assets.whiteTexture,
+//                targetFalloff.x,
+//                targetFalloff.y,
+//                targetFalloff.width,
+//                targetFalloff.height
+//        );
+//        batch.setColor(Color.RED);
+//        batch.draw(
+//                Assets.whiteTexture,
+//                target.x,
+//                target.y,
+//                target.width,
+//                target.height
+//        );
+//
         // Indicator
         batch.setColor(Color.WHITE);
         batch.draw(
