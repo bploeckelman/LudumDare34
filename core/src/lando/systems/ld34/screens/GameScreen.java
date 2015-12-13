@@ -1,5 +1,8 @@
 package lando.systems.ld34.screens;
 
+import aurelienribon.tweenengine.BaseTween;
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenCallback;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ObjectMap;
@@ -38,16 +41,24 @@ public class GameScreen extends AbstractScreen {
         areaMap.put(Area.Type.QUARRY, new AreaQuarry(this));
         areaMap.put(Area.Type.FIELD, new AreaField(this));
         areaMap.put(Area.Type.WOODS, new AreaWoods(this));
-
+        currentArea = areaMap.get(Area.Type.MGMT);
         TransitionToArea(AreaButton.SelectedButton.AreaLocation);
     }
+
 
     public void TransitionToArea(Area.Type area) {
         System.out.println(area.toString());
 
-        currentArea = areaMap.get(area);
-
-        // fancy transition code- tween, twerk or wtf ever
+        final Area nextArea = areaMap.get(area);
+        Tween.to(background.xOffset, 1, 1f)
+                .target(nextArea.worldX * (512/5f))
+                .setCallback(new TweenCallback() {
+                    @Override
+                    public void onEvent(int i, BaseTween<?> baseTween) {
+                        currentArea = nextArea;
+                    }
+                })
+                .start(Assets.tween);
 
     }
 

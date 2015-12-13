@@ -12,7 +12,7 @@ public abstract class Area {
 
     protected final GameScreen gameScreen;
     protected final Type type;
-    protected float worldX;
+    public float worldX;
 
     public Area(GameScreen gameScreen, Type type) {
         this.gameScreen = gameScreen;

@@ -14,7 +14,7 @@ public class AreaMgmt extends Area {
 
     public AreaMgmt(GameScreen gameScreen) {
         super(gameScreen, Type.MGMT);
-        worldX = 0f;
+        worldX = 4;
         glyphLayout = new GlyphLayout(Assets.font, "Management Area");
     }
 
@@ -28,7 +28,7 @@ public class AreaMgmt extends Area {
         //batch.setColor(135f / 255f, 206f / 255f, 250f / 255f, 1f);
         //batch.draw(Assets.background, 0, 0, gameScreen.camera.viewportWidth, gameScreen.camera.viewportHeight);
 
-        //Assets.font.setColor(0f, 0f, 0f, 1f);
+        Assets.font.setColor(0f, 0f, 0f, 1f);
         Assets.font.draw(batch,
                          "Management Area",
                          gameScreen.camera.viewportWidth  / 2f - glyphLayout.width  / 2f,

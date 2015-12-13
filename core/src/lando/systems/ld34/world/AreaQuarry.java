@@ -14,7 +14,7 @@ public class AreaQuarry extends Area {
 
     public AreaQuarry(GameScreen gameScreen) {
         super(gameScreen, Type.QUARRY);
-        worldX = -1f * gameScreen.camera.viewportWidth;
+        worldX = 2;
         glyphLayout = new GlyphLayout(Assets.font, "Quarry Area");
     }
 
@@ -26,7 +26,7 @@ public class AreaQuarry extends Area {
     @Override
     public void render(SpriteBatch batch) {
         batch.setColor(211f / 255f, 211f / 255f, 211f / 255f, 1f);
-        batch.draw(Assets.whiteTexture, 0, 0, gameScreen.camera.viewportWidth, gameScreen.camera.viewportHeight);
+        //batch.draw(Assets.whiteTexture, 0, 0, gameScreen.camera.viewportWidth, gameScreen.camera.viewportHeight);
 
         Assets.font.setColor(0f, 0f, 0f, 1f);
         Assets.font.draw(batch,

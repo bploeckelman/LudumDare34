@@ -12,10 +12,10 @@ public class Background {
 
     public MutableFloat xOffset;
     public Background(){
-        xOffset = new MutableFloat(0);
+        xOffset = new MutableFloat(96);
     }
 
     public void render (SpriteBatch batch){
-        batch.draw(Assets.background, 0, 0, Config.width, Config.height, xOffset.intValue(), 0, 128, 128, false, false);
+        batch.draw(Assets.background, 0, 0, Config.width, Config.height, xOffset.intValue(), 0, 96, 128, false, false);
     }
 }
