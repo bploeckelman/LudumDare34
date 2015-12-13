@@ -249,7 +249,7 @@ public class ManageSlaves extends Manage {
                          farmingSlavesBar.bounds.x + farmingSlavesBar.bounds.width / 2f - glyphLayout.width / 2f,
                          farmingSlavesBar.bounds.y + farmingSlavesBar.bounds.height / 2f + glyphLayout.height / 2f);
 
-        glyphLayout.setText(Assets.font, "Chopping:");
+        glyphLayout.setText(Assets.font, "Logging:");
         x = MathUtils.floor(choppingSlavesBar.bounds.x - glyphLayout.width - widgetPadding);
         y = choppingSlavesBar.bounds.y + choppingSlavesBar.bounds.height / 2f + glyphLayout.height / 2f;
         choppingSlavesBar.render(batch);
@@ -257,7 +257,7 @@ public class ManageSlaves extends Manage {
         batch.draw(woodAddTex,    chopAddButton.x,    chopAddButton.y,    buttonSize, buttonSize);
         n = numChoppingSlaves / (float) numChoppingSlavesMax;
         Assets.font.setColor(1f - n, n, 0f, 1f);
-        Assets.font.draw(batch, "Chopping:", x, y);
+        Assets.font.draw(batch, "Logging:", x, y);
         String choppingText = numChoppingSlaves + "/" + numChoppingSlavesMax;
         glyphLayout.setText(Assets.font, choppingText);
         Assets.font.setColor(Color.WHITE);

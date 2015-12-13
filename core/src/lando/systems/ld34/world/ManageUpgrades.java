@@ -23,18 +23,23 @@ public class ManageUpgrades extends Manage {
     ProgressBar     availableStoneBar;
     ProgressBar     availableFoodBar;
     ProgressBar     availableForestBar;
+    ProgressBar     availableBuildingBar;
     Rectangle       stoneUpgradeButton;
     Rectangle       foodUpgradeButton;
     Rectangle       forestUpgradeButton;
+    Rectangle       buildingUpgradeButton;
     int             woodResourceLevel;
     int             stoneResourceLevel;
     int             foodResourceLevel;
+    int             buildingResourceLevel;
     int             availableWood;
     int             availableWoodMax;
     int             availableStone;
     int             availableStoneMax;
     int             availableFood;
     int             availableFoodMax;
+    int             availableBuildSlaves;
+    int             availableBuildSlavesMax;
 
     final float widgetPadding = 10f;
     final float buttonSize    = 20f;
@@ -44,16 +49,18 @@ public class ManageUpgrades extends Manage {
         resources = LudumDare34.GameScreen.ResourceManager;
         glyphLayout = new GlyphLayout();
 
-        availableWoodBar   = new ProgressBar(Assets.nice2NinePatch);
-        availableStoneBar  = new ProgressBar(Assets.nice2NinePatch);
-        availableFoodBar   = new ProgressBar(Assets.nice2NinePatch);
-        availableForestBar = new ProgressBar(Assets.nice2NinePatch);
+        availableWoodBar     = new ProgressBar(Assets.nice2NinePatch);
+        availableStoneBar    = new ProgressBar(Assets.nice2NinePatch);
+        availableFoodBar     = new ProgressBar(Assets.nice2NinePatch);
+        availableForestBar   = new ProgressBar(Assets.nice2NinePatch);
+        availableBuildingBar = new ProgressBar(Assets.nice2NinePatch);
 
         final Color boundsColor = new Color(160f / 255f, 82f / 255f, 45f / 255f, 1f);
-        availableWoodBar.boundsColor   = boundsColor;
-        availableStoneBar.boundsColor  = boundsColor;
-        availableFoodBar.boundsColor   = boundsColor;
-        availableForestBar.boundsColor = boundsColor;
+        availableWoodBar.boundsColor     = boundsColor;
+        availableStoneBar.boundsColor    = boundsColor;
+        availableFoodBar.boundsColor     = boundsColor;
+        availableForestBar.boundsColor   = boundsColor;
+        availableBuildingBar.boundsColor = boundsColor;
 
         final float barWidth = bounds.width / 4f;
         final float leftMargin = bounds.x + bounds.width - barWidth - 2f * (buttonSize + widgetPadding) - 40f;
@@ -62,36 +69,43 @@ public class ManageUpgrades extends Manage {
         final float widgetPadding = 10f;
         final float buttonSize    = 20f;
         final float barTop = bounds.y + bounds.height - 100f;
-        availableWoodBar  .bounds.set(leftMargin, barTop - 0f * (barHeight + lineSpacing), barWidth + 2f * (buttonSize + widgetPadding), barHeight);
-        availableStoneBar .bounds.set(leftMargin, barTop - 1f * (barHeight + lineSpacing), barWidth + 1.0f * buttonSize + widgetPadding, barHeight);
-        availableFoodBar  .bounds.set(leftMargin, barTop - 2f * (barHeight + lineSpacing), barWidth + 1.0f * buttonSize + widgetPadding, barHeight);
-        availableForestBar.bounds.set(leftMargin, barTop - 3f * (barHeight + lineSpacing), barWidth + 1.0f * buttonSize + widgetPadding, barHeight);
+        availableWoodBar    .bounds.set(leftMargin, barTop - 0f * (barHeight + lineSpacing), barWidth + 2.0f *(buttonSize + widgetPadding), barHeight);
+        availableBuildingBar.bounds.set(leftMargin, barTop - 1f * (barHeight + lineSpacing), barWidth + 1.0f * buttonSize + widgetPadding,  barHeight);
+        availableStoneBar   .bounds.set(leftMargin, barTop - 2f * (barHeight + lineSpacing), barWidth + 1.0f * buttonSize + widgetPadding,  barHeight);
+        availableFoodBar    .bounds.set(leftMargin, barTop - 3f * (barHeight + lineSpacing), barWidth + 1.0f * buttonSize + widgetPadding,  barHeight);
+        availableForestBar  .bounds.set(leftMargin, barTop - 4f * (barHeight + lineSpacing), barWidth + 1.0f * buttonSize + widgetPadding,  barHeight);
 
-        stoneUpgradeButton  = new Rectangle(leftMargin + barWidth + 4.0f * widgetPadding, availableStoneBar.bounds.y,  buttonSize, buttonSize);
-        foodUpgradeButton   = new Rectangle(leftMargin + barWidth + 4.0f * widgetPadding, availableFoodBar.bounds.y,   buttonSize, buttonSize);
-        forestUpgradeButton = new Rectangle(leftMargin + barWidth + 4.0f * widgetPadding, availableForestBar.bounds.y, buttonSize, buttonSize);
+        buildingUpgradeButton = new Rectangle(leftMargin + barWidth + 4.0f * widgetPadding, availableBuildingBar.bounds.y, buttonSize, buttonSize);
+        stoneUpgradeButton    = new Rectangle(leftMargin + barWidth + 4.0f * widgetPadding, availableStoneBar.bounds.y,    buttonSize, buttonSize);
+        foodUpgradeButton     = new Rectangle(leftMargin + barWidth + 4.0f * widgetPadding, availableFoodBar.bounds.y,     buttonSize, buttonSize);
+        forestUpgradeButton   = new Rectangle(leftMargin + barWidth + 4.0f * widgetPadding, availableForestBar.bounds.y,   buttonSize, buttonSize);
     }
 
     @Override
     public void update(float delta) {
-        final ResourceInfo woodResource = resources.getResourceInfo(ResourceManager.Resources.WOOD);
+        final ResourceInfo woodResource  = resources.getResourceInfo(ResourceManager.Resources.WOOD);
         final ResourceInfo stoneResource = resources.getResourceInfo(ResourceManager.Resources.STONE);
-        final ResourceInfo foodResource = resources.getResourceInfo(ResourceManager.Resources.FOOD);
+        final ResourceInfo foodResource  = resources.getResourceInfo(ResourceManager.Resources.FOOD);
+        final ResourceInfo buildResource = resources.getResourceInfo(ResourceManager.Resources.BUILD);
 
-        woodResourceLevel  = woodResource.level;
-        stoneResourceLevel = stoneResource.level;
-        foodResourceLevel  = foodResource.level;
-        availableWood      = MathUtils.floor(woodResource.amount);
-        availableStone     = MathUtils.floor(stoneResource.amount);
-        availableFood      = MathUtils.floor(foodResource.amount);
-        availableWoodMax   = resources.getResourceInfo(ResourceManager.Resources.WOOD).maxAmount;
-        availableStoneMax  = resources.getResourceInfo(ResourceManager.Resources.STONE).maxAmount;
-        availableFoodMax   = resources.getResourceInfo(ResourceManager.Resources.FOOD).maxAmount;
+        woodResourceLevel       = woodResource.level;
+        stoneResourceLevel      = stoneResource.level;
+        foodResourceLevel       = foodResource.level;
+        buildingResourceLevel   = buildResource.level;
+        availableWood           = MathUtils.floor(woodResource.amount);
+        availableStone          = MathUtils.floor(stoneResource.amount);
+        availableFood           = MathUtils.floor(foodResource.amount);
+        availableBuildSlaves    = MathUtils.floor(buildResource.slaves);
+        availableWoodMax        = woodResource.maxAmount;
+        availableStoneMax       = stoneResource.maxAmount;
+        availableFoodMax        = foodResource.maxAmount;
+        availableBuildSlavesMax = buildResource.maxSlaves;
 
-        availableWoodBar  .fillPercent.setValue(availableWood  / (float) availableWoodMax);
-        availableStoneBar .fillPercent.setValue(availableStone / (float) availableStoneMax);
-        availableFoodBar  .fillPercent.setValue(availableFood  / (float) availableFoodMax);
-        availableForestBar.fillPercent.setValue(availableWood  / (float) availableWoodMax);
+        availableWoodBar    .fillPercent.setValue(availableWood  / (float) availableWoodMax);
+        availableStoneBar   .fillPercent.setValue(availableStone / (float) availableStoneMax);
+        availableFoodBar    .fillPercent.setValue(availableFood  / (float) availableFoodMax);
+        availableForestBar  .fillPercent.setValue(availableWood  / (float) availableWoodMax);
+        availableBuildingBar.fillPercent.setValue(availableBuildSlaves / (float) availableBuildSlavesMax);
 
         if (!Gdx.input.justTouched()) {
             return;
@@ -107,6 +121,9 @@ public class ManageUpgrades extends Manage {
         }
         else if (forestUpgradeButton.contains(x,y) && resources.canUpgrade(ResourceManager.Resources.WOOD)) {
             woodResource.upgradeLevel();
+        }
+        else if (buildingUpgradeButton.contains(x,y) && resources.canUpgrade(ResourceManager.Resources.BUILD)) {
+            buildResource.upgradeLevel();
         }
     }
 
@@ -133,13 +150,30 @@ public class ManageUpgrades extends Manage {
         Assets.font.setColor(1f - n, n, 0f, 1f);
         Assets.font.draw(batch, "Available Wood:", x, y);
 
+        glyphLayout.setText(Assets.font, "Building (level " + buildingResourceLevel + "):");
+        x = MathUtils.floor(availableBuildingBar.bounds.x - glyphLayout.width - widgetPadding);
+        y = availableBuildingBar.bounds.y + availableBuildingBar.bounds.height / 2f + glyphLayout.height / 2f;
+        availableBuildingBar.render(batch);
+        batch.draw(Assets.upIconOn, buildingUpgradeButton.x, buildingUpgradeButton.y, buttonSize, buttonSize);
+//        n = availableBuildSlaves / (float) availableBuildSlavesMax;
+//        Assets.font.setColor(1f - n, n, 0f, 1f);
+        Assets.font.setColor(Color.WHITE);
+        Assets.font.draw(batch, "Building (level " + buildingResourceLevel + "):", x, y);
+        String buildText = availableBuildSlaves + "/" + availableBuildSlavesMax;
+        glyphLayout.setText(Assets.font, buildText);
+        Assets.font.setColor(Color.WHITE);
+        Assets.font.draw(batch, buildText,
+                         availableBuildingBar.bounds.x + availableBuildingBar.bounds.width / 2f - glyphLayout.width / 2f,
+                         availableBuildingBar.bounds.y + availableBuildingBar.bounds.height / 2f + glyphLayout.height / 2f);
+
         glyphLayout.setText(Assets.font, "Mining (level " + stoneResourceLevel + "):");
         x = MathUtils.floor(availableStoneBar.bounds.x - glyphLayout.width - widgetPadding);
         y = availableStoneBar.bounds.y + availableStoneBar.bounds.height / 2f + glyphLayout.height / 2f;
         availableStoneBar.render(batch);
         batch.draw(Assets.upIconOn, stoneUpgradeButton.x, stoneUpgradeButton.y, buttonSize, buttonSize);
-        n = availableStone / (float) availableStoneMax;
-        Assets.font.setColor(1f - n, n, 0f, 1f);
+//        n = availableStone / (float) availableStoneMax;
+//        Assets.font.setColor(1f - n, n, 0f, 1f);
+        Assets.font.setColor(Color.WHITE);
         Assets.font.draw(batch, "Mining (level " + stoneResourceLevel + "):", x, y);
         String stoneText = availableStone + "/" + availableStoneMax;
         glyphLayout.setText(Assets.font, stoneText);
@@ -153,8 +187,9 @@ public class ManageUpgrades extends Manage {
         y = availableFoodBar.bounds.y + availableFoodBar.bounds.height / 2f + glyphLayout.height / 2f;
         availableFoodBar.render(batch);
         batch.draw(Assets.upIconOn, foodUpgradeButton.x, foodUpgradeButton.y, buttonSize, buttonSize);
-        n = availableFood / (float) availableFoodMax;
-        Assets.font.setColor(1f - n, n, 0f, 1f);
+//        n = availableFood / (float) availableFoodMax;
+//        Assets.font.setColor(1f - n, n, 0f, 1f);
+        Assets.font.setColor(Color.WHITE);
         Assets.font.draw(batch, "Farming (level " + foodResourceLevel + "):", x, y);
         String foodText = availableFood + "/" + availableFoodMax;
         glyphLayout.setText(Assets.font, foodText);
@@ -163,14 +198,15 @@ public class ManageUpgrades extends Manage {
                          availableFoodBar.bounds.x + availableFoodBar.bounds.width / 2f - glyphLayout.width / 2f,
                          availableFoodBar.bounds.y + availableFoodBar.bounds.height / 2f + glyphLayout.height / 2f);
 
-        glyphLayout.setText(Assets.font, "Forestry (level " + woodResourceLevel + "):");
+        glyphLayout.setText(Assets.font, "Logging (level " + woodResourceLevel + "):");
         x = MathUtils.floor(availableForestBar.bounds.x - glyphLayout.width - widgetPadding);
         y = availableForestBar.bounds.y + availableForestBar.bounds.height / 2f + glyphLayout.height / 2f;
         availableForestBar.render(batch);
         batch.draw(Assets.upIconOn, forestUpgradeButton.x, forestUpgradeButton.y, buttonSize, buttonSize);
-        n = availableWood / (float) availableWoodMax;
-        Assets.font.setColor(1f - n, n, 0f, 1f);
-        Assets.font.draw(batch, "Forestry (level " + woodResourceLevel + "):", x, y);
+//        n = availableWood / (float) availableWoodMax;
+//        Assets.font.setColor(1f - n, n, 0f, 1f);
+        Assets.font.setColor(Color.WHITE);
+        Assets.font.draw(batch, "Logging (level " + woodResourceLevel + "):", x, y);
         String forestText = availableWood + "/" + availableWoodMax;
         glyphLayout.setText(Assets.font, forestText);
         Assets.font.setColor(Color.WHITE);
