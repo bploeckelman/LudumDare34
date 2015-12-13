@@ -1,5 +1,6 @@
 package lando.systems.ld34.resources;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ObjectMap;
 
 
@@ -69,5 +70,9 @@ public class ResourceManager {
             totalSlaves += r.slaves;
         }
         return totalSlaves;
+    }
+
+    public int getPyramidHeight(){
+        return (int) MathUtils.log2(resources.get(Resources.BUILD).amount);
     }
 }
