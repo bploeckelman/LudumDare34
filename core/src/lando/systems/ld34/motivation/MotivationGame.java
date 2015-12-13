@@ -125,7 +125,7 @@ public class MotivationGame {
         this.targetFalloffRange = targetFalloffRange;
         this.targetFalloff.width = bar.width * ((this.targetFalloffRange * 2) + this.targetRange);
         this.updateTargetRangeWidth();
-        this.reset();
+        //this.reset();
     }
 
     private void updateTargetRangeWidth() {
@@ -250,6 +250,8 @@ public class MotivationGame {
         if (!isActive) {
             return;
         }
+
+        setTargetFalloffRange(resourceManager.getWhipFalloffRange(resourceType));
 
         // Click?
         if (Gdx.input.justTouched()) {

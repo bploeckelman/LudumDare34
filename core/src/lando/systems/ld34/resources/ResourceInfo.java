@@ -22,6 +22,7 @@ public class ResourceInfo {
     public int maxAmount;
     public int lastMaxAmount;
     public float maxEfficiency;
+    public float minEfficiency;
     public int slaves;
     public int maxSlaves;
     public int level;
@@ -47,6 +48,7 @@ public class ResourceInfo {
         slaves = 1;
         maxAmount = 100;
         maxEfficiency = 1;
+        minEfficiency = 0;
         maxSlaves = 5;
         efficiency = 1;
         skilledWorkers = 0;
@@ -166,10 +168,14 @@ public class ResourceInfo {
     }
 
     public void addEfficiency(float amount){
-        efficiency += amount * .1f;
+        efficiency += amount * .3f;
         if (efficiency >= maxEfficiency){
             efficiency = maxEfficiency;
         }
+    }
+
+    public float getWhipFalloff(){
+        return (.8f - ((efficiency - minEfficiency) / (maxEfficiency - minEfficiency))) * .2f;
     }
 
 
