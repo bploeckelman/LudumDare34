@@ -91,7 +91,7 @@ public class NavigationLayout {
 
     public void render(SpriteBatch batch, OrthographicCamera camera) {
         batch.setProjectionMatrix(camera.combined);
-        batch.begin();
+        //batch.begin();
 
         //batch.setColor(Color.BLUE);
         //batch.draw(Assets.whiteTexture, _navBounds.x, _navBounds.y, _navBounds.width, _navBounds.height);
@@ -109,7 +109,7 @@ public class NavigationLayout {
             }
         }
 
-        batch.end();
+        //batch.end();
     }
 
     private boolean isManagementScreen() {

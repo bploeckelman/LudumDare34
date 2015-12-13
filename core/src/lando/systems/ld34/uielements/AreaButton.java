@@ -16,8 +16,8 @@ public class AreaButton extends NavigationButton {
 
     public static AreaButton SelectedButton;
 
-    public AreaButton(String text, Texture image, Area.Type area) {
-        super(text, image);
+    public AreaButton(String text, Texture image, Area.Type area, String tooltip) {
+        super(text, image, tooltip);
         AreaLocation = area;
     }
 

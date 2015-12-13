@@ -109,13 +109,13 @@ public class GameScreen extends AbstractScreen {
     }
 
     private void SetupNavigation(NavigationLayout navLayout) {
-        AreaButton managementAreaButton = new AreaButton("Management", Assets.managementIcon, Area.Type.MGMT);
+        AreaButton managementAreaButton = new AreaButton("Management", Assets.managementIcon, Area.Type.MGMT, "Slave Mangement");
         AreaButton.SelectedButton = managementAreaButton;
 
         navLayout.add(managementAreaButton);
-        navLayout.add(new AreaButton("Quarry", Assets.quarryIcon, Area.Type.QUARRY));
-        navLayout.add(new AreaButton("Field", Assets.fieldIcon, Area.Type.FIELD));
-        navLayout.add(new AreaButton("Woods", Assets.woodsIcon, Area.Type.WOODS));
+        navLayout.add(new AreaButton("Quarry", Assets.quarryIcon, Area.Type.QUARRY, "Quarry"));
+        navLayout.add(new AreaButton("Field", Assets.fieldIcon, Area.Type.FIELD, "Farmlands"));
+        navLayout.add(new AreaButton("Woods", Assets.woodsIcon, Area.Type.WOODS, "Woods"));
 
         // layout added buttons first before adding pyramid button - hacky but fuck it
         float height = uiCamera.viewportHeight;
@@ -128,15 +128,15 @@ public class GameScreen extends AbstractScreen {
         Rectangle pyramidBounds = new Rectangle(uiCamera.viewportWidth - 50, yOffset, 50, boundsHeight);
         navLayout.add(new PyramidButton(pyramidBounds));
 
-        ManagementButton skillsManagementButton = new ManagementButton("Workers", Manage.Type.WORKERS);
+        ManagementButton skillsManagementButton = new ManagementButton("Workers", Manage.Type.WORKERS, "Manage Skilled Workers");
         ManagementButton.SelectedButton = skillsManagementButton;
         ShowManagementScreen(skillsManagementButton.Screen);
 
         navLayout.add(skillsManagementButton);
-        navLayout.add(new ManagementButton("Slaves", Manage.Type.SLAVES));
-        navLayout.add(new ManagementButton("Pharoah", Manage.Type.PHAROAH));
-        navLayout.add(new ManagementButton("Upgrades", Manage.Type.UPGRADES));
-        navLayout.add(new ManagementButton("Resources", Manage.Type.RESOURCES));
+        navLayout.add(new ManagementButton("Slaves", Manage.Type.SLAVES, "Manage Slave Labor"));
+        navLayout.add(new ManagementButton("Pharoah", Manage.Type.PHAROAH, "Keep the Pharoah Happy"));
+        navLayout.add(new ManagementButton("Upgrades", Manage.Type.UPGRADES, "Upgrade your Buildings"));
+        navLayout.add(new ManagementButton("Resources", Manage.Type.RESOURCES, "Check Storehouses"));
 
         navLayout.layoutManagement(new Rectangle(0, (uiCamera.viewportHeight - 40), uiCamera.viewportWidth, 40));
     }
@@ -176,13 +176,14 @@ public class GameScreen extends AbstractScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         background.render(batch);
-        batch.setColor(1,1,1,sceneAlpha.floatValue());
+        batch.setColor(1, 1, 1, sceneAlpha.floatValue());
         batch.draw(currentTexture, 0, currentFBO.getHeight(), currentFBO.getWidth(), -currentFBO.getHeight());
-        batch.setColor(1,1,1,1);
+        batch.setColor(1, 1, 1, 1);
+        layout.render(batch, uiCamera);
+
         hudManager.render(batch);
         batch.end();
 
-        layout.render(batch, uiCamera);
     }
 
 }

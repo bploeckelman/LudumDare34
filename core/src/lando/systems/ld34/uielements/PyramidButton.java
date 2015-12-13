@@ -16,7 +16,7 @@ public class PyramidButton extends AreaButton {
     public Rectangle Boundary;
 
     public PyramidButton(Rectangle boundary) {
-        super("Pyramid", Assets.pyramidIcon, Area.Type.PYRAMID);
+        super("Pyramid", Assets.pyramidIcon, Area.Type.PYRAMID, "View Pharaohs Pyramid");
 
         Boundary = boundary;
         Bounds = new Rectangle(0, 0, 50, 0);

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import lando.systems.ld34.LudumDare34;
 import lando.systems.ld34.utils.Assets;
 
 /**
@@ -16,6 +17,7 @@ public abstract class NavigationButton {
     public Rectangle Bounds;
     public Texture Image;
     public String Text;
+    public String ToolTipText;
     private GlyphLayout _glyphLayout;
 
     public boolean Highlighted;
@@ -23,9 +25,10 @@ public abstract class NavigationButton {
 
     public float SelectionThickness = 3f;
 
-    public NavigationButton(String text, Texture image) {
+    public NavigationButton(String text, Texture image, String tooltipText) {
         Text = text;
         Image = image;
+        ToolTipText = tooltipText;
 
         Bounds = new Rectangle(0, 0, 50, 50);
         _glyphLayout = new GlyphLayout(Assets.font, text);
@@ -33,7 +36,9 @@ public abstract class NavigationButton {
 
     public void update(Vector3 mousePos, boolean clicked) {
         Highlighted = Bounds.contains(mousePos.x, mousePos.y);
-
+        if (Highlighted && !Selected){
+            LudumDare34.GameScreen.hudManager.showTooltip(ToolTipText);
+        }
         if (Highlighted && !Selected && clicked) {
             click();
         }

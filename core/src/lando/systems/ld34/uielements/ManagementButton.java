@@ -14,8 +14,8 @@ public class ManagementButton extends NavigationButton {
 
     public Manage.Type Screen;
 
-    public ManagementButton(String text, Manage.Type screen) {
-        super(text, null);
+    public ManagementButton(String text, Manage.Type screen, String tooltip) {
+        super(text, null, tooltip);
 
         Screen = screen;
         Bounds.width = 100;

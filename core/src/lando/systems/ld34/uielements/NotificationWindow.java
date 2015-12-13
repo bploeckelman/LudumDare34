@@ -40,8 +40,9 @@ public class NotificationWindow {
         }
     }
 
-    public void render(SpriteBatch batch){
+    public void render(SpriteBatch batch, boolean hovered){
         float alpha = Utils.clamp(ttl, 0, 1);
+        if (hovered) alpha = Math.min(alpha, .4f);
         Assets.nice2NinePatch.setColor(new Color(1,1,1,alpha));
         Assets.HUDFont.setColor(new Color(1,1,1,alpha));
         Assets.glyphLayout.setText(Assets.HUDFont, text);
