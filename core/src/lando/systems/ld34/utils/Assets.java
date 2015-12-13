@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Rectangle;
@@ -27,6 +28,9 @@ public class Assets {
 
     public static Texture testTexture;
     public static Texture whiteTexture;
+    public static Texture boxTexture;
+
+    public static NinePatch boxNinePatch;
 
     public static void load() {
         if (tween == null) {
@@ -44,6 +48,9 @@ public class Assets {
 
         testTexture = new Texture("badlogic.jpg");
         whiteTexture = new Texture("pixel.png");
+        boxTexture = new Texture("box.png");
+
+        boxNinePatch = new NinePatch(boxTexture, 2, 2, 2, 2);
     }
 
     public static void dispose() {
@@ -51,6 +58,7 @@ public class Assets {
         font.dispose();
         testTexture.dispose();
         whiteTexture.dispose();
+        boxTexture.dispose();
     }
 
     private static ShaderProgram compileShaderProgram(FileHandle vertSource, FileHandle fragSource) {
