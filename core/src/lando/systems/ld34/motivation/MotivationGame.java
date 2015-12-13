@@ -30,7 +30,7 @@ public class MotivationGame {
     private final static float BAR_X = 6f; // pixels
     private final static float BAR_Y = 6f; // pixels
 
-    private final static float INDICATOR_SPEED = 1.2f; // % of the bar per second (out of 1)
+    private final static float INDICATOR_SPEED = 1.3f; // % of the bar per second (out of 1)
 
     private ResourceManager resourceManager;
     private ResourceManager.Resources resourceType;
@@ -94,10 +94,6 @@ public class MotivationGame {
         this.targetFalloffRangeU = targetFalloffRangeU;
     }
 
-    public void setTargetU(float targetU) {
-        this.targetU = targetU;
-    }
-
     // -----------------------------------------------------------------------------------------------------------------
 
 
@@ -116,15 +112,18 @@ public class MotivationGame {
         Assets.nice2NinePatch.draw(batch, bg.x, bg.y, bg.width, bg.height);
 
         // Shader bar
+//        Gdx.gl20.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
+//        batch.enableBlending();
         batch.setShader(Assets.motivationBarShader);
-        batch.setBlendFunction(GL20.GL_ONE, GL20.GL_ONE_MINUS_SRC_ALPHA);
+//        batch.setBlendFunction(GL20.GL_ONE, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Assets.motivationBarShader.setUniformf("u_target_x", targetU);
         Assets.motivationBarShader.setUniformf("u_target_width", targetRangeU);
         Assets.motivationBarShader.setUniformf("u_target_falloff_width", targetFalloffRangeU);
         Assets.motivationBarShader.setUniformf("u_indicator_x", indicatorPosition);
         Assets.motivationBarShader.setUniformf("u_indicator_dir", indicatorDirection);
         batch.draw(Assets.testTexture, bar.x, bar.y, bar.width, bar.height);
-        batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+//        batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
         batch.setShader(null);
 
@@ -190,7 +189,8 @@ public class MotivationGame {
             return;
         }
 
-        setTargetFalloffRangeU(resourceManager.getWhipFalloffRange(resourceType));
+//        setTargetFalloffRangeU(resourceManager.getWhipFalloffRange(resourceType));
+        setTargetFalloffRangeU(0.2f);
 
         // Click?
         if (Gdx.input.justTouched()) {
