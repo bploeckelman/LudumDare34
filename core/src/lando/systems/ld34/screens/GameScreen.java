@@ -68,6 +68,10 @@ public class GameScreen extends AbstractScreen {
 
     }
 
+    public void ShowManagementScreen(ManageScreen screen) {
+        // TODO: call me from NavigationLayout and then do stuff
+    }
+
     private void SetupNavigation(NavigationLayout navLayout) {
         AreaButton managementButton = new AreaButton("Management", Area.Type.MGMT);
         AreaButton.SelectedButton = managementButton;
