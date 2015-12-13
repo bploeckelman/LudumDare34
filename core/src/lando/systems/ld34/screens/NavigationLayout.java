@@ -32,14 +32,14 @@ public class NavigationLayout {
             height += button.Bounds.height;
         }
 
-        float space = (bounds.height - height) / (NavButtons.size() + 1);
+        int space = (int)(bounds.height - height) / (NavButtons.size() + 1);
 
         float y = bounds.y + bounds.height;
         for (NavigationButton button : NavButtons) {
             y -= (button.Bounds.height + space);
 
             button.Bounds.y = y;
-            button.Bounds.x = bounds.x + (bounds.width - button.Bounds.width)/2;
+            button.Bounds.x = (int)(bounds.x + (bounds.width - button.Bounds.width)/2);
         }
     }
 
