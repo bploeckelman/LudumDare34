@@ -48,6 +48,8 @@ public class Assets {
     public static Texture upIconOff;
     public static Texture downIconOn;
     public static Texture downIconOff;
+    public static Texture plusIconOn;
+    public static Texture plusIconOff;
 
     public static ArrayList<Texture> pryamidBlocks = new ArrayList<Texture>();
 
@@ -102,6 +104,8 @@ public class Assets {
         upIconOff = new Texture("up_white.png");
         downIconOn = new Texture("down_orange.png");
         downIconOff = new Texture("down_white.png");
+        plusIconOn = new Texture("plus_orange.png");
+        plusIconOff = new Texture("plus_white.png");
 
         motivationBarShader = compileShaderProgram(Gdx.files.internal("shaders/default.vert"), Gdx.files.internal("shaders/motivation_bar.frag"));
     }
@@ -126,6 +130,8 @@ public class Assets {
         upIconOff.dispose();
         downIconOn.dispose();
         downIconOff.dispose();
+        plusIconOn.dispose();
+        plusIconOff.dispose();
 
         for (Texture block : pryamidBlocks) {
             block.dispose();

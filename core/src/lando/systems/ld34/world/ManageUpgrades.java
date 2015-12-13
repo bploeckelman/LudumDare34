@@ -146,10 +146,10 @@ public class ManageUpgrades extends Manage {
         availableFoodSlavesBar     .fillPercent.setValue(availableFoodSlaves   / (float) availableFoodSlavesMax);
         availableForestSlavesBar   .fillPercent.setValue(availableForestSlaves / (float) availableForestSlavesMax);
 
-        buildUpgradeTex  = resources.canUpgrade(ResourceManager.Resources.BUILD) ? Assets.upIconOn : Assets.upIconOff;
-        stoneUpgradeTex  = resources.canUpgrade(ResourceManager.Resources.STONE) ? Assets.upIconOn : Assets.upIconOff;
-        foodUpgradeTex   = resources.canUpgrade(ResourceManager.Resources.FOOD)  ? Assets.upIconOn : Assets.upIconOff;
-        forestUpgradeTex = resources.canUpgrade(ResourceManager.Resources.WOOD)  ? Assets.upIconOn : Assets.upIconOff;
+        buildUpgradeTex  = resources.canUpgrade(ResourceManager.Resources.BUILD) ? Assets.plusIconOn : Assets.plusIconOff;
+        stoneUpgradeTex  = resources.canUpgrade(ResourceManager.Resources.STONE) ? Assets.plusIconOn : Assets.plusIconOff;
+        foodUpgradeTex   = resources.canUpgrade(ResourceManager.Resources.FOOD)  ? Assets.plusIconOn : Assets.plusIconOff;
+        forestUpgradeTex = resources.canUpgrade(ResourceManager.Resources.WOOD)  ? Assets.plusIconOn : Assets.plusIconOff;
 
         if (!Gdx.input.justTouched()) {
             return;

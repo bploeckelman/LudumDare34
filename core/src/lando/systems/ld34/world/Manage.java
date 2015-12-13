@@ -104,7 +104,7 @@ public abstract class Manage {
         batch.draw(addTexture,    addButton.x,    addButton.y,    buttonSize, buttonSize);
 
         Assets.font.setColor(1f - n, n, 0f, 1f);
-        Assets.font.draw(batch, "Building:", x, y);
+        Assets.font.draw(batch, labelText, x, y);
 
         String buildingText = numItems + "/" + numItemsMax;
         glyphLayout.setText(Assets.fontSmall, buildingText);
@@ -149,6 +149,33 @@ public abstract class Manage {
         Assets.fontSmall.draw(batch, slavesText,
                               slavesProgressBar.bounds.x + slavesProgressBar.bounds.width / 2f - glyphLayout.width / 2f,
                               slavesProgressBar.bounds.y + slavesProgressBar.bounds.height / 2f + glyphLayout.height / 2f);
+    }
+
+    protected void drawAddWorkerRow(SpriteBatch batch,
+                                    String rowLabel,
+                                    ProgressBar progressBar,
+                                    Texture addTexture,
+                                    Rectangle addButton,
+                                    int numWorkers,
+                                    int nextWorkerCost) {
+        glyphLayout.setText(Assets.font, rowLabel);
+        final float x = MathUtils.floor(progressBar.bounds.x - glyphLayout.width - widgetPadding);
+        final float y = progressBar.bounds.y + progressBar.bounds.height / 2f + glyphLayout.height / 2f;
+
+        progressBar.render(batch);
+        batch.draw(addTexture, addButton.x, addButton.y, buttonSize, buttonSize);
+
+        Assets.font.setColor(Color.WHITE);
+        Assets.font.draw(batch, rowLabel, x, y);
+        final String buildText = "" + numWorkers;
+        glyphLayout.setText(Assets.fontSmall, buildText);
+        Assets.fontSmall.draw(batch, buildText,
+                              progressBar.bounds.x + progressBar.bounds.width / 2f - glyphLayout.width / 2f,
+                              progressBar.bounds.y + progressBar.bounds.height / 2f + glyphLayout.height / 2f);
+
+        final String nextCostLabel =  "$" + nextWorkerCost;
+        glyphLayout.setText(Assets.font, nextCostLabel);
+        Assets.font.draw(batch, nextCostLabel, addButton.x + addButton.width + widgetPadding, addButton.y + addButton.height / 2f + glyphLayout.height / 2f);
     }
 
 }
