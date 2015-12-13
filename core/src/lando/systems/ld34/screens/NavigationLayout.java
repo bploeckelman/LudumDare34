@@ -11,6 +11,7 @@ import lando.systems.ld34.uielements.ManagementButton;
 import lando.systems.ld34.uielements.NavigationButton;
 import lando.systems.ld34.utils.Assets;
 import lando.systems.ld34.world.Area;
+import lando.systems.ld34.world.Manage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +24,7 @@ public class NavigationLayout {
     public static Area.Type CurrentArea;
 
     public static HashMap<Area.Type, AreaButton> AreaButtons = new HashMap<Area.Type, AreaButton>();
+    public static HashMap<Manage.Type, ManagementButton> ResourceButtons = new HashMap<Manage.Type, ManagementButton>();
 
     private final GameScreen _screen;
     private ArrayList<AreaButton> _areaButtons = new ArrayList<AreaButton>();
@@ -42,6 +44,7 @@ public class NavigationLayout {
 
     public void add(ManagementButton button) {
         _skillsButtons.add(button);
+        ResourceButtons.put(button.Screen, button);
     }
 
     private Rectangle _navBounds;
