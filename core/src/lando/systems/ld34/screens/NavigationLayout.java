@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import lando.systems.ld34.LudumDare34;
 import lando.systems.ld34.uielements.AreaButton;
 import lando.systems.ld34.uielements.ManagementButton;
 import lando.systems.ld34.uielements.NavigationButton;
@@ -92,7 +93,7 @@ public class NavigationLayout {
     }
 
     private boolean isManagementScreen() {
-        return _screen.CurrentArea == Area.Type.MGMT;
+        return LudumDare34.GameScreen.currentArea.type == Area.Type.MGMT;
     }
 
     public void update() {

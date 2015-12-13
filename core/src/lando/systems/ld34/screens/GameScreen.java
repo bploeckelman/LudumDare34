@@ -24,10 +24,9 @@ public class GameScreen extends AbstractScreen {
 
     // java# (tm)
     public ResourceManager ResourceManager;
-    public Area.Type CurrentArea;
 
     ObjectMap<Area.Type, Area> areaMap;
-    Area currentArea;
+    public Area currentArea;
     Background background;
 
     public GameScreen(LudumDare34 game) {
@@ -55,8 +54,6 @@ public class GameScreen extends AbstractScreen {
     }
 
     public void TransitionToArea(Area.Type area) {
-        CurrentArea = area;
-
         final Area nextArea = areaMap.get(area);
         Tween.to(background.xOffset, 1, 1f)
                 .target(nextArea.worldX * (512/5f))
