@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import lando.systems.ld34.Config;
+import lando.systems.ld34.resources.ResourceManager;
 import lando.systems.ld34.utils.Assets;
 
 public class MotivationGame {
@@ -30,7 +31,8 @@ public class MotivationGame {
     private final static float INDICATOR_SPEED = 1.2f; // % of the bar per second (out of 1)
     private final static float INDICATOR_WIDTH = 2f; // pixels
 
-    private String resourceType; // TODO switch to Doug's enum for resource type
+    private ResourceManager resourceManager;
+    private ResourceManager.Resources resourceType;
     private float targetRange; // The size of the target, out of 1
     private float targetFalloffRange;  // The falloff area on either side of the target, out of 1
 
@@ -58,8 +60,9 @@ public class MotivationGame {
      * @param targetRange float
      * @param targetFalloffRange float
      */
-    public MotivationGame(String resourceType, float targetRange, float targetFalloffRange) {
+    public MotivationGame(ResourceManager resourceManager, ResourceManager.Resources resourceType, float targetRange, float targetFalloffRange) {
 
+        this.resourceManager = resourceManager;
         this.resourceType = resourceType;
 
         // Let's start building the rectangles
@@ -228,8 +231,7 @@ public class MotivationGame {
             // didn't even hit the falloff area
             score = 0;
         }
-        // TODO report to the manager
-        Gdx.app.log("MotivationScore:", ""+score);
+        resourceManager.addEfficiency(resourceType, score);
     }
 
     public void start() {

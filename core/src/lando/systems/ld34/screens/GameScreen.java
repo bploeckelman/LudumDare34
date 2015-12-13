@@ -29,6 +29,8 @@ public class GameScreen extends AbstractScreen {
 
     public GameScreen(LudumDare34 game) {
         super(game);
+        LudumDare34.GameScreen = this;
+
         batch = Assets.batch;
 
         layout = new NavigationLayout(this);
@@ -86,6 +88,7 @@ public class GameScreen extends AbstractScreen {
         super.update(delta);
         layout.update();
         ResourceManager.update(delta);
+        currentArea.update(delta);
     }
 
     @Override
