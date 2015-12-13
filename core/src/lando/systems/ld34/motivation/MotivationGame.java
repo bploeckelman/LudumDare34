@@ -2,6 +2,7 @@ package lando.systems.ld34.motivation;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -14,20 +15,20 @@ public class MotivationGame {
 
     // Positioning info for the game's UI
     // NOTE: All other X/Y positions within this class are relative to these positions.
-    private final static float GAME_HEIGHT = 140f;
+    private final static float GAME_HEIGHT = 46f;
     private final static float GAME_WIDTH = 340f;
     private final static float GAME_X = Config.width/2 - 170;
     private final static float GAME_Y = 200f;
 
-    private final static float BUTTON_HEIGHT = 40f;
+    private final static float BUTTON_HEIGHT = 34f;
     private final static float BUTTON_WIDTH = 80f;
-    private final static float BUTTON_X = 130f;
-    private final static float BUTTON_Y = 20f;
+    private final static float BUTTON_X = 254f;
+    private final static float BUTTON_Y = 6f;
 
-    private final static float BAR_HEIGHT = 40f; // pixels
-    private final static float BAR_WIDTH = 300f; // pixels
-    private final static float BAR_X = 20f; // pixels
-    private final static float BAR_Y = 80f; // pixels
+    private final static float BAR_HEIGHT = 34f; // pixels
+    private final static float BAR_WIDTH = 242f; // pixels
+    private final static float BAR_X = 6f; // pixels
+    private final static float BAR_Y = 6f; // pixels
 
     private final static float INDICATOR_SPEED = 1.2f; // % of the bar per second (out of 1)
 
@@ -112,10 +113,10 @@ public class MotivationGame {
         Color c = batch.getColor();
 
         // Game BG
-//        batch.setColor(Color.GRAY);
         Assets.nice2NinePatch.draw(batch, bg.x, bg.y, bg.width, bg.height);
-//        batch.draw(Assets.whiteTexture, bg.x, bg.y, bg.width, bg.height);
 
+        // Shader bar
+        Gdx.gl20.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
         batch.setShader(Assets.motivationBarShader);
         Assets.motivationBarShader.setUniformf("u_target_x", targetU);
         Assets.motivationBarShader.setUniformf("u_target_width", targetRangeU);

@@ -33,26 +33,30 @@ float GetDistanceFromIndicator() {
     }
 }
 
+float GetDistanceFromTarget() {
+    if (v_texCoords.x >= u_target_x && v_texCoords.x <= (u_target_x + u_target_width)) {
+        return 0.;
+    }
+    if (v_texCoords.x < u_target_x) {
+        return u_target_x - v_texCoords.x;
+    } else {
+        return v_texCoords.x - (u_target_x + u_target_width);
+    }
+}
+
 void main()
 {
 
     // Default color
-    vec4 color = vec4(1,1,1,0);
+    vec4 color = vec4(0,0,0,0);
 
-
-    // Falloff color first
-    if (v_texCoords.x >= u_target_x - u_target_falloff_width
-            && v_texCoords.x < u_target_x) {
-        // Falloff left
-        color = vec4(0,0,1,1);
-    } else if (v_texCoords.x >= u_target_x
-            && v_texCoords.x <= u_target_x + u_target_width) {
-        // Target
-        color = vec4(0,1,0,1);
-    } else if (v_texCoords.x > u_target_x + u_target_width
-            && v_texCoords.x <= u_target_x + u_target_width + u_target_falloff_width) {
-        // Falloff right
-        color = vec4(0,0,1,1);
+    float distance_from_target = GetDistanceFromTarget();
+    if (distance_from_target <= u_target_falloff_width) {
+        if (distance_from_target == 0.) {
+            color = vec4(1,0,0,1);
+        } else {
+            color = vec4(0,1,0,1) * (1. - (distance_from_target / u_target_falloff_width));
+        }
     }
 
     float distance_from_indicator = GetDistanceFromIndicator();
