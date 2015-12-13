@@ -1,11 +1,19 @@
 package lando.systems.ld34.screens;
 
 import aurelienribon.tweenengine.BaseTween;
+import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
+import aurelienribon.tweenengine.primitives.MutableFloat;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ObjectMap;
+import lando.systems.ld34.Config;
 import lando.systems.ld34.LudumDare34;
 import lando.systems.ld34.resources.ResourceManager;
 import lando.systems.ld34.uielements.AreaButton;
@@ -33,9 +41,17 @@ public class GameScreen extends AbstractScreen {
     public HUDManager hudManager;
 
     public Pyramid Pyramid;
+    private final FrameBuffer currentFBO;
+    private MutableFloat sceneAlpha;
+    private final static float SCENEFADE = .3f;
+    private final static float BACKGROUNDTRANSITION = .5f;
 
     public GameScreen(LudumDare34 game) {
         super(game);
+        Gdx.gl.glClearColor(0, 0, 0, 0);
+        sceneAlpha = new MutableFloat(1);
+        currentFBO = new FrameBuffer(Pixmap.Format.RGBA8888, Config.width, Config.height, false);
+
         hudManager = new HUDManager();
         LudumDare34.GameScreen = this;
 
@@ -67,14 +83,19 @@ public class GameScreen extends AbstractScreen {
 
     public void TransitionToArea(Area.Type area) {
         final Area nextArea = areaMap.get(area);
-        Tween.to(background.xOffset, 1, 1f)
-                .target(nextArea.worldX * (512/5f))
-                .setCallback(new TweenCallback() {
+        Timeline.createSequence()
+                .push(Tween.to(sceneAlpha, 1, SCENEFADE)
+                      .target(0))
+                .push(Tween.to(background.xOffset, 1, BACKGROUNDTRANSITION)
+                        .target(nextArea.worldX * (512/5f)))
+                .push(Tween.call(new TweenCallback() {
                     @Override
                     public void onEvent(int i, BaseTween<?> baseTween) {
                         currentArea = nextArea;
                     }
-                })
+                }))
+                .push(Tween.to(sceneAlpha, 1, SCENEFADE)
+                .target(1))
                 .start(Assets.tween);
 
     }
@@ -134,11 +155,26 @@ public class GameScreen extends AbstractScreen {
     public void render(float delta) {
         update(delta);
 
+
+        currentFBO.begin();
+
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        background.render(batch);
         currentArea.render(batch);
+        batch.end();
+        currentFBO.end();
 
+        Texture currentTexture = currentFBO.getColorBufferTexture();
+        currentTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        batch.begin();
+        background.render(batch);
+        batch.setColor(1,1,1,sceneAlpha.floatValue());
+        batch.draw(currentTexture, 0, currentFBO.getHeight(), currentFBO.getWidth(), -currentFBO.getHeight());
+        batch.setColor(1,1,1,1);
         hudManager.render(batch);
         batch.end();
 

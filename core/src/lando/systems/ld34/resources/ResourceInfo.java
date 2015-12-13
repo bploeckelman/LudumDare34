@@ -91,6 +91,7 @@ public class ResourceInfo {
             case SLAVES:
                 int nextSlave = LudumDare34.GameScreen.ResourceManager.nextSlaveFoodAmount;
                 if (LudumDare34.GameScreen.ResourceManager.removeResource(ResourceManager.Resources.FOOD, nextSlave)){
+                    LudumDare34.GameScreen.addNotification("Slave Born");
                     slaves++;
                 }
                 break;
