@@ -6,10 +6,14 @@ import lando.systems.ld34.screens.GameScreen;
 import lando.systems.ld34.utils.Assets;
 
 public class LudumDare34 extends Game {
+
+	public static GameScreen GameScreen;
+
 	@Override
 	public void create () {
 		Assets.load();
-		setScreen(new GameScreen(this));
+		GameScreen = new GameScreen(this);
+		setScreen(GameScreen);
 	}
 
 	@Override

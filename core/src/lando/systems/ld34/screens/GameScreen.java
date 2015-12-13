@@ -1,37 +1,102 @@
 package lando.systems.ld34.screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
+import aurelienribon.tweenengine.BaseTween;
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenCallback;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.ObjectMap;
 import lando.systems.ld34.LudumDare34;
+import lando.systems.ld34.resources.ResourceManager;
+import lando.systems.ld34.uielements.AreaButton;
 import lando.systems.ld34.utils.Assets;
+import lando.systems.ld34.world.*;
 
 /**
  * Brian Ploeckelman created on 12/9/2015.
  */
 public class GameScreen extends AbstractScreen {
 
-    final SpriteBatch batch;
+    final SpriteBatch      batch;
+    final NavigationLayout layout;
+
+    ObjectMap<Area.Type, Area> areaMap;
+    Area currentArea;
+    ResourceManager resourceManager;
+    Background background;
 
     public GameScreen(LudumDare34 game) {
         super(game);
         batch = Assets.batch;
+
+        layout = new NavigationLayout(this);
+        SetupNavigation(layout);
+
+        resourceManager = new ResourceManager();
+
+        background = new Background();
+        areaMap = new ObjectMap<Area.Type, Area>();
+        areaMap.put(Area.Type.MGMT, new AreaMgmt(this));
+        areaMap.put(Area.Type.PYRAMID, new AreaPyramid(this));
+        areaMap.put(Area.Type.QUARRY, new AreaQuarry(this));
+        areaMap.put(Area.Type.FIELD, new AreaField(this));
+        areaMap.put(Area.Type.WOODS, new AreaWoods(this));
+        currentArea = areaMap.get(Area.Type.MGMT);
+        TransitionToArea(AreaButton.SelectedButton.AreaLocation);
+    }
+
+
+    public void TransitionToArea(Area.Type area) {
+        System.out.println(area.toString());
+
+        final Area nextArea = areaMap.get(area);
+        Tween.to(background.xOffset, 1, 1f)
+                .target(nextArea.worldX * (512/5f))
+                .setCallback(new TweenCallback() {
+                    @Override
+                    public void onEvent(int i, BaseTween<?> baseTween) {
+                        currentArea = nextArea;
+                    }
+                })
+                .start(Assets.tween);
+
+    }
+
+    private void SetupNavigation(NavigationLayout navLayout) {
+        AreaButton managementButton = new AreaButton("Management", Area.Type.MGMT);
+        AreaButton.SelectedButton = managementButton;
+
+        navLayout.add(managementButton);
+        navLayout.add(new AreaButton("Quarry", Area.Type.QUARRY));
+        navLayout.add(new AreaButton("Field", Area.Type.FIELD));
+        navLayout.add(new AreaButton("Woods", Area.Type.WOODS));
+
+        float height = uiCamera.viewportHeight;
+        float third = height / 3;
+        navLayout.layout(new Rectangle(0, third, 75, height - third));
+
+        //navLayout.add(new AreaButton("Pyramid", Area.Type.PYRAMID));
+
     }
 
     @Override
     public void update(float delta) {
         super.update(delta);
+        layout.update();
+        resourceManager.update(delta);
     }
 
     @Override
     public void render(float delta) {
         update(delta);
 
-        Gdx.gl.glClearColor(0f, 191f / 255f, 255f / 255f, 1f);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        batch.draw(Assets.testTexture, 0, 0);
+        background.render(batch);
+        currentArea.render(batch);
         batch.end();
+
+        layout.render(batch, uiCamera);
     }
 
 }

@@ -19,11 +19,11 @@ public abstract class AbstractScreen extends ScreenAdapter {
 
     public final LudumDare34        game;
     public       OrthographicCamera uiCamera;
+    public       OrthographicCamera camera;
 
     protected SpriteBatch        batch;
     protected Vector3            mouseScreenPos;
     protected Vector3            mouseWorldPos;
-    protected OrthographicCamera camera;
 
     public AbstractScreen(LudumDare34 game) {
         this.game = game;
