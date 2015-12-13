@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import lando.systems.ld34.Config;
-import lando.systems.ld34.LudumDare34;
 import lando.systems.ld34.resources.ResourceManager;
 import lando.systems.ld34.utils.Assets;
 import lando.systems.ld34.utils.SoundManager;
@@ -31,25 +30,19 @@ public class MotivationGame {
     private final static float BAR_Y = 80f; // pixels
 
     private final static float INDICATOR_SPEED = 1.2f; // % of the bar per second (out of 1)
-    private final static float INDICATOR_WIDTH = 2f; // pixels
 
     private ResourceManager resourceManager;
     private ResourceManager.Resources resourceType;
-    private float targetRange; // The size of the target, out of 1
-    private float targetFalloffRange;  // The falloff area on either side of the target, out of 1
+
+    private float targetFalloffRangeU;  // The falloff area on either side of the target, out of 1
+    private float targetRangeU; // The size of the target, out of 1
+    private float targetU; // Where's the target?
 
     private Rectangle bg;
     private Rectangle bar;
     private Rectangle button;
 
-    private Rectangle target;
-    private Rectangle targetFalloff; // Covers the falloff on either side of the target
-    private float targetRangeWidth;
-
-    private Rectangle indicator;
     private float indicatorPosition; // Where along the bar to place the indicator, from 0 to 1
-    private float indicatorMinX;
-    private float indicatorRangeWidth;
     private float indicatorDirection;
 
     private boolean isActive = false;
@@ -64,7 +57,6 @@ public class MotivationGame {
 
         this.resourceManager = resourceManager;
         this.resourceType = resourceType;
-
 
         // Let's start building the rectangles
         this.bg = new Rectangle(
@@ -81,31 +73,9 @@ public class MotivationGame {
                 MotivationGame.BUTTON_WIDTH,
                 MotivationGame.BUTTON_HEIGHT
         );
-        this.indicator = new Rectangle(
-                0,  // Set when we update
-                this.bar.y,
-                MotivationGame.INDICATOR_WIDTH,
-                this.bar.height
-        );
-        this.target = new Rectangle(
-                0,  // Set when the targetRange is setter is called
-                this.bar.y,
-                0,  // Set when the targetRange is setter is called
-                this.bar.height
-        );
-        this.targetFalloff = new Rectangle(
-                0,  // Set when the targetFalloffRange is setter is called
-                this.bar.y,
-                0,  // Set when the targetFalloffRange is setter is called
-                this.bar.height
-        );
 
-        // Computed values
-        this.indicatorMinX = this.bar.x;
-        this.indicatorRangeWidth = this.bar.width - MotivationGame.INDICATOR_WIDTH;
-
-        this.setTargetRange(resourceManager.getWhipTargetRange(resourceType));
-        this.setTargetFalloffRange(resourceManager.getWhipFalloffRange(resourceType));
+        this.setTargetRangeU(resourceManager.getWhipTargetRange(resourceType));
+        this.setTargetFalloffRangeU(resourceManager.getWhipFalloffRange(resourceType));
 
         this.reset();
         this.start();
@@ -115,24 +85,17 @@ public class MotivationGame {
 
     // Getter/Setters --------------------------------------------------------------------------------------------------
 
-    public void setTargetRange(float targetRange) {
-        this.targetRange = targetRange;
-        this.target.width = bar.width * this.targetRange;
-        this.updateTargetRangeWidth();
-        this.reset();
+    public void setTargetRangeU(float targetRangeU) {
+        this.targetRangeU = targetRangeU;
     }
 
-    public void setTargetFalloffRange(float targetFalloffRange) {
-        this.targetFalloffRange = targetFalloffRange;
-        this.targetFalloff.width = bar.width * ((this.targetFalloffRange * 2) + this.targetRange);
-        this.updateTargetRangeWidth();
-        //this.reset();
+    public void setTargetFalloffRangeU(float targetFalloffRangeU) {
+        this.targetFalloffRangeU = targetFalloffRangeU;
     }
 
-    private void updateTargetRangeWidth() {
-        this.targetRangeWidth = bar.width - this.targetFalloff.width;
+    public void setTargetU(float targetU) {
+        this.targetU = targetU;
     }
-
 
     // -----------------------------------------------------------------------------------------------------------------
 
@@ -140,58 +103,27 @@ public class MotivationGame {
     public void reset() {
         this.indicatorPosition = 0; // All the way to the left
         this.indicatorDirection = 1; // Moving right
-        // todo: select and place target
         // Position the target
-        this.targetFalloff.x = bar.x + (MathUtils.random() * this.targetRangeWidth);
-        this.target.x = this.targetFalloff.x + (this.targetFalloffRange * MotivationGame.BAR_WIDTH);
+        targetU = MathUtils.random(0, 1 - targetRangeU);    // NOTE: Falloff might be cut off; that's OK
     }
 
     public void render(SpriteBatch batch){
 
         Color c = batch.getColor();
 
-
         // Game BG
-        batch.setColor(Color.GRAY);
-        batch.draw(Assets.whiteTexture, bg.x, bg.y, bg.width, bg.height);
+//        batch.setColor(Color.GRAY);
+        Assets.nice2NinePatch.draw(batch, bg.x, bg.y, bg.width, bg.height);
+//        batch.draw(Assets.whiteTexture, bg.x, bg.y, bg.width, bg.height);
 
         batch.setShader(Assets.motivationBarShader);
-        Assets.motivationBarShader.setUniformf("u_time", resourceManager.getEfficiency(resourceType));
+        Assets.motivationBarShader.setUniformf("u_target_x", targetU);
+        Assets.motivationBarShader.setUniformf("u_target_width", targetRangeU);
+        Assets.motivationBarShader.setUniformf("u_target_falloff_width", targetFalloffRangeU);
+        Assets.motivationBarShader.setUniformf("u_indicator_x", indicatorPosition);
+        Assets.motivationBarShader.setUniformf("u_indicator_dir", indicatorDirection);
         batch.draw(Assets.testTexture, bar.x, bar.y, bar.width, bar.height);
         batch.setShader(null);
-
-        // Bar
-//        batch.setColor(Color.BLUE);
-//        batch.draw(Assets.whiteTexture, bar.x, bar.y, bar.width, bar.height);
-
-
-//        // Target
-//        batch.setColor(Color.ORANGE);
-//        batch.draw(
-//                Assets.whiteTexture,
-//                targetFalloff.x,
-//                targetFalloff.y,
-//                targetFalloff.width,
-//                targetFalloff.height
-//        );
-//        batch.setColor(Color.RED);
-//        batch.draw(
-//                Assets.whiteTexture,
-//                target.x,
-//                target.y,
-//                target.width,
-//                target.height
-//        );
-//
-        // Indicator
-        batch.setColor(Color.WHITE);
-        batch.draw(
-                Assets.whiteTexture,
-                indicator.x,
-                indicator.y,
-                indicator.width,
-                indicator.height
-        );
 
         // Button
         batch.setColor(Color.GREEN);
@@ -209,37 +141,34 @@ public class MotivationGame {
 
     private void reportCurrentMotivationScore() {
 
-        float score;
-        // Measure from the middle of the indicator
-        float currentPos = indicator.x + (indicator.width / 2);
+        float score = 0f;
+
+        // All measurements are from 0 to 1
 
         // Are we inside the falloff bounds?
-        if (currentPos >= targetFalloff.x
-                && currentPos <= targetFalloff.x + targetFalloff.width) {
+        if (indicatorPosition >= targetU - targetFalloffRangeU
+                && indicatorPosition <= targetU + targetRangeU + targetFalloffRangeU) {
             // Did they hit the target?
-            if (currentPos >= target.x
-                    && currentPos <= target.x + target.width) {
+            if (indicatorPosition >= targetU
+                    && indicatorPosition <= targetU + targetRangeU) {
                 // Dead on!
-                score = 1;
+                score = 1f;
             } else {
                 // Determine where in the falloff they hit and score accordingly.
                 float missDist;
-                if (currentPos < target.x) {
+                if (indicatorPosition < targetU) {
                     // This is before the target area
-                    missDist = target.x - currentPos;
+                    missDist = targetU - indicatorPosition;
                 } else {
                     // They hit after the target area
-                    missDist = currentPos - (target.x + target.width);
+                    missDist = indicatorPosition - (targetU + targetRangeU);
                 }
-                score = 1 - (missDist / (this.targetFalloffRange * bar.width));
+                score = 1 - (missDist / targetFalloffRangeU);
             }
-        } else {
-            // didn't even hit the falloff area
-            score = 0;
         }
+
         resourceManager.addEfficiency(resourceType, score);
         if (MathUtils.random() > score){
-            LudumDare34.GameScreen.addNotification("You killed a Slave");
             resourceManager.removeSlaves(resourceType, 1);
         }
     }
@@ -258,11 +187,10 @@ public class MotivationGame {
             return;
         }
 
-        setTargetFalloffRange(resourceManager.getWhipFalloffRange(resourceType));
+        setTargetFalloffRangeU(resourceManager.getWhipFalloffRange(resourceType));
 
         // Click?
         if (Gdx.input.justTouched()) {
-            // TODO: test if they clicked the button
             int touchX = Gdx.input.getX();
             int touchY = (Config.height - Gdx.input.getY());
             if (button.contains(touchX, touchY)) {
@@ -284,7 +212,7 @@ public class MotivationGame {
             this.indicatorDirection *= -1;
             this.indicatorPosition += (this.indicatorPosition * -1);
         }
-        indicator.x = indicatorMinX + (indicatorRangeWidth * indicatorPosition);
+
     }
 
 }
