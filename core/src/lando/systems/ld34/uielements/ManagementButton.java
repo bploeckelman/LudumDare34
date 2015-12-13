@@ -1,24 +1,23 @@
 package lando.systems.ld34.uielements;
 
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import lando.systems.ld34.LudumDare34;
-import lando.systems.ld34.world.Area;
+import lando.systems.ld34.world.Manage;
 
 /**
  * Created by Brian on 12/12/2015.
  */
-public class AreaButton extends NavigationButton {
+public class ManagementButton extends NavigationButton {
 
-    public Area.Type AreaLocation;
+    public static ManagementButton SelectedButton;
 
-    public static AreaButton SelectedButton;
+    public Manage.Type Screen;
 
-    public AreaButton(String text, Area.Type area) {
+    public ManagementButton(String text, Manage.Type screen) {
         super(text);
-        AreaLocation = area;
-    }
 
+        Screen = screen;
+    }
     @Override
     public void update(Vector3 mousePos, boolean clicked) {
         super.update(mousePos, clicked);
@@ -28,6 +27,6 @@ public class AreaButton extends NavigationButton {
     @Override
     public void click() {
         SelectedButton = this;
-        LudumDare34.GameScreen.TransitionToArea(AreaLocation);
+        LudumDare34.GameScreen.ShowManagementScreen(Screen);
     }
 }

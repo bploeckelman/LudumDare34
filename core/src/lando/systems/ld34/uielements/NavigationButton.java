@@ -25,6 +25,8 @@ public abstract class NavigationButton {
 
     public NavigationButton(String text) {
         Text = text;
+
+        Bounds = new Rectangle(0, 0, 50, 50);
         _glyphLayout = new GlyphLayout(Assets.font, text);
     }
 
@@ -48,7 +50,7 @@ public abstract class NavigationButton {
         } else {
             Assets.font.setColor(Color.BLACK);
             Assets.font.draw(batch,
-                    _glyphLayout,
+                    Text,
                     Bounds.x + (Bounds.width - _glyphLayout.width)/2,
                     Bounds.y + (Bounds.height + _glyphLayout.height)/2);
         }

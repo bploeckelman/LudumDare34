@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 import lando.systems.ld34.LudumDare34;
 import lando.systems.ld34.resources.ResourceManager;
 import lando.systems.ld34.uielements.AreaButton;
+import lando.systems.ld34.uielements.ManagementButton;
 import lando.systems.ld34.uielements.PyramidButton;
 import lando.systems.ld34.utils.Assets;
 import lando.systems.ld34.world.*;
@@ -23,6 +24,7 @@ public class GameScreen extends AbstractScreen {
 
     // java# (tm)
     public ResourceManager ResourceManager;
+    public Area.Type CurrentArea;
 
     ObjectMap<Area.Type, Area> areaMap;
     Area currentArea;
@@ -43,6 +45,7 @@ public class GameScreen extends AbstractScreen {
         areaMap.put(Area.Type.QUARRY, new AreaQuarry(this));
         areaMap.put(Area.Type.FIELD, new AreaField(this));
         areaMap.put(Area.Type.WOODS, new AreaWoods(this));
+
         currentArea = areaMap.get(Area.Type.MGMT);
 
         layout = new NavigationLayout(this);
@@ -51,9 +54,8 @@ public class GameScreen extends AbstractScreen {
         TransitionToArea(AreaButton.SelectedButton.AreaLocation);
     }
 
-
     public void TransitionToArea(Area.Type area) {
-        System.out.println(area.toString());
+        CurrentArea = area;
 
         final Area nextArea = areaMap.get(area);
         Tween.to(background.xOffset, 1, 1f)
@@ -68,25 +70,37 @@ public class GameScreen extends AbstractScreen {
 
     }
 
-    public void ShowManagementScreen(Manage screen) {
+    public void ShowManagementScreen(Manage.Type skillScreen) {
         // TODO: call me from NavigationLayout and then do stuff
     }
 
     private void SetupNavigation(NavigationLayout navLayout) {
-        AreaButton managementButton = new AreaButton("Management", Area.Type.MGMT);
-        AreaButton.SelectedButton = managementButton;
+        AreaButton managementAreaButton = new AreaButton("Management", Area.Type.MGMT);
+        AreaButton.SelectedButton = managementAreaButton;
 
-        navLayout.add(managementButton);
+        navLayout.add(managementAreaButton);
         navLayout.add(new AreaButton("Quarry", Area.Type.QUARRY));
         navLayout.add(new AreaButton("Field", Area.Type.FIELD));
         navLayout.add(new AreaButton("Woods", Area.Type.WOODS));
 
+        // layout added buttons first before adding pyramid button - hacky but fuck it
         float height = uiCamera.viewportHeight;
-        navLayout.layout(new Rectangle(0, background.SandHeight, 75, height - background.SandHeight));
+        navLayout.layoutAreaButtons(new Rectangle(0, background.SandHeight, 75, height - background.SandHeight));
 
         Rectangle pyramidBounds = new Rectangle(uiCamera.viewportWidth - 75,
                 background.SandHeight, 75, height - background.SandHeight);
         navLayout.add(new PyramidButton(pyramidBounds));
+
+        ManagementButton skillsManagementButton = new ManagementButton("Workers", Manage.Type.WORKERS);
+        ManagementButton.SelectedButton = skillsManagementButton;
+
+        navLayout.add(skillsManagementButton);
+        navLayout.add(new ManagementButton("Slaves", Manage.Type.SLAVES));
+        navLayout.add(new ManagementButton("Pharoah", Manage.Type.PHAROAH));
+        navLayout.add(new ManagementButton("Upgrades", Manage.Type.UPGRADES));
+        navLayout.add(new ManagementButton("Resources", Manage.Type.RESOURCES));
+
+        navLayout.layoutManagement(new Rectangle(0, 0, uiCamera.viewportWidth, background.SandHeight));
     }
 
     @Override
