@@ -10,6 +10,9 @@ public class PyramidBlock {
     public Texture image;
     public Rectangle bounds;
     public boolean isPlaced;
-    public int row;
-    public Rectangle finalPosition;
+    public int currentRow;
+    public int finalRow;
+    //public Rectangle finalPosition;
+    public boolean fromLeft;
+    public boolean movingUp;
 }

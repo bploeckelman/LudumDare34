@@ -17,7 +17,7 @@ public class MotivationGame {
     private final static float GAME_HEIGHT = 140f;
     private final static float GAME_WIDTH = 340f;
     private final static float GAME_X = Config.width/2 - 170;
-    private final static float GAME_Y = 100f;
+    private final static float GAME_Y = 200f;
 
     private final static float BUTTON_HEIGHT = 40f;
     private final static float BUTTON_WIDTH = 80f;

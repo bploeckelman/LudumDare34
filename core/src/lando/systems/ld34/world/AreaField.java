@@ -16,7 +16,6 @@ public class AreaField extends Area {
     GlyphLayout glyphLayout;
     private MotivationGame mg;
 
-
     public AreaField(GameScreen gameScreen) {
         super(gameScreen, Type.FIELD);
         worldX = 1;

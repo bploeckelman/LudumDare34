@@ -2,6 +2,7 @@ package lando.systems.ld34.world;
 
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import lando.systems.ld34.LudumDare34;
 import lando.systems.ld34.motivation.MotivationGame;
 import lando.systems.ld34.resources.ResourceManager;
@@ -20,6 +21,7 @@ public class AreaPyramid extends Area {
     public AreaPyramid(GameScreen gameScreen) {
         super(gameScreen, Type.PYRAMID);
         worldX = 5;
+
         glyphLayout = new GlyphLayout(Assets.font, "Pyramid Area");
         mg = new MotivationGame(
                 LudumDare34.GameScreen.ResourceManager,
@@ -45,5 +47,7 @@ public class AreaPyramid extends Area {
         gameScreen.ResourceManager.render(resourceType, batch);
         mg.render(batch);
         batch.setColor(1f, 1f, 1f, 1f);
+
+        gameScreen.Pyramid.render(batch);
     }
 }

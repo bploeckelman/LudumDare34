@@ -13,6 +13,7 @@ import lando.systems.ld34.uielements.ManagementButton;
 import lando.systems.ld34.uielements.PyramidButton;
 import lando.systems.ld34.utils.Assets;
 import lando.systems.ld34.world.*;
+import lando.systems.ld34.world.pyramid.Pyramid;
 
 /**
  * Brian Ploeckelman created on 12/9/2015.
@@ -29,9 +30,17 @@ public class GameScreen extends AbstractScreen {
     public Area currentArea;
     Background background;
 
+    public Pyramid Pyramid;
+
     public GameScreen(LudumDare34 game) {
         super(game);
         LudumDare34.GameScreen = this;
+
+        float w = uiCamera.viewportWidth / 2f;
+        float h = uiCamera.viewportHeight - uiCamera.viewportHeight / 6f;
+        float x = uiCamera.viewportWidth / 2f - w / 2f;
+        float y = uiCamera.viewportHeight / 2f - h / 2f;
+        Pyramid = new Pyramid(new Rectangle(x, y, w, h));
 
         batch = Assets.batch;
 
@@ -109,6 +118,7 @@ public class GameScreen extends AbstractScreen {
         super.update(delta);
         layout.update();
         ResourceManager.update(delta);
+        Pyramid.update(delta);
         currentArea.update(delta);
     }
 
