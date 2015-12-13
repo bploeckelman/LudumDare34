@@ -34,7 +34,6 @@ public class ResourceManager {
         for (ResourceInfo resource : resources.values()) {
             resource.update(dt);
         }
-
     }
 
     /**
@@ -98,6 +97,10 @@ public class ResourceManager {
 
     public void addEfficiency(Resources type, float motivationAmount){
         resources.get(type).addEfficiency(motivationAmount);
+    }
+
+    public ResourceInfo getResourceInfo(Resources type) {
+        return resources.get(type);
     }
 
     public void render(Resources type, SpriteBatch batch){
