@@ -39,23 +39,30 @@ public class GameScreen extends AbstractScreen {
         areaMap.put(Area.Type.FIELD, new AreaField(this));
         areaMap.put(Area.Type.WOODS, new AreaWoods(this));
 
-        TransitionToArea(Area.Type.MGMT);
+        TransitionToArea(AreaButton.SelectedButton.AreaLocation);
     }
 
     public void TransitionToArea(Area.Type area) {
-        currentArea = areaMap.get(Area.Type.MGMT);
+        System.out.println(area.toString());
+
+        currentArea = areaMap.get(area);
 
         // fancy transition code- tween, twerk or wtf ever
-        System.out.println(area.toString());
+
     }
 
     private void SetupNavigation(NavigationLayout navLayout) {
-        navLayout.add(new AreaButton("Management", Area.Type.MGMT));
+        AreaButton managementButton = new AreaButton("Management", Area.Type.MGMT);
+        AreaButton.SelectedButton = managementButton;
+
+        navLayout.add(managementButton);
         navLayout.add(new AreaButton("Quarry", Area.Type.QUARRY));
         navLayout.add(new AreaButton("Field", Area.Type.FIELD));
         navLayout.add(new AreaButton("Woods", Area.Type.WOODS));
 
-        navLayout.layout(new Rectangle(0, 0, 200, uiCamera.viewportHeight));
+        float height = uiCamera.viewportHeight;
+        float third = height / 3;
+        navLayout.layout(new Rectangle(0, third, 75, height - third));
 
         //navLayout.add(new AreaButton("Pyramid", Area.Type.PYRAMID));
 

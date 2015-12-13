@@ -34,11 +34,12 @@ public class NavigationLayout {
 
         float space = (bounds.height - height) / (NavButtons.size() + 1);
 
-        float y = space;
+        float y = bounds.y + bounds.height;
         for (NavigationButton button : NavButtons) {
+            y -= (button.Bounds.height + space);
+
             button.Bounds.y = y;
             button.Bounds.x = bounds.x + (bounds.width - button.Bounds.width)/2;
-            y += button.Bounds.height + space;
         }
     }
 
@@ -55,13 +56,13 @@ public class NavigationLayout {
 
     public void update() {
         Vector3 mousePos = _screen.getMouseScreenPos();
-        if (Gdx.input.justTouched()) {
-            for (NavigationButton button : NavButtons) {
-                if (button.Bounds.contains(mousePos.x, mousePos.y)) {
-                   button.click();
-                    break;
-                }
-            }
+        // mouse y is top down, render is down up - reverse the y y? because. fucker.
+        mousePos.y = _screen.uiCamera.viewportHeight - mousePos.y;
+
+        boolean clicked = Gdx.input.justTouched();
+
+        for (NavigationButton button : NavButtons) {
+            button.update(mousePos, clicked);
         }
     }
 }
