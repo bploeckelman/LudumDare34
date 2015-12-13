@@ -30,13 +30,13 @@ public class GameScreen extends AbstractScreen {
     public Area currentArea;
     Background background;
 
-    public HUDNotificationManager hudNotificationManager;
+    public HUDManager hudManager;
 
     public Pyramid Pyramid;
 
     public GameScreen(LudumDare34 game) {
         super(game);
-        hudNotificationManager = new HUDNotificationManager();
+        hudManager = new HUDManager();
         LudumDare34.GameScreen = this;
 
         float w = uiCamera.viewportWidth / 2f;
@@ -117,7 +117,7 @@ public class GameScreen extends AbstractScreen {
     }
 
     public void addNotification(String msg){
-        hudNotificationManager.addNotification(msg);
+        hudManager.addNotification(msg);
     }
 
     @Override
@@ -127,7 +127,7 @@ public class GameScreen extends AbstractScreen {
         ResourceManager.update(delta);
         Pyramid.update(delta);
         currentArea.update(delta);
-        hudNotificationManager.update(delta);
+        hudManager.update(delta);
     }
 
     @Override
@@ -139,7 +139,7 @@ public class GameScreen extends AbstractScreen {
         background.render(batch);
         currentArea.render(batch);
 
-        hudNotificationManager.render(batch);
+        hudManager.render(batch);
         batch.end();
 
         layout.render(batch, uiCamera);

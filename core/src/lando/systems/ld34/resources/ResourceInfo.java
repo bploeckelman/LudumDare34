@@ -176,7 +176,8 @@ public class ResourceInfo {
     }
 
     public float getWhipFalloff(){
-        return Utils.clamp((.8f - ((efficiency - minEfficiency) / (maxEfficiency - minEfficiency))) * .2f, 0, 1);
+        float val = (1.2f - ((efficiency - minEfficiency) / (maxEfficiency - minEfficiency))) * .2f;
+        return Utils.clamp(val, 0, 1);
     }
 
 

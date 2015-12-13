@@ -8,11 +8,11 @@ import lando.systems.ld34.uielements.NotificationWindow;
 /**
  * Created by dsgraham on 12/13/15.
  */
-public class HUDNotificationManager {
+public class HUDManager {
 
     Array<NotificationWindow> notifications;
 
-    public HUDNotificationManager(){
+    public HUDManager(){
         notifications = new Array<NotificationWindow>();
 
     }
