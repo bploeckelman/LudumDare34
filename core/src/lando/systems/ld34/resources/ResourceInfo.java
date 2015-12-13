@@ -128,12 +128,12 @@ public class ResourceInfo {
         return amount;
     }
 
-    public int woodToUpdate(){
+    public int woodToUpgade(){
         return (level * (level+1))/2*10;
     }
 
-    public boolean updateLevel(){
-        int wood = woodToUpdate();
+    public boolean upgradeLevel(){
+        int wood = woodToUpgade();
         if (LudumDare34.GameScreen.ResourceManager.removeResource(ResourceManager.Resources.WOOD, wood)){
             level++;
             maxSlaves = level * 5;

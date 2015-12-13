@@ -1,7 +1,6 @@
 package lando.systems.ld34.resources;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ObjectMap;
 
 
@@ -105,5 +104,13 @@ public class ResourceManager {
 
     public void render(Resources type, SpriteBatch batch){
         resources.get(type).render(batch);
+    }
+
+    public boolean canUpgrade(Resources type){
+        return resources.get(Resources.WOOD).amount > resources.get(type).woodToUpgade();
+    }
+
+    public void upgradeResource(Resources type){
+        resources.get(type).upgradeLevel();
     }
 }
