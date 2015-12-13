@@ -68,7 +68,7 @@ public class GameScreen extends AbstractScreen {
 
     }
 
-    public void ShowManagementScreen(ManageScreen screen) {
+    public void ShowManagementScreen(Manage screen) {
         // TODO: call me from NavigationLayout and then do stuff
     }
 
