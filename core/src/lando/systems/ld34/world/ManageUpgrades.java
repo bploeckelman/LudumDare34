@@ -3,7 +3,6 @@ package lando.systems.ld34.world;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -19,7 +18,6 @@ import lando.systems.ld34.utils.Assets;
 public class ManageUpgrades extends Manage {
 
     ResourceManager resources;
-    GlyphLayout     glyphLayout;
     ProgressBar     availableWoodBar;
     ProgressBar     availableStoneBar;
     ProgressBar     availableStoneSlavesBar;
@@ -61,7 +59,6 @@ public class ManageUpgrades extends Manage {
     public ManageUpgrades(Rectangle bounds) {
         super(Type.UPGRADES, bounds);
         resources = LudumDare34.GameScreen.ResourceManager;
-        glyphLayout = new GlyphLayout();
 
         availableWoodBar           = new ProgressBar(Assets.nice2NinePatch);
         availableStoneBar          = new ProgressBar(Assets.nice2NinePatch);
@@ -176,40 +173,18 @@ public class ManageUpgrades extends Manage {
 
     @Override
     public void render(SpriteBatch batch) {
-        float x,y,n;
-
         Assets.fontSmall.setColor(Color.WHITE);
 
-        glyphLayout.setText(Assets.font, "Upgrade Management");
-        x = bounds.x + bounds.width / 2f - glyphLayout.width / 2f;
-        y = bounds.y + bounds.height - glyphLayout.height - 10f;
-        Assets.batch.setColor(160f / 255f, 82f / 255f, 45f / 255f, 1f);
-        final float marginx = 30f;
-        final float marginy = 15f;
-        Assets.nice2NinePatch.draw(batch, x - marginx, y - marginy - glyphLayout.height, glyphLayout.width + 2f * marginx, glyphLayout.height + 2f * marginy);
-        Assets.batch.setColor(1f, 1f, 1f, 1f);
-        Assets.font.setColor(Color.WHITE);
-        Assets.font.draw(batch, "Upgrade Management", x, y);
+        drawHeading(batch, "Resource Upgrade Management");
+        drawAvailableRow(batch, "Available Wood:", availableWoodBar, availableWood, availableWoodMax);
 
-        glyphLayout.setText(Assets.font, "Available Wood:");
-        x = MathUtils.floor(availableWoodBar.bounds.x - glyphLayout.width - widgetPadding);
-        y = availableWoodBar.bounds.y + availableWoodBar.bounds.height / 2f + glyphLayout.height / 2f;
-        availableWoodBar.render(batch);
-        n = availableWood / (float) availableWoodMax;
-        Assets.font.setColor(1f - n, n, 0f, 1f);
-        Assets.font.draw(batch, "Available Wood:", x, y);
-        String woodText = availableWood + "/" + availableWoodMax;
-        glyphLayout.setText(Assets.fontSmall, woodText);
-        Assets.fontSmall.draw(batch, woodText,
-                              availableWoodBar.bounds.x + availableWoodBar.bounds.width / 2f - glyphLayout.width / 2f,
-                              availableWoodBar.bounds.y + availableWoodBar.bounds.height / 2f + glyphLayout.height / 2f);
-
+        // too lazy to extract a method for this single oddball row
         glyphLayout.setText(Assets.font, "Building (level " + buildingResourceLevel + "):");
-        x = MathUtils.floor(availableBuildingSlavesBar.bounds.x - glyphLayout.width - widgetPadding);
-        y = availableBuildingSlavesBar.bounds.y + availableBuildingSlavesBar.bounds.height / 2f + glyphLayout.height / 2f;
+        final float x = MathUtils.floor(availableBuildingSlavesBar.bounds.x - glyphLayout.width - widgetPadding);
+        final float y = availableBuildingSlavesBar.bounds.y + availableBuildingSlavesBar.bounds.height / 2f + glyphLayout.height / 2f;
         availableBuildingSlavesBar.render(batch);
         batch.draw(buildUpgradeTex, buildingUpgradeButton.x, buildingUpgradeButton.y, buttonSize, buttonSize);
-//        n = availableBuildSlaves / (float) availableBuildSlavesMax;
+//        final float n = availableBuildSlaves / (float) availableBuildSlavesMax;
 //        Assets.font.setColor(1f - n, n, 0f, 1f);
         Assets.font.setColor(Color.WHITE);
         Assets.font.draw(batch, "Building (level " + buildingResourceLevel + "):", x, y);
@@ -219,71 +194,13 @@ public class ManageUpgrades extends Manage {
                          availableBuildingSlavesBar.bounds.x + availableBuildingSlavesBar.bounds.width / 2f - glyphLayout.width / 2f,
                          availableBuildingSlavesBar.bounds.y + availableBuildingSlavesBar.bounds.height / 2f + glyphLayout.height / 2f);
 
-        glyphLayout.setText(Assets.font, "Mining (level " + stoneResourceLevel + "):");
-        x = MathUtils.floor(availableStoneBar.bounds.x - glyphLayout.width - widgetPadding);
-        y = availableStoneBar.bounds.y + availableStoneBar.bounds.height / 2f + glyphLayout.height / 2f;
-        availableStoneBar.render(batch);
-        availableStoneSlavesBar.render(batch);
-        batch.draw(stoneUpgradeTex, stoneUpgradeButton.x, stoneUpgradeButton.y, buttonSize, buttonSize);
-//        n = availableStone / (float) availableStoneMax;
-//        Assets.font.setColor(1f - n, n, 0f, 1f);
-        Assets.font.setColor(Color.WHITE);
-        Assets.font.draw(batch, "Mining (level " + stoneResourceLevel + "):", x, y);
-        String stoneText = availableStone + "/" + availableStoneMax;
-        glyphLayout.setText(Assets.fontSmall, stoneText);
-        Assets.fontSmall.draw(batch, stoneText,
-                         availableStoneBar.bounds.x + availableStoneBar.bounds.width / 2f - glyphLayout.width / 2f,
-                         availableStoneBar.bounds.y + availableStoneBar.bounds.height / 2f + glyphLayout.height / 2f);
-        String stoneSlavesText = availableStoneSlaves + "/" + availableStoneSlavesMax;
-        glyphLayout.setText(Assets.fontSmall, stoneSlavesText);
-        Assets.fontSmall.draw(batch, stoneSlavesText,
-                              availableStoneSlavesBar.bounds.x + availableStoneSlavesBar.bounds.width / 2f - glyphLayout.width / 2f,
-                              availableStoneSlavesBar.bounds.y + availableStoneSlavesBar.bounds.height / 2f + glyphLayout.height / 2f);
-
-        glyphLayout.setText(Assets.font, "Farming (level " + foodResourceLevel + "):");
-        x = MathUtils.floor(availableFoodBar.bounds.x - glyphLayout.width - widgetPadding);
-        y = availableFoodBar.bounds.y + availableFoodBar.bounds.height / 2f + glyphLayout.height / 2f;
-        availableFoodBar.render(batch);
-        availableFoodSlavesBar.render(batch);
-        batch.draw(foodUpgradeTex, foodUpgradeButton.x, foodUpgradeButton.y, buttonSize, buttonSize);
-//        n = availableFood / (float) availableFoodMax;
-//        Assets.font.setColor(1f - n, n, 0f, 1f);
-        Assets.font.setColor(Color.WHITE);
-        Assets.font.draw(batch, "Farming (level " + foodResourceLevel + "):", x, y);
-        String foodText = availableFood + "/" + availableFoodMax;
-        glyphLayout.setText(Assets.fontSmall, foodText);
-        Assets.fontSmall.draw(batch, foodText,
-                         availableFoodBar.bounds.x + availableFoodBar.bounds.width / 2f - glyphLayout.width / 2f,
-                         availableFoodBar.bounds.y + availableFoodBar.bounds.height / 2f + glyphLayout.height / 2f);
-        String foodSlavesText = availableFoodSlaves + "/" + availableFoodSlavesMax;
-        glyphLayout.setText(Assets.fontSmall, foodSlavesText);
-        Assets.fontSmall.draw(batch, foodSlavesText,
-                              availableFoodSlavesBar.bounds.x + availableFoodSlavesBar.bounds.width / 2f - glyphLayout.width / 2f,
-                              availableFoodSlavesBar.bounds.y + availableFoodSlavesBar.bounds.height / 2f + glyphLayout.height / 2f);
-
-        glyphLayout.setText(Assets.font, "Logging (level " + woodResourceLevel + "):");
-        x = MathUtils.floor(availableForestBar.bounds.x - glyphLayout.width - widgetPadding);
-        y = availableForestBar.bounds.y + availableForestBar.bounds.height / 2f + glyphLayout.height / 2f;
-        availableForestBar.render(batch);
-        availableForestSlavesBar.render(batch);
-        batch.draw(forestUpgradeTex, forestUpgradeButton.x, forestUpgradeButton.y, buttonSize, buttonSize);
-//        n = availableWood / (float) availableWoodMax;
-//        Assets.font.setColor(1f - n, n, 0f, 1f);
-        Assets.font.setColor(Color.WHITE);
-        Assets.font.draw(batch, "Logging (level " + woodResourceLevel + "):", x, y);
-        String forestText = availableWood + "/" + availableWoodMax;
-        glyphLayout.setText(Assets.fontSmall, forestText);
-        Assets.fontSmall.draw(batch, forestText,
-                         availableForestBar.bounds.x + availableForestBar.bounds.width / 2f - glyphLayout.width / 2f,
-                         availableForestBar.bounds.y + availableForestBar.bounds.height / 2f + glyphLayout.height / 2f);
-        String forestSlavesText = availableForestSlaves + "/" + availableForestSlavesMax;
-        glyphLayout.setText(Assets.fontSmall, forestSlavesText);
-        Assets.fontSmall.draw(batch, forestSlavesText,
-                              availableForestSlavesBar.bounds.x + availableForestSlavesBar.bounds.width / 2f - glyphLayout.width / 2f,
-                              availableForestSlavesBar.bounds.y + availableForestSlavesBar.bounds.height / 2f + glyphLayout.height / 2f);
+        drawUpgrade2ColRow(batch, "Mining",  stoneResourceLevel, availableStoneBar,  availableStoneSlavesBar,  stoneUpgradeTex,  stoneUpgradeButton,  availableStone, availableStoneMax, availableStoneSlaves,  availableStoneSlavesMax);
+        drawUpgrade2ColRow(batch, "Farming", foodResourceLevel,  availableFoodBar,   availableFoodSlavesBar,   foodUpgradeTex,   foodUpgradeButton,   availableFood,  availableFoodMax,  availableFoodSlaves,   availableFoodSlavesMax);
+        drawUpgrade2ColRow(batch, "Logging", woodResourceLevel,  availableForestBar, availableForestSlavesBar, forestUpgradeTex, forestUpgradeButton, availableWood,  availableWoodMax,  availableForestSlaves, availableForestSlavesMax);
 
         batch.setColor(Color.WHITE);
         Assets.font.setColor(Color.WHITE);
         Assets.fontSmall.setColor(Color.WHITE);
     }
+
 }
