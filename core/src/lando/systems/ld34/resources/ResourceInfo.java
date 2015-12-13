@@ -14,9 +14,13 @@ import lando.systems.ld34.utils.Assets;
  */
 public class ResourceInfo {
 
+    private static float effDecay = .01f;
+    private static float buildDT = .1f;
+
     public float amount;
     public float efficiency;
     public int maxAmount;
+    public int lastMaxAmount;
     public float maxEfficiency;
     public int slaves;
     public int maxSlaves;
@@ -62,6 +66,7 @@ public class ResourceInfo {
                 typeLabel = "Blocks";
                 amount = 1;
                 maxAmount = 1;
+                lastMaxAmount = 0;
                 break;
             case GOLD:
                 slaves = 0;
@@ -69,22 +74,40 @@ public class ResourceInfo {
                 efficiency = 0;
                 break;
             case SLAVES:
-                maxSlaves = 100000;
+                maxSlaves = 10000000;
                 slaves = 10;
                 break;
         }
     }
 
     public void update(float dt){
-        efficiency -= .01*dt;
-        if (efficiency < 0) efficiency = 0;
-        amount += (slaves * efficiency * dt);
-        if (amount > maxAmount) amount = maxAmount;
-        if (type == ResourceManager.Resources.BUILD && amount == maxAmount){
-            //TODO: Add Pun to screen here
-            int height = LudumDare34.GameScreen.ResourceManager.getPyramidHeight() + 1;
-            maxAmount = (height * (height+1))/2;
+
+        switch (type){
+            case SLAVES:
+                break;
+            case BUILD:
+                efficiency -= effDecay*dt;
+                if (efficiency < 0) efficiency = 0;
+                float stones = (slaves * efficiency * dt);
+                if (LudumDare34.GameScreen.ResourceManager.removeResource(ResourceManager.Resources.STONE, stones)) {
+                    amount += stones * buildDT;
+                }
+                if (amount > maxAmount) amount = maxAmount;
+                if (amount == maxAmount){
+                    //TODO: Add Pun to screen here
+                    int height = LudumDare34.GameScreen.ResourceManager.getPyramidHeight();
+                    lastMaxAmount = (height * (height+1))/2;
+                    height++;
+                    maxAmount = (height * (height+1))/2;
+                }
+                break;
+            default:
+                efficiency -= effDecay*dt;
+                if (efficiency < 0) efficiency = 0;
+                amount += (slaves * efficiency * dt);
+                if (amount > maxAmount) amount = maxAmount;
         }
+
     }
 
     /**
@@ -118,7 +141,7 @@ public class ResourceInfo {
         return amount;
     }
 
-    public boolean removeAmount(int amount){
+    public boolean removeAmount(float amount){
         if (amount < 0) return false;
         if (amount > this.amount) return false;
         this.amount -= amount;
@@ -136,7 +159,7 @@ public class ResourceInfo {
     public void render(SpriteBatch batch){
         GlyphLayout layout = new GlyphLayout(Assets.font, typeLabel);
         Assets.font.draw(batch, typeLabel, amountPB.bounds.x - (layout.width + 1), amountPB.bounds.y + (amountPB.bounds.height / 2) + layout.height / 2);
-        amountPB.fillPercent.setValue(amount / maxAmount);
+        amountPB.fillPercent.setValue((amount-lastMaxAmount) / (maxAmount-lastMaxAmount));
         amountPB.render(batch);
         String amountText = (int)amount+"/"+maxAmount;
         layout.setText(Assets.font, amountText);

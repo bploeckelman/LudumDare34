@@ -39,7 +39,7 @@ public class ResourceManager {
      * @param amount amount to remove
      * @return whether it was able to remove the resources
      */
-    public boolean removeResource(Resources type, int amount){
+    public boolean removeResource(Resources type, float amount){
         return resources.get(type).removeAmount(amount);
     }
 
