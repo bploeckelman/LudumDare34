@@ -59,11 +59,11 @@ public class ManageSlaves extends Manage {
         super(Type.SLAVES, bounds);
         resources = LudumDare34.GameScreen.ResourceManager;
         glyphLayout = new GlyphLayout();
-        availableSlavesBar = new ProgressBar(Assets.niceNinePatch);
-        buildingSlavesBar  = new ProgressBar(Assets.niceNinePatch);
-        quarryingSlavesBar = new ProgressBar(Assets.niceNinePatch);
-        farmingSlavesBar   = new ProgressBar(Assets.niceNinePatch);
-        choppingSlavesBar  = new ProgressBar(Assets.niceNinePatch);
+        availableSlavesBar = new ProgressBar(Assets.nice2NinePatch);
+        buildingSlavesBar  = new ProgressBar(Assets.nice2NinePatch);
+        quarryingSlavesBar = new ProgressBar(Assets.nice2NinePatch);
+        farmingSlavesBar   = new ProgressBar(Assets.nice2NinePatch);
+        choppingSlavesBar  = new ProgressBar(Assets.nice2NinePatch);
         final Color boundsColor = new Color(160f / 255f, 82f / 255f, 45f / 255f, 1f);
         availableSlavesBar .boundsColor = boundsColor;
         buildingSlavesBar  .boundsColor = boundsColor;
@@ -78,7 +78,7 @@ public class ManageSlaves extends Manage {
         widgetPadding = 10f;
         buttonSize    = 20f;
         final float barTop = bounds.y + bounds.height - 100f;
-        final float leftMargin = bounds.x + bounds.width - barWidth - 2f * (buttonSize + widgetPadding) - 30f;
+        final float leftMargin = bounds.x + bounds.width - barWidth - 2f * (buttonSize + widgetPadding) - 40f;
         availableSlavesBar.bounds.set(leftMargin,
                                       barTop - 0f * (barHeight + lineSpacing),
                                       barWidth + 2f * (buttonSize + widgetPadding),
@@ -178,7 +178,12 @@ public class ManageSlaves extends Manage {
         glyphLayout.setText(Assets.font, "Slave Job Management");
         x = bounds.x + bounds.width / 2f - glyphLayout.width / 2f;
         y = bounds.y + bounds.height - glyphLayout.height;
-        Assets.font.setColor(Color.RED);
+        Assets.batch.setColor(160f / 255f, 82f / 255f, 45f / 255f, 1f);
+        final float marginx = 30f;
+        final float marginy = 15f;
+        Assets.nice2NinePatch.draw(batch, x - marginx, y - marginy - glyphLayout.height, glyphLayout.width + 2f * marginx, glyphLayout.height + 2f * marginy);
+        Assets.batch.setColor(1f, 1f, 1f, 1f);
+        Assets.font.setColor(Color.WHITE);
         Assets.font.draw(batch, "Slave Job Management", x, y);
 
         glyphLayout.setText(Assets.font, "Available Slaves:");

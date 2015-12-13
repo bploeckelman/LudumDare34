@@ -32,15 +32,15 @@ public class ProgressBar {
     }
 
     public void render(SpriteBatch batch) {
+        batch.setColor(boundsColor);
+        ninePatch.draw(batch, bounds.x, bounds.y, bounds.width, bounds.height);
+
         batch.setColor(fillColor);
         batch.draw(Assets.whiteTexture,
                    bounds.x + ninePatch.getLeftWidth(),
                    bounds.y + ninePatch.getBottomHeight(),
                    (bounds.width - ninePatch.getLeftWidth() - ninePatch.getRightWidth()) * fillPercent.floatValue(),
                    bounds.height - ninePatch.getTopHeight() - ninePatch.getBottomHeight());
-
-        batch.setColor(boundsColor);
-        ninePatch.draw(batch, bounds.x, bounds.y, bounds.width, bounds.height);
 
         batch.setColor(Color.WHITE);
     }

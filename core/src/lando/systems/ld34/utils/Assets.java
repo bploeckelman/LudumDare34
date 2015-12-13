@@ -32,6 +32,7 @@ public class Assets {
     public static Texture whiteTexture;
     public static Texture boxTexture;
     public static Texture niceBoxTexture;
+    public static Texture niceBox2Texture;
     public static Texture background;
 
     public static Texture managementIcon;
@@ -53,6 +54,7 @@ public class Assets {
 
     public static NinePatch boxNinePatch;
     public static NinePatch niceNinePatch;
+    public static NinePatch nice2NinePatch;
 
 
     public static void load() {
@@ -74,6 +76,7 @@ public class Assets {
         whiteTexture = new Texture("pixel.png");
         boxTexture = new Texture("box.png");
         niceBoxTexture = new Texture("ninepatch.png");
+        niceBox2Texture = new Texture("ninepatch-bg.png");
 
         managementIcon = new Texture("management.png");
         quarryIcon = new Texture("quarry.png");
@@ -91,6 +94,7 @@ public class Assets {
 
         boxNinePatch = new NinePatch(boxTexture, 2, 2, 2, 2);
         niceNinePatch = new NinePatch(niceBoxTexture, 6, 6, 6, 6);
+        nice2NinePatch = new NinePatch(niceBox2Texture, 6, 6, 6, 6);
 
         upIconOn = new Texture("up_orange.png");
         upIconOff = new Texture("up_white.png");
@@ -105,6 +109,7 @@ public class Assets {
         whiteTexture.dispose();
         boxTexture.dispose();
         niceBoxTexture.dispose();
+        niceBox2Texture.dispose();
 
         managementIcon.dispose();
         quarryIcon.dispose();
