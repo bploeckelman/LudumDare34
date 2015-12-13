@@ -51,17 +51,19 @@ public abstract class NavigationButton {
             batch.setColor(Color.BLACK);
             batch.draw(Image, Bounds.x, Bounds.y, Bounds.width, Bounds.height);
         } else {
-            batch.setColor(highlight ? Color.GOLD : Color.YELLOW);
-            batch.draw(Assets.whiteTexture, Bounds.x, Bounds.y, Bounds.width, Bounds.height);
+            batch.setColor(highlight ? Color.YELLOW : Color.BLACK);
+            //batch.draw(Assets.whiteTexture, Bounds.x, Bounds.y, Bounds.width, Bounds.height);
+            Assets.nice2NinePatch.draw(batch, Bounds.x, Bounds.y, Bounds.width, Bounds.height);
 
-            Assets.font.setColor(Color.BLACK);
+            Assets.font.setColor(highlight ? Color.YELLOW : Color.WHITE);
+
             Assets.font.draw(batch,
                     Text,
                     Bounds.x + (Bounds.width - _glyphLayout.width)/2,
                     Bounds.y + (Bounds.height + _glyphLayout.height)/2);
         }
 
-        if (Selected) {
+        if (Selected && (Image != null)) {
            renderSelected(batch);
         }
 

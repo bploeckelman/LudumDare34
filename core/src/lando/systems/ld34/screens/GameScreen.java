@@ -118,23 +118,26 @@ public class GameScreen extends AbstractScreen {
 
         // layout added buttons first before adding pyramid button - hacky but fuck it
         float height = uiCamera.viewportHeight;
-        navLayout.layoutAreaButtons(new Rectangle(0, background.SandHeight, 75, height - background.SandHeight));
 
-        Rectangle pyramidBounds = new Rectangle(uiCamera.viewportWidth - 75,
-                background.SandHeight, 75, height - background.SandHeight);
+        float yOffset = background.SandHeight;
+        float boundsHeight = height - background.SandHeight - 40;
+
+        navLayout.layoutAreaButtons(new Rectangle(0, yOffset, 50, boundsHeight));
+
+        Rectangle pyramidBounds = new Rectangle(uiCamera.viewportWidth - 50, yOffset, 50, boundsHeight);
         navLayout.add(new PyramidButton(pyramidBounds));
 
-        ManagementButton skillsManagementButton = new ManagementButton("Workers", Assets.workersIcon, Manage.Type.WORKERS);
+        ManagementButton skillsManagementButton = new ManagementButton("Workers", Manage.Type.WORKERS);
         ManagementButton.SelectedButton = skillsManagementButton;
         ShowManagementScreen(skillsManagementButton.Screen);
 
         navLayout.add(skillsManagementButton);
-        navLayout.add(new ManagementButton("Slaves", Assets.slavesIcon, Manage.Type.SLAVES));
-        navLayout.add(new ManagementButton("Pharoah", Assets.pharoahIcon, Manage.Type.PHAROAH));
-        navLayout.add(new ManagementButton("Upgrades", Assets.upgradesIcon, Manage.Type.UPGRADES));
-        navLayout.add(new ManagementButton("Resources", Assets.resourcesIcon, Manage.Type.RESOURCES));
+        navLayout.add(new ManagementButton("Slaves", Manage.Type.SLAVES));
+        navLayout.add(new ManagementButton("Pharoah", Manage.Type.PHAROAH));
+        navLayout.add(new ManagementButton("Upgrades", Manage.Type.UPGRADES));
+        navLayout.add(new ManagementButton("Resources", Manage.Type.RESOURCES));
 
-        navLayout.layoutManagement(new Rectangle(0, 0, uiCamera.viewportWidth, background.SandHeight));
+        navLayout.layoutManagement(new Rectangle(0, (uiCamera.viewportHeight - 40), uiCamera.viewportWidth, 40));
     }
 
     public void addNotification(String msg){

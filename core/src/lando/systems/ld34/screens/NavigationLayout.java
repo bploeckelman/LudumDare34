@@ -9,6 +9,7 @@ import lando.systems.ld34.LudumDare34;
 import lando.systems.ld34.uielements.AreaButton;
 import lando.systems.ld34.uielements.ManagementButton;
 import lando.systems.ld34.uielements.NavigationButton;
+import lando.systems.ld34.utils.Assets;
 import lando.systems.ld34.world.Area;
 
 import java.util.ArrayList;
@@ -18,9 +19,13 @@ import java.util.ArrayList;
  */
 public class NavigationLayout {
 
+    public static Area.Type CurrentArea;
+
     private final GameScreen _screen;
     private ArrayList<AreaButton> _areaButtons = new ArrayList<AreaButton>();
     private ArrayList<ManagementButton> _skillsButtons = new ArrayList<ManagementButton>();
+
+    private Rectangle _managementBackground;
 
     public NavigationLayout(GameScreen screen) {
         _screen = screen;
@@ -56,15 +61,19 @@ public class NavigationLayout {
     }
 
     public void layoutManagement(Rectangle bounds) {
-        float width = 0f;
+        int space = 15;
+        float width = space;
 
         for (NavigationButton button : _skillsButtons) {
-            width += button.Bounds.width;
+            width += button.Bounds.width + space;
         }
 
-        int space = (int)(bounds.width - width) / (_skillsButtons.size() + 1);
+        float x = (int)(bounds.x + (bounds.width - width)/2);
 
-        float x = bounds.x + space;
+        _managementBackground = new Rectangle(x, bounds.y, width, bounds.height);
+
+        x += space;
+
         for (NavigationButton button : _skillsButtons) {
             button.Bounds.y = (int)(bounds.y + (bounds.height - button.Bounds.height)/2);
             button.Bounds.x = (int)x;
@@ -84,6 +93,9 @@ public class NavigationLayout {
         }
 
         if (isManagementScreen()) {
+            Assets.nice2NinePatch.draw(batch, _managementBackground.x,
+                    _managementBackground.y, _managementBackground.width, _managementBackground.y);
+
             for (NavigationButton button : _skillsButtons) {
                 button.render(batch);
             }
@@ -93,7 +105,7 @@ public class NavigationLayout {
     }
 
     private boolean isManagementScreen() {
-        return LudumDare34.GameScreen.currentArea.type == Area.Type.MGMT;
+        return CurrentArea == Area.Type.MGMT;
     }
 
     public void update() {

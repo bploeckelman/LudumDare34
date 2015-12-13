@@ -14,10 +14,13 @@ public class ManagementButton extends NavigationButton {
 
     public Manage.Type Screen;
 
-    public ManagementButton(String text, Texture image, Manage.Type screen) {
-        super(text,  image);
+    public ManagementButton(String text, Manage.Type screen) {
+        super(text, null);
 
         Screen = screen;
+        Bounds.width = 100;
+        Bounds.height = 25;
+
     }
     @Override
     public void update(Vector3 mousePos, boolean clicked) {

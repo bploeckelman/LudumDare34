@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import lando.systems.ld34.LudumDare34;
+import lando.systems.ld34.screens.NavigationLayout;
 import lando.systems.ld34.world.Area;
 
 /**
@@ -30,5 +31,6 @@ public class AreaButton extends NavigationButton {
     public void click() {
         SelectedButton = this;
         LudumDare34.GameScreen.TransitionToArea(AreaLocation);
+        NavigationLayout.CurrentArea = AreaLocation;
     }
 }
