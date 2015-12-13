@@ -81,6 +81,7 @@ public class ResourceInfo {
         amount += (slaves * efficiency * dt);
         if (amount > maxAmount) amount = maxAmount;
         if (type == ResourceManager.Resources.BUILD && amount == maxAmount){
+            //TODO: Add Pun to screen here
             int height = LudumDare34.GameScreen.ResourceManager.getPyramidHeight() + 1;
             maxAmount = (height * (height+1))/2;
         }
