@@ -23,9 +23,7 @@ public class AreaQuarry extends Area {
         glyphLayout = new GlyphLayout(Assets.font, "Quarry Area");
         mg = new MotivationGame(
                 LudumDare34.GameScreen.ResourceManager,
-                ResourceManager.Resources.STONE,
-                0.1f,
-                0.1f);
+                ResourceManager.Resources.STONE);
     }
 
     @Override
@@ -40,9 +38,9 @@ public class AreaQuarry extends Area {
 
         Assets.font.setColor(0f, 0f, 0f, 1f);
         Assets.font.draw(batch,
-                         "Quarry Area",
-                         gameScreen.camera.viewportWidth  / 2f - glyphLayout.width  / 2f,
-                         gameScreen.camera.viewportHeight / 2f - glyphLayout.height / 2f);
+                "Quarry Area - Amount:" + (int) gameScreen.ResourceManager.getAmount(ResourceManager.Resources.STONE) +" EFF%:" +(int)(100*gameScreen.ResourceManager.getEfficiency(ResourceManager.Resources.STONE)),
+                gameScreen.camera.viewportWidth / 2f - glyphLayout.width / 2f,
+                gameScreen.camera.viewportHeight / 2f - glyphLayout.height / 2f);
         Assets.font.setColor(1f, 1f, 1f, 1f);
 
         batch.setColor(1f, 1f, 1f, 1f);

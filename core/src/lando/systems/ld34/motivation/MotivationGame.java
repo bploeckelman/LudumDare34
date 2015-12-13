@@ -57,13 +57,12 @@ public class MotivationGame {
     /**
      * todo: take in the game manager so we can report motivations
      * @param resourceType String
-     * @param targetRange float
-     * @param targetFalloffRange float
      */
-    public MotivationGame(ResourceManager resourceManager, ResourceManager.Resources resourceType, float targetRange, float targetFalloffRange) {
+    public MotivationGame(ResourceManager resourceManager, ResourceManager.Resources resourceType) {
 
         this.resourceManager = resourceManager;
         this.resourceType = resourceType;
+
 
         // Let's start building the rectangles
         this.bg = new Rectangle(
@@ -103,8 +102,8 @@ public class MotivationGame {
         this.indicatorMinX = this.bar.x;
         this.indicatorRangeWidth = this.bar.width - MotivationGame.INDICATOR_WIDTH;
 
-        this.setTargetRange(targetRange);
-        this.setTargetFalloffRange(targetFalloffRange);
+        this.setTargetRange(resourceManager.getWhipTargetRange(resourceType));
+        this.setTargetFalloffRange(resourceManager.getWhipFalloffRange(resourceType));
 
         this.reset();
         this.start();

@@ -87,11 +87,15 @@ public class ResourceManager {
     }
 
     public float getWhipTargetRange(Resources type){
-        return .1f;
+        return .05f;
     }
 
     public float getWhipFalloffRange(Resources type){
-        return .5f;
+        return .1f;
+    }
+
+    public float getEfficiency(Resources type){
+        return resources.get(type).efficiency;
     }
 
     public void addEfficiency(Resources type, float motivationAmount){
