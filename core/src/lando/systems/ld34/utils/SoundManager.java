@@ -29,6 +29,7 @@ public class SoundManager{
 
     private static HashMap<SoundOptions, Sound> soundMap = new HashMap<SoundOptions, Sound>();
     private static ArrayList<Sound> whipList = new ArrayList<Sound>();
+    private static ArrayList<Sound> screamList = new ArrayList<Sound>();
     private static HashMap<MusicPieces, Sound> musicMap = new HashMap<MusicPieces, Sound>();
 
     public static void load() {
@@ -37,6 +38,13 @@ public class SoundManager{
         whipList.add(Gdx.audio.newSound(Gdx.files.internal("sounds/crack3.mp3")));
         whipList.add(Gdx.audio.newSound(Gdx.files.internal("sounds/crack4.mp3")));
         whipList.add(Gdx.audio.newSound(Gdx.files.internal("sounds/crack5.mp3")));
+        screamList.add(Gdx.audio.newSound(Gdx.files.internal("sounds/scream1.mp3")));
+        screamList.add(Gdx.audio.newSound(Gdx.files.internal("sounds/scream2.mp3")));
+        screamList.add(Gdx.audio.newSound(Gdx.files.internal("sounds/scream3.mp3")));
+        screamList.add(Gdx.audio.newSound(Gdx.files.internal("sounds/scream4.mp3")));
+        screamList.add(Gdx.audio.newSound(Gdx.files.internal("sounds/scream5.mp3")));
+        screamList.add(Gdx.audio.newSound(Gdx.files.internal("sounds/scream6.mp3")));
+        screamList.add(Gdx.audio.newSound(Gdx.files.internal("sounds/scream7.mp3")));
         soundMap.put(SoundOptions.NECK_CRACK, Gdx.audio.newSound(Gdx.files.internal("sounds/neckcrack.mp3")));
     }
 
@@ -52,6 +60,10 @@ public class SoundManager{
             whipSound.dispose();
         }
 
+        for (Sound screamSound : screamList) {
+            screamSound.dispose();
+        }
+
         MusicPieces[] allMusicPieces = MusicPieces.values();
         for (MusicPieces musicPiece : allMusicPieces) {
             musicMap.get(musicPiece).dispose();
@@ -64,8 +76,16 @@ public class SoundManager{
 
 
     public static void playWhip() {
-        int value = _rand.nextInt(whipList.size());
-        whipList.get(value).play();
+        playRandom(whipList);
+    }
+
+    public static void playScream() {
+        playRandom(screamList);
+    }
+
+    private static void playRandom(ArrayList<Sound> soundList) {
+        int value = _rand.nextInt(soundList.size());
+        soundList.get(value).play();
     }
 
     public static void playSound(SoundOptions soundOption) {

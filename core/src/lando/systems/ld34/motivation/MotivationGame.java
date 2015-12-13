@@ -255,6 +255,7 @@ public class MotivationGame {
             int touchY = (Config.height - Gdx.input.getY());
             if (button.contains(touchX, touchY)) {
                 SoundManager.playWhip();
+                SoundManager.playScream();
                 this.reportCurrentMotivationScore();
                 this.reset();
             }
