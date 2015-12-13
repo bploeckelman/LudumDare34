@@ -47,7 +47,7 @@ public class ResourceInfo {
         slaves = 1;
         maxAmount = 100;
         maxEfficiency = 1;
-        maxSlaves = 10;
+        maxSlaves = 5;
         efficiency = 1;
         skilledWorkers = 0;
         level = 1;
@@ -106,7 +106,7 @@ public class ResourceInfo {
                 }
                 break;
             default:
-
+                maxAmount = 50 * (level * level);
                 amount += (slaves * efficiency * dt);
                 if (amount > maxAmount) amount = maxAmount;
         }
@@ -126,6 +126,20 @@ public class ResourceInfo {
         }
         slaves += amount;
         return amount;
+    }
+
+    public int woodToUpdate(){
+        return (level * (level+1))/2*10;
+    }
+
+    public boolean updateLevel(){
+        int wood = woodToUpdate();
+        if (LudumDare34.GameScreen.ResourceManager.removeResource(ResourceManager.Resources.WOOD, wood)){
+            level++;
+            maxSlaves = level * 5;
+            return true;
+        }
+        return false;
     }
 
     public int removeSlaves(int amount){
