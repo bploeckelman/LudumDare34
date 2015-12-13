@@ -45,20 +45,7 @@ public class AreaMgmt extends Area {
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.setColor(Color.RED);
-        Assets.boxNinePatch.draw(batch, bounds.x, bounds.y, bounds.width, bounds.height);
-
         currentManage.render(batch);
-
-//        Assets.font.setColor(0f, 0f, 0f, 1f);
-//        Assets.font.draw(batch,
-//                         "Management Area",
-//                         gameScreen.camera.viewportWidth  / 2f - glyphLayout.width  / 2f,
-//                         gameScreen.camera.viewportHeight / 2f - glyphLayout.height / 2f);
-//
-//        Assets.font.setColor(1f, 1f, 1f, 1f);
-
-        batch.setColor(1f, 1f, 1f, 1f);
     }
 
     public void setCurrentManageType(Manage.Type newType) {

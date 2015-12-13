@@ -59,50 +59,56 @@ public class ManageSlaves extends Manage {
         super(Type.SLAVES, bounds);
         resources = LudumDare34.GameScreen.ResourceManager;
         glyphLayout = new GlyphLayout();
-        availableSlavesBar = new ProgressBar();
-        buildingSlavesBar = new ProgressBar();
-        quarryingSlavesBar = new ProgressBar();
-        farmingSlavesBar = new ProgressBar();
-        choppingSlavesBar = new ProgressBar();
+        availableSlavesBar = new ProgressBar(Assets.niceNinePatch);
+        buildingSlavesBar  = new ProgressBar(Assets.niceNinePatch);
+        quarryingSlavesBar = new ProgressBar(Assets.niceNinePatch);
+        farmingSlavesBar   = new ProgressBar(Assets.niceNinePatch);
+        choppingSlavesBar  = new ProgressBar(Assets.niceNinePatch);
+        final Color boundsColor = new Color(160f / 255f, 82f / 255f, 45f / 255f, 1f);
+        availableSlavesBar .boundsColor = boundsColor;
+        buildingSlavesBar  .boundsColor = boundsColor;
+        quarryingSlavesBar .boundsColor = boundsColor;
+        farmingSlavesBar   .boundsColor = boundsColor;
+        choppingSlavesBar  .boundsColor = boundsColor;
 
-        barWidth = bounds.width / 4f;
-        barHeight = 20f;
-        lineHeight = 20f;
-        lineSpacing = 10f;
+        barWidth      = bounds.width / 4f;
+        barHeight     = 20f;
+        lineHeight    = 20f;
+        lineSpacing   = 10f;
         widgetPadding = 10f;
-        buttonSize = 20f;
+        buttonSize    = 20f;
         final float barTop = bounds.y + bounds.height - 100f;
         final float leftMargin = bounds.x + bounds.width - barWidth - 2f * (buttonSize + widgetPadding) - 30f;
         availableSlavesBar.bounds.set(leftMargin,
                                       barTop - 0f * (barHeight + lineSpacing),
                                       barWidth + 2f * (buttonSize + widgetPadding),
                                       barHeight);
-        buildingSlavesBar.bounds.set(leftMargin, barTop - 1f * (barHeight + lineSpacing), barWidth, barHeight);
-        quarryingSlavesBar.bounds.set(leftMargin, barTop - 2f * (barHeight + lineSpacing), barWidth, barHeight);
-        farmingSlavesBar.bounds.set(leftMargin, barTop - 3f * (barHeight + lineSpacing), barWidth, barHeight);
+        buildingSlavesBar  .bounds.set(leftMargin, barTop - 1f * (barHeight + lineSpacing), barWidth, barHeight);
+        quarryingSlavesBar .bounds.set(leftMargin, barTop - 2f * (barHeight + lineSpacing), barWidth, barHeight);
+        farmingSlavesBar   .bounds.set(leftMargin, barTop - 3f * (barHeight + lineSpacing), barWidth, barHeight);
         choppingSlavesBar  .bounds.set(leftMargin, barTop - 4f * (barHeight + lineSpacing), barWidth, barHeight);
 
         buildRemoveButton  = new Rectangle(leftMargin + barWidth + 1f * widgetPadding,              buildingSlavesBar.bounds.y,  buttonSize, buttonSize);
-        buildAddButton     = new Rectangle(leftMargin + barWidth + 2f * widgetPadding + buttonSize, buildingSlavesBar.bounds.y,  buttonSize, buttonSize);
         quarryRemoveButton = new Rectangle(leftMargin + barWidth + 1f * widgetPadding,              quarryingSlavesBar.bounds.y, buttonSize, buttonSize);
-        quarryAddButton    = new Rectangle(leftMargin + barWidth + 2f * widgetPadding + buttonSize, quarryingSlavesBar.bounds.y, buttonSize, buttonSize);
         farmRemoveButton   = new Rectangle(leftMargin + barWidth + 1f * widgetPadding,              farmingSlavesBar.bounds.y,   buttonSize, buttonSize);
-        farmAddButton      = new Rectangle(leftMargin + barWidth + 2f * widgetPadding + buttonSize, farmingSlavesBar.bounds.y,   buttonSize, buttonSize);
         chopRemoveButton   = new Rectangle(leftMargin + barWidth + 1f * widgetPadding,              choppingSlavesBar.bounds.y,  buttonSize, buttonSize);
+        buildAddButton     = new Rectangle(leftMargin + barWidth + 2f * widgetPadding + buttonSize, buildingSlavesBar.bounds.y,  buttonSize, buttonSize);
+        quarryAddButton    = new Rectangle(leftMargin + barWidth + 2f * widgetPadding + buttonSize, quarryingSlavesBar.bounds.y, buttonSize, buttonSize);
+        farmAddButton      = new Rectangle(leftMargin + barWidth + 2f * widgetPadding + buttonSize, farmingSlavesBar.bounds.y,   buttonSize, buttonSize);
         chopAddButton      = new Rectangle(leftMargin + barWidth + 2f * widgetPadding + buttonSize, choppingSlavesBar.bounds.y,  buttonSize, buttonSize);
     }
 
     @Override
     public void update(float delta) {
-        numAvailableSlaves    = resources.getSlaveAmount(ResourceManager.Resources.SLAVES);
         numTotalSlaves        = resources.getTotalSlaves();
+        numAvailableSlaves    = resources.getSlaveAmount(ResourceManager.Resources.SLAVES);
         numBuildingSlaves     = resources.getSlaveAmount(ResourceManager.Resources.BUILD);
-        numBuildingSlavesMax  = resources.getResourceInfo(ResourceManager.Resources.BUILD).maxSlaves;
         numQuarryingSlaves    = resources.getSlaveAmount(ResourceManager.Resources.STONE);
-        numQuarryingSlavesMax = resources.getResourceInfo(ResourceManager.Resources.STONE).maxSlaves;
         numFarmingSlaves      = resources.getSlaveAmount(ResourceManager.Resources.FOOD);
-        numFarmingSlavesMax   = resources.getResourceInfo(ResourceManager.Resources.FOOD).maxSlaves;
         numChoppingSlaves     = resources.getSlaveAmount(ResourceManager.Resources.WOOD);
+        numBuildingSlavesMax  = resources.getResourceInfo(ResourceManager.Resources.BUILD).maxSlaves;
+        numQuarryingSlavesMax = resources.getResourceInfo(ResourceManager.Resources.STONE).maxSlaves;
+        numFarmingSlavesMax   = resources.getResourceInfo(ResourceManager.Resources.FOOD).maxSlaves;
         numChoppingSlavesMax  = resources.getResourceInfo(ResourceManager.Resources.WOOD).maxSlaves;
 
         availableSlavesBar .fillPercent.setValue(numAvailableSlaves / (float) numTotalSlaves);
@@ -112,14 +118,14 @@ public class ManageSlaves extends Manage {
         choppingSlavesBar  .fillPercent.setValue(numChoppingSlaves  / (float) numChoppingSlavesMax);
 
         // checks for when buttons should be inactive (and switch the button texture to greyed out)
-        buildAddTex = (numAvailableSlaves > 0 && numBuildingSlaves < numBuildingSlavesMax) ? Assets.upIconOn : Assets.upIconOff;
-        buildRemoveTex = (numBuildingSlaves > 0) ? Assets.downIconOn : Assets.downIconOff;
-        quarryAddTex = (numAvailableSlaves > 0 && numQuarryingSlaves < numQuarryingSlavesMax) ? Assets.upIconOn : Assets.upIconOff;
+        buildAddTex     = (numAvailableSlaves > 0 && numBuildingSlaves  < numBuildingSlavesMax)  ? Assets.upIconOn : Assets.upIconOff;
+        quarryAddTex    = (numAvailableSlaves > 0 && numQuarryingSlaves < numQuarryingSlavesMax) ? Assets.upIconOn : Assets.upIconOff;
+        farmAddTex      = (numAvailableSlaves > 0 && numFarmingSlaves   < numFarmingSlavesMax)   ? Assets.upIconOn : Assets.upIconOff;
+        woodAddTex      = (numAvailableSlaves > 0 && numChoppingSlaves  < numChoppingSlavesMax)  ? Assets.upIconOn : Assets.upIconOff;
+        buildRemoveTex  = (numBuildingSlaves  > 0) ? Assets.downIconOn : Assets.downIconOff;
         quarryRemoveTex = (numQuarryingSlaves > 0) ? Assets.downIconOn : Assets.downIconOff;
-        farmAddTex = (numAvailableSlaves > 0 && numFarmingSlaves < numFarmingSlavesMax) ? Assets.upIconOn : Assets.upIconOff;
-        farmRemoveTex = (numFarmingSlaves > 0) ? Assets.downIconOn : Assets.downIconOff;
-        woodAddTex = (numAvailableSlaves > 0 && numChoppingSlaves < numChoppingSlavesMax) ? Assets.upIconOn : Assets.upIconOff;
-        woodRemoveTex = (numFarmingSlaves > 0) ? Assets.downIconOn : Assets.downIconOff;
+        farmRemoveTex   = (numFarmingSlaves   > 0) ? Assets.downIconOn : Assets.downIconOff;
+        woodRemoveTex   = (numFarmingSlaves   > 0) ? Assets.downIconOn : Assets.downIconOff;
 
         if (!Gdx.input.justTouched()) {
             return;
@@ -167,7 +173,7 @@ public class ManageSlaves extends Manage {
 
     @Override
     public void render(SpriteBatch batch) {
-        float x,y;
+        float x,y,n;
 
         glyphLayout.setText(Assets.font, "Slave Job Management");
         x = bounds.x + bounds.width / 2f - glyphLayout.width / 2f;
@@ -179,7 +185,8 @@ public class ManageSlaves extends Manage {
         x = MathUtils.floor(availableSlavesBar.bounds.x - glyphLayout.width - widgetPadding);
         y = availableSlavesBar.bounds.y + availableSlavesBar.bounds.height / 2f + glyphLayout.height / 2f;
         availableSlavesBar.render(batch);
-        Assets.font.setColor(Color.BLACK);
+        n = availableSlavesBar.fillPercent.floatValue();
+        Assets.font.setColor(1f - n, n, 0, 1f);
         Assets.font.draw(batch, "Available Slaves:", x, y);
         String availableText = numAvailableSlaves + "/" + numTotalSlaves;
         glyphLayout.setText(Assets.font, availableText);
@@ -195,7 +202,8 @@ public class ManageSlaves extends Manage {
         buildingSlavesBar.render(batch);
         batch.draw(buildRemoveTex, buildRemoveButton.x, buildRemoveButton.y, buttonSize, buttonSize);
         batch.draw(buildAddTex,    buildAddButton.x,    buildAddButton.y,    buttonSize, buttonSize);
-        Assets.font.setColor(Color.BLACK);
+        n = numBuildingSlaves / (float) numBuildingSlavesMax;
+        Assets.font.setColor(1f - n, n, 0f, 1f);
         Assets.font.draw(batch, "Building:", x, y);
         String buildingText = numBuildingSlaves + "/" + numBuildingSlavesMax;
         glyphLayout.setText(Assets.font, buildingText);
@@ -210,7 +218,8 @@ public class ManageSlaves extends Manage {
         quarryingSlavesBar.render(batch);
         batch.draw(quarryRemoveTex, quarryRemoveButton.x, quarryRemoveButton.y, buttonSize, buttonSize);
         batch.draw(quarryAddTex,    quarryAddButton.x,    quarryAddButton.y,    buttonSize, buttonSize);
-        Assets.font.setColor(Color.BLACK);
+        n = numQuarryingSlaves / (float) numQuarryingSlavesMax;
+        Assets.font.setColor(1f - n, n, 0f, 1f);
         Assets.font.draw(batch, "Mining:", x, y);
         String quarryingText = numQuarryingSlaves + "/" + numQuarryingSlavesMax;
         glyphLayout.setText(Assets.font, quarryingText);
@@ -225,7 +234,8 @@ public class ManageSlaves extends Manage {
         farmingSlavesBar.render(batch);
         batch.draw(farmRemoveTex, farmRemoveButton.x, farmRemoveButton.y, buttonSize, buttonSize);
         batch.draw(farmAddTex,    farmAddButton.x,    farmAddButton.y,    buttonSize, buttonSize);
-        Assets.font.setColor(Color.BLACK);
+        n = numFarmingSlaves / (float) numFarmingSlavesMax;
+        Assets.font.setColor(1f - n, n, 0f, 1f);
         Assets.font.draw(batch, "Farming:", x, y);
         String farmingText = numFarmingSlaves + "/" + numFarmingSlavesMax;
         glyphLayout.setText(Assets.font, farmingText);
@@ -240,7 +250,8 @@ public class ManageSlaves extends Manage {
         choppingSlavesBar.render(batch);
         batch.draw(woodRemoveTex, chopRemoveButton.x, chopRemoveButton.y, buttonSize, buttonSize);
         batch.draw(woodAddTex,    chopAddButton.x,    chopAddButton.y,    buttonSize, buttonSize);
-        Assets.font.setColor(Color.BLACK);
+        n = numChoppingSlaves / (float) numChoppingSlavesMax;
+        Assets.font.setColor(1f - n, n, 0f, 1f);
         Assets.font.draw(batch, "Chopping:", x, y);
         String choppingText = numChoppingSlaves + "/" + numChoppingSlavesMax;
         glyphLayout.setText(Assets.font, choppingText);

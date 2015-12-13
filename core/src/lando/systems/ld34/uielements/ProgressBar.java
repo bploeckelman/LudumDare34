@@ -20,7 +20,11 @@ public class ProgressBar {
     public        Color        fillColor;
 
     public ProgressBar() {
-        ninePatch = Assets.boxNinePatch;
+        this(Assets.boxNinePatch);
+    }
+
+    public ProgressBar(NinePatch ninePatch) {
+        this.ninePatch = ninePatch;
         bounds = new Rectangle();
         fillPercent = new MutableFloat(0.0f);
         boundsColor = new Color(0f, 0f, 0f, 1f);
