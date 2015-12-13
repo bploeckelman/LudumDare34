@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
@@ -27,6 +28,7 @@ public class Assets {
     public static TweenManager tween;
     public static SpriteBatch  batch;
     public static BitmapFont   font;
+    public static BitmapFont   HUDFont;
 
     public static Texture testTexture;
     public static Texture whiteTexture;
@@ -57,9 +59,11 @@ public class Assets {
     public static NinePatch nice2NinePatch;
 
     public static ShaderProgram motivationBarShader;
+    public static GlyphLayout glyphLayout;
 
 
     public static void load() {
+        glyphLayout = new GlyphLayout();
         if (tween == null) {
             tween = new TweenManager();
             Tween.setCombinedAttributesLimit(4);
@@ -72,6 +76,8 @@ public class Assets {
 
         batch = new SpriteBatch();
         font = new BitmapFont();
+        HUDFont = new BitmapFont();
+        HUDFont.getData().setScale(1f);
 
         background = new Texture("background.png");
         testTexture = new Texture("badlogic.jpg");

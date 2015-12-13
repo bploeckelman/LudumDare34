@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import lando.systems.ld34.Config;
+import lando.systems.ld34.LudumDare34;
 import lando.systems.ld34.resources.ResourceManager;
 import lando.systems.ld34.utils.Assets;
 import lando.systems.ld34.utils.SoundManager;
@@ -238,6 +239,7 @@ public class MotivationGame {
         }
         resourceManager.addEfficiency(resourceType, score);
         if (MathUtils.random() > score){
+            LudumDare34.GameScreen.addNotification("You killed a Slave");
             resourceManager.removeSlaves(resourceType, 1);
         }
     }
