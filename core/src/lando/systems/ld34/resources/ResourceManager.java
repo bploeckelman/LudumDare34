@@ -65,6 +65,11 @@ public class ResourceManager {
         return resources.get(type).removeSlaves(amount);
     }
 
+    public boolean canAddSlaves(Resources type, int amount){
+        ResourceInfo info = resources.get(type);
+        return info.maxSlaves - info.slaves >= amount;
+    }
+
     public int getTotalSlaves(){
         int totalSlaves = 0;
         for (ResourceInfo r : resources.values()){

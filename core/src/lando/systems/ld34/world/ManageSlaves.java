@@ -125,7 +125,7 @@ public class ManageSlaves extends Manage {
         buildRemoveTex  = (numBuildingSlaves  > 0) ? Assets.downIconOn : Assets.downIconOff;
         quarryRemoveTex = (numQuarryingSlaves > 0) ? Assets.downIconOn : Assets.downIconOff;
         farmRemoveTex   = (numFarmingSlaves   > 0) ? Assets.downIconOn : Assets.downIconOff;
-        woodRemoveTex   = (numFarmingSlaves   > 0) ? Assets.downIconOn : Assets.downIconOff;
+        woodRemoveTex   = (numChoppingSlaves  > 0) ? Assets.downIconOn : Assets.downIconOff;
 
         if (!Gdx.input.justTouched()) {
             return;
@@ -138,7 +138,7 @@ public class ManageSlaves extends Manage {
             num = resources.removeSlaves(ResourceManager.Resources.BUILD, 1);
             resources.addSlaves(ResourceManager.Resources.SLAVES, num);
         }
-        else if (buildAddButton.contains(x,y)) {
+        else if (buildAddButton.contains(x,y) && resources.canAddSlaves(ResourceManager.Resources.BUILD, 1)) {
             num = resources.removeSlaves(ResourceManager.Resources.SLAVES, 1);
             resources.addSlaves(ResourceManager.Resources.BUILD, num);
         }
@@ -147,7 +147,7 @@ public class ManageSlaves extends Manage {
             num = resources.removeSlaves(ResourceManager.Resources.STONE, 1);
             resources.addSlaves(ResourceManager.Resources.SLAVES, num);
         }
-        else if (quarryAddButton.contains(x,y)) {
+        else if (quarryAddButton.contains(x,y) && resources.canAddSlaves(ResourceManager.Resources.STONE, 1)) {
             num = resources.removeSlaves(ResourceManager.Resources.SLAVES, 1);
             resources.addSlaves(ResourceManager.Resources.STONE, num);
         }
@@ -156,7 +156,7 @@ public class ManageSlaves extends Manage {
             num = resources.removeSlaves(ResourceManager.Resources.FOOD, 1);
             resources.addSlaves(ResourceManager.Resources.SLAVES, num);
         }
-        else if (farmAddButton.contains(x,y)) {
+        else if (farmAddButton.contains(x,y) && resources.canAddSlaves(ResourceManager.Resources.FOOD, 1)) {
             num = resources.removeSlaves(ResourceManager.Resources.SLAVES, 1);
             resources.addSlaves(ResourceManager.Resources.FOOD, num);
         }
@@ -165,7 +165,7 @@ public class ManageSlaves extends Manage {
             num = resources.removeSlaves(ResourceManager.Resources.WOOD, 1);
             resources.addSlaves(ResourceManager.Resources.SLAVES, num);
         }
-        else if (chopAddButton.contains(x,y)) {
+        else if (chopAddButton.contains(x,y)&& resources.canAddSlaves(ResourceManager.Resources.WOOD, 1)) {
             num = resources.removeSlaves(ResourceManager.Resources.SLAVES, 1);
             resources.addSlaves(ResourceManager.Resources.WOOD, num);
         }
