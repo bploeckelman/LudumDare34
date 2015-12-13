@@ -28,6 +28,7 @@ public class Assets {
     public static TweenManager tween;
     public static SpriteBatch  batch;
     public static BitmapFont   font;
+    public static BitmapFont   fontSmall;
     public static BitmapFont   HUDFont;
 
     public static Texture testTexture;
@@ -76,6 +77,8 @@ public class Assets {
 
         batch = new SpriteBatch();
         font = new BitmapFont();
+        fontSmall = new BitmapFont();
+        fontSmall.getData().setScale(0.95f);
         HUDFont = new BitmapFont();
         HUDFont.getData().setScale(1f);
 
@@ -115,6 +118,7 @@ public class Assets {
     public static void dispose() {
         batch.dispose();
         font.dispose();
+        fontSmall.dispose();
         testTexture.dispose();
         whiteTexture.dispose();
         boxTexture.dispose();

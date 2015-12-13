@@ -71,7 +71,7 @@ public class ManageSlaves extends Manage {
         farmingSlavesBar   .boundsColor = boundsColor;
         choppingSlavesBar  .boundsColor = boundsColor;
 
-        barWidth      = bounds.width / 4f;
+        barWidth      = bounds.width / 3f;
         barHeight     = 20f;
         lineHeight    = 20f;
         lineSpacing   = 10f;
@@ -194,9 +194,9 @@ public class ManageSlaves extends Manage {
         Assets.font.setColor(1f - n, n, 0, 1f);
         Assets.font.draw(batch, "Available Slaves:", x, y);
         String availableText = numAvailableSlaves + "/" + numTotalSlaves;
-        glyphLayout.setText(Assets.font, availableText);
-        Assets.font.setColor(Color.WHITE);
-        Assets.font.draw(batch, availableText,
+        glyphLayout.setText(Assets.fontSmall, availableText);
+        Assets.fontSmall.setColor(Color.WHITE);
+        Assets.fontSmall.draw(batch, availableText,
                          availableSlavesBar.bounds.x + availableSlavesBar.bounds.width / 2f - glyphLayout.width / 2f,
                          availableSlavesBar.bounds.y + availableSlavesBar.bounds.height / 2f + glyphLayout.height / 2f);
 
@@ -211,9 +211,9 @@ public class ManageSlaves extends Manage {
         Assets.font.setColor(1f - n, n, 0f, 1f);
         Assets.font.draw(batch, "Building:", x, y);
         String buildingText = numBuildingSlaves + "/" + numBuildingSlavesMax;
-        glyphLayout.setText(Assets.font, buildingText);
-        Assets.font.setColor(Color.WHITE);
-        Assets.font.draw(batch, buildingText,
+        glyphLayout.setText(Assets.fontSmall, buildingText);
+        Assets.fontSmall.setColor(Color.WHITE);
+        Assets.fontSmall.draw(batch, buildingText,
                          buildingSlavesBar.bounds.x + buildingSlavesBar.bounds.width / 2f - glyphLayout.width / 2f,
                          buildingSlavesBar.bounds.y + buildingSlavesBar.bounds.height / 2f + glyphLayout.height / 2f);
 
@@ -227,9 +227,9 @@ public class ManageSlaves extends Manage {
         Assets.font.setColor(1f - n, n, 0f, 1f);
         Assets.font.draw(batch, "Mining:", x, y);
         String quarryingText = numQuarryingSlaves + "/" + numQuarryingSlavesMax;
-        glyphLayout.setText(Assets.font, quarryingText);
-        Assets.font.setColor(Color.WHITE);
-        Assets.font.draw(batch, quarryingText,
+        glyphLayout.setText(Assets.fontSmall, quarryingText);
+        Assets.fontSmall.setColor(Color.WHITE);
+        Assets.fontSmall.draw(batch, quarryingText,
                          quarryingSlavesBar.bounds.x + quarryingSlavesBar.bounds.width / 2f - glyphLayout.width / 2f,
                          quarryingSlavesBar.bounds.y + quarryingSlavesBar.bounds.height / 2f + glyphLayout.height / 2f);
 
@@ -243,9 +243,9 @@ public class ManageSlaves extends Manage {
         Assets.font.setColor(1f - n, n, 0f, 1f);
         Assets.font.draw(batch, "Farming:", x, y);
         String farmingText = numFarmingSlaves + "/" + numFarmingSlavesMax;
-        glyphLayout.setText(Assets.font, farmingText);
-        Assets.font.setColor(Color.WHITE);
-        Assets.font.draw(batch, farmingText,
+        glyphLayout.setText(Assets.fontSmall, farmingText);
+        Assets.fontSmall.setColor(Color.WHITE);
+        Assets.fontSmall.draw(batch, farmingText,
                          farmingSlavesBar.bounds.x + farmingSlavesBar.bounds.width / 2f - glyphLayout.width / 2f,
                          farmingSlavesBar.bounds.y + farmingSlavesBar.bounds.height / 2f + glyphLayout.height / 2f);
 
@@ -259,9 +259,9 @@ public class ManageSlaves extends Manage {
         Assets.font.setColor(1f - n, n, 0f, 1f);
         Assets.font.draw(batch, "Logging:", x, y);
         String choppingText = numChoppingSlaves + "/" + numChoppingSlavesMax;
-        glyphLayout.setText(Assets.font, choppingText);
-        Assets.font.setColor(Color.WHITE);
-        Assets.font.draw(batch, choppingText,
+        glyphLayout.setText(Assets.fontSmall, choppingText);
+        Assets.fontSmall.setColor(Color.WHITE);
+        Assets.fontSmall.draw(batch, choppingText,
                          choppingSlavesBar.bounds.x + choppingSlavesBar.bounds.width / 2f - glyphLayout.width / 2f,
                          choppingSlavesBar.bounds.y + choppingSlavesBar.bounds.height / 2f + glyphLayout.height / 2f);
 
