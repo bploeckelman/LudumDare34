@@ -11,7 +11,7 @@ public abstract class Area {
     public enum Type { PYRAMID, MGMT, QUARRY, FIELD, WOODS }
 
     protected final GameScreen gameScreen;
-    protected final Type type;
+    public final Type type;
     public float worldX;
 
     public Area(GameScreen gameScreen, Type type) {

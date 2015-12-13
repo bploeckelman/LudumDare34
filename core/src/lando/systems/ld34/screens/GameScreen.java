@@ -71,7 +71,10 @@ public class GameScreen extends AbstractScreen {
     }
 
     public void ShowManagementScreen(Manage.Type skillScreen) {
-        // TODO: call me from NavigationLayout and then do stuff
+        if (currentArea.type != Area.Type.MGMT) {
+            return;
+        }
+        ((AreaMgmt) currentArea).setCurrentManageType(skillScreen);
     }
 
     private void SetupNavigation(NavigationLayout navLayout) {
@@ -93,6 +96,7 @@ public class GameScreen extends AbstractScreen {
 
         ManagementButton skillsManagementButton = new ManagementButton("Workers", Manage.Type.WORKERS);
         ManagementButton.SelectedButton = skillsManagementButton;
+        ShowManagementScreen(skillsManagementButton.Screen);
 
         navLayout.add(skillsManagementButton);
         navLayout.add(new ManagementButton("Slaves", Manage.Type.SLAVES));

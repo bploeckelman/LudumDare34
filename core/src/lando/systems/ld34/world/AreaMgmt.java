@@ -60,4 +60,8 @@ public class AreaMgmt extends Area {
 
         batch.setColor(1f, 1f, 1f, 1f);
     }
+
+    public void setCurrentManageType(Manage.Type newType) {
+        currentManage = manageMap.get(newType);
+    }
 }
