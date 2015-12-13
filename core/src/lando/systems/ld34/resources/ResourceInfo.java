@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld34.Config;
+import lando.systems.ld34.LudumDare34;
 import lando.systems.ld34.uielements.ProgressBar;
 import lando.systems.ld34.utils.Assets;
 
@@ -20,6 +21,7 @@ public class ResourceInfo {
     public int slaves;
     public int maxSlaves;
     public int level;
+    public int skilledWorkers;
     public ResourceManager.Resources type;
 
 
@@ -28,22 +30,47 @@ public class ResourceInfo {
     private String typeLabel = "";
     private ProgressBar amountPB;
     private ProgressBar effPB;
+    private ProgressBar slavePB;
 
     public ResourceInfo(ResourceManager.Resources type){
         amountPB = new ProgressBar();
-        amountPB.bounds = new Rectangle(screenPos.x - 50, screenPos.y, 120, 20);
+        amountPB.bounds = new Rectangle(screenPos.x, screenPos.y, 120, 20);
         effPB = new ProgressBar();
-        effPB.bounds = new Rectangle(screenPos.x - 80, screenPos.y, 120, 20);
+        effPB.bounds = new Rectangle(screenPos.x, screenPos.y - 30, 120, 20);
+        slavePB = new ProgressBar();
+        slavePB.bounds = new Rectangle(screenPos.x, screenPos.y - 60, 120, 20);
         amount = 10;
         slaves = 1;
         maxAmount = 100;
         maxEfficiency = 1;
         maxSlaves = 10;
         efficiency = 1;
+        skilledWorkers = 0;
+        level = 1;
         this.type = type;
         switch (type){
             case STONE:
                 typeLabel = "Stones";
+                break;
+            case WOOD:
+                typeLabel = "Wood";
+                break;
+            case FOOD:
+                typeLabel = "Food";
+                break;
+            case BUILD:
+                typeLabel = "Blocks";
+                amount = 1;
+                maxAmount = 1;
+                break;
+            case GOLD:
+                slaves = 0;
+                amount = 0;
+                efficiency = 0;
+                break;
+            case SLAVES:
+                maxSlaves = 100000;
+                slaves = 10;
                 break;
         }
     }
@@ -53,6 +80,10 @@ public class ResourceInfo {
         if (efficiency < 0) efficiency = 0;
         amount += (slaves * efficiency * dt);
         if (amount > maxAmount) amount = maxAmount;
+        if (type == ResourceManager.Resources.BUILD && amount == maxAmount){
+            int height = LudumDare34.GameScreen.ResourceManager.getPyramidHeight() + 1;
+            maxAmount = (height * (height+1))/2;
+        }
     }
 
     /**
@@ -103,13 +134,30 @@ public class ResourceInfo {
 
     public void render(SpriteBatch batch){
         GlyphLayout layout = new GlyphLayout(Assets.font, typeLabel);
-        Assets.font.draw(batch, typeLabel, amountPB.bounds.x - (layout.width + 1), amountPB.bounds.y + (amountPB.bounds.height/2) + layout.height/2);
-        amountPB.bounds.y = screenPos.y - (layout.height + amountPB.bounds.height)/2;
+        Assets.font.draw(batch, typeLabel, amountPB.bounds.x - (layout.width + 1), amountPB.bounds.y + (amountPB.bounds.height / 2) + layout.height / 2);
         amountPB.fillPercent.setValue(amount / maxAmount);
         amountPB.render(batch);
         String amountText = (int)amount+"/"+maxAmount;
         layout.setText(Assets.font, amountText);
-        Assets.font.draw(batch, amountText, amountPB.bounds.x + (amountPB.bounds.width /2) - layout.width/2, amountPB.bounds.y + (amountPB.bounds.height/2) + layout.height/2);
+        Assets.font.draw(batch, amountText, amountPB.bounds.x + (amountPB.bounds.width / 2) - layout.width / 2, amountPB.bounds.y + (amountPB.bounds.height / 2) + layout.height / 2);
+
+            layout.setText(Assets.font, "Efficiency");
+        Assets.font.draw(batch, "Efficiency", effPB.bounds.x - (layout.width + 1), effPB.bounds.y + (effPB.bounds.height / 2) + layout.height / 2);
+        effPB.fillPercent.setValue(efficiency);
+        effPB.render(batch);
+        amountText = (int)(efficiency*100)+"%";
+        layout.setText(Assets.font, amountText);
+        Assets.font.draw(batch, amountText, effPB.bounds.x + (effPB.bounds.width / 2) - layout.width / 2, effPB.bounds.y + (effPB.bounds.height / 2) + layout.height / 2);
+
+        layout.setText(Assets.font, "Slaves");
+        Assets.font.draw(batch, "Slaves", slavePB.bounds.x - (layout.width + 1), slavePB.bounds.y + (slavePB.bounds.height / 2) + layout.height / 2);
+        slavePB.fillPercent.setValue((float)slaves/maxSlaves);
+        slavePB.render(batch);
+        amountText = (slaves)+"/"+maxSlaves;
+        layout.setText(Assets.font, amountText);
+        Assets.font.draw(batch, amountText, slavePB.bounds.x + (slavePB.bounds.width / 2) - layout.width / 2, slavePB.bounds.y + (slavePB.bounds.height / 2) + layout.height / 2);
+
+
     }
 
 }

@@ -23,26 +23,14 @@ public class ResourceManager {
         resources.put(Resources.FOOD, new ResourceInfo(Resources.FOOD));
         resources.put(Resources.GOLD, new ResourceInfo(Resources.GOLD));
         resources.put(Resources.SLAVES, new ResourceInfo(Resources.SLAVES));
-        resources.get(Resources.GOLD).efficiency = 0;
-        resources.get(Resources.GOLD).slaves = 0;
-        resources.get(Resources.SLAVES).efficiency = 0;
-        resources.get(Resources.SLAVES).maxSlaves = 1000;
-        resources.get(Resources.SLAVES).slaves = 10;
     }
 
-    private float _greatTemporaryFieldName;
 
     public void update(float dt) {
         for (ResourceInfo resource : resources.values()) {
             resource.update(dt);
         }
 
-        // add a block every .5 seconds
-        _greatTemporaryFieldName += dt;
-        if (_greatTemporaryFieldName > .5) {
-            _greatTemporaryFieldName -= .5;
-            addAmount(Resources.BUILD, 1);
-        }
     }
 
     /**

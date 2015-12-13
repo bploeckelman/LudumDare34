@@ -34,6 +34,7 @@ public class AreaWoods extends Area {
                          gameScreen.camera.viewportWidth / 2f - glyphLayout.width / 2f,
                          gameScreen.camera.viewportHeight / 2f - glyphLayout.height / 2f);
         Assets.font.setColor(1f, 1f, 1f, 1f);
+        gameScreen.ResourceManager.render(resourceType, batch);
 
         batch.setColor(1f, 1f, 1f, 1f);
     }
