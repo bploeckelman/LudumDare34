@@ -1,11 +1,13 @@
 package lando.systems.ld34.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import lando.systems.ld34.uielements.NavigationButton;
+import lando.systems.ld34.utils.Assets;
 
 import java.util.ArrayList;
 
@@ -25,7 +27,10 @@ public class NavigationLayout {
         NavButtons.add(button);
     }
 
+    private Rectangle _navBounds;
+
     public void layout(Rectangle bounds) {
+        _navBounds = bounds;
         float height = 0f;
 
         for (NavigationButton button : NavButtons) {
@@ -46,6 +51,9 @@ public class NavigationLayout {
     public void render(SpriteBatch batch, OrthographicCamera camera) {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
+
+        //batch.setColor(Color.BLUE);
+        //batch.draw(Assets.whiteTexture, _navBounds.x, _navBounds.y, _navBounds.width, _navBounds.height);
 
         for (NavigationButton button : NavButtons) {
             button.render(batch);

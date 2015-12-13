@@ -28,9 +28,18 @@ public class ResourceManager {
         resources.get(Resources.SLAVES).slaves = 10;
     }
 
+    private float _greatTemporaryFieldName;
+
     public void update(float dt) {
-        for (ResourceInfo resource : resources.values()){
+        for (ResourceInfo resource : resources.values()) {
             resource.update(dt);
+        }
+
+        // add a block every .5 seconds
+        _greatTemporaryFieldName += dt;
+        if (_greatTemporaryFieldName > .005) {
+            _greatTemporaryFieldName -= .005;
+            addAmount(Resources.BUILD, 1);
         }
     }
 

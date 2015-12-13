@@ -10,6 +10,8 @@ import lando.systems.ld34.utils.Assets;
  */
 public class Background {
 
+    public int SandHeight = 90;
+
     public MutableFloat xOffset;
     public Background(){
         xOffset = new MutableFloat(96);

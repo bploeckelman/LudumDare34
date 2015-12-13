@@ -29,6 +29,6 @@ public class PyramidButton extends AreaButton {
     private void setBounds(int pyramidHeight) {
         Bounds.height = pyramidHeight * 10;
         Bounds.x = (int)(Boundary.x + (Boundary.width - Bounds.width) / 2);
-        Bounds.y = (int)(Boundary.y + (Boundary.height - pyramidHeight) / 2);
+        Bounds.y = (int)(Boundary.y + (Boundary.height - Bounds.height) / 2);
     }
 }

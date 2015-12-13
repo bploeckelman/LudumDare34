@@ -22,7 +22,7 @@ public class AreaQuarry extends Area {
         worldX = 2;
         glyphLayout = new GlyphLayout(Assets.font, "Quarry Area");
         mg = new MotivationGame(
-                LudumDare34.GameScreen.resourceManager,
+                LudumDare34.GameScreen.ResourceManager,
                 ResourceManager.Resources.STONE,
                 0.1f,
                 0.1f);

@@ -21,6 +21,7 @@ public class GameScreen extends AbstractScreen {
     final SpriteBatch      batch;
     final NavigationLayout layout;
 
+    // java# (tm)
     public ResourceManager ResourceManager;
 
     ObjectMap<Area.Type, Area> areaMap;
@@ -33,9 +34,6 @@ public class GameScreen extends AbstractScreen {
 
         batch = Assets.batch;
 
-        layout = new NavigationLayout(this);
-        SetupNavigation(layout);
-
         ResourceManager = new ResourceManager();
 
         background = new Background();
@@ -46,6 +44,10 @@ public class GameScreen extends AbstractScreen {
         areaMap.put(Area.Type.FIELD, new AreaField(this));
         areaMap.put(Area.Type.WOODS, new AreaWoods(this));
         currentArea = areaMap.get(Area.Type.MGMT);
+
+        layout = new NavigationLayout(this);
+        SetupNavigation(layout);
+
         TransitionToArea(AreaButton.SelectedButton.AreaLocation);
     }
 
@@ -76,10 +78,10 @@ public class GameScreen extends AbstractScreen {
         navLayout.add(new AreaButton("Woods", Area.Type.WOODS));
 
         float height = uiCamera.viewportHeight;
-        float third = height / 3;
-        navLayout.layout(new Rectangle(0, third, 75, height - third));
+        navLayout.layout(new Rectangle(0, background.SandHeight, 75, height - background.SandHeight));
 
-        Rectangle pyramidBounds = new Rectangle(uiCamera.viewportWidth - 75, third, 75, height - third);
+        Rectangle pyramidBounds = new Rectangle(uiCamera.viewportWidth - 75,
+                background.SandHeight, 75, height - background.SandHeight);
         navLayout.add(new PyramidButton(pyramidBounds));
     }
 
