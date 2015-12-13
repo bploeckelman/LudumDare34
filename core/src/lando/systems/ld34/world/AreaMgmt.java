@@ -33,6 +33,7 @@ public class AreaMgmt extends Area {
                          "Management Area",
                          gameScreen.camera.viewportWidth  / 2f - glyphLayout.width  / 2f,
                          gameScreen.camera.viewportHeight / 2f - glyphLayout.height / 2f);
+
         Assets.font.setColor(1f, 1f, 1f, 1f);
 
         batch.setColor(1f, 1f, 1f, 1f);

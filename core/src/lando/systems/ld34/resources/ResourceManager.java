@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 
 /**
  * Created by dsgraham on 12/12/15.
+ * Stop showing a warning....
  */
 public class ResourceManager {
 
@@ -37,8 +38,8 @@ public class ResourceManager {
 
         // add a block every .5 seconds
         _greatTemporaryFieldName += dt;
-        if (_greatTemporaryFieldName > .005) {
-            _greatTemporaryFieldName -= .005;
+        if (_greatTemporaryFieldName > .5) {
+            _greatTemporaryFieldName -= .5;
             addAmount(Resources.BUILD, 1);
         }
     }
@@ -82,7 +83,7 @@ public class ResourceManager {
     }
 
     public int getPyramidHeight(){
-        return (int) MathUtils.log2(resources.get(Resources.BUILD).amount);
+        return (int) ((Math.sqrt((8.0 * resources.get(Resources.BUILD).amount) + 1) - 1)  / 2.0);
     }
 
     public float getWhipTargetRange(Resources type){

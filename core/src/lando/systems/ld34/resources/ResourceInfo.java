@@ -71,7 +71,7 @@ public class ResourceInfo {
     }
 
     public void addEfficiency(float amount){
-        efficiency += amount;
+        efficiency += amount * .1f;
         if (efficiency >= maxEfficiency){
             efficiency = maxEfficiency;
         }
