@@ -88,7 +88,7 @@ public class GameScreen extends AbstractScreen {
                 .push(Tween.to(sceneAlpha, 1, SCENEFADE)
                       .target(0))
                 .push(Tween.to(background.xOffset, 1, BACKGROUNDTRANSITION)
-                        .target(nextArea.worldX * (Assets.background.getWidth()/6f)))
+                        .target(nextArea.worldX * (Assets.background.getWidth()/8f)))
                 .push(Tween.call(new TweenCallback() {
                     @Override
                     public void onEvent(int i, BaseTween<?> baseTween) {
