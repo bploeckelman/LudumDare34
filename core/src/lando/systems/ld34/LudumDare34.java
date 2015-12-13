@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import lando.systems.ld34.screens.GameScreen;
 import lando.systems.ld34.utils.Assets;
+import lando.systems.ld34.utils.SoundManager;
 
 public class LudumDare34 extends Game {
 
@@ -12,6 +13,7 @@ public class LudumDare34 extends Game {
 	@Override
 	public void create () {
 		Assets.load();
+		SoundManager.load();
 		GameScreen = new GameScreen(this);
 		setScreen(GameScreen);
 	}
@@ -28,5 +30,6 @@ public class LudumDare34 extends Game {
 	@Override
 	public void dispose() {
 		Assets.dispose();
+		SoundManager.dispose();
 	}
 }

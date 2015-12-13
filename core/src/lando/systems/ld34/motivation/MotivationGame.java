@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import lando.systems.ld34.Config;
 import lando.systems.ld34.resources.ResourceManager;
 import lando.systems.ld34.utils.Assets;
+import lando.systems.ld34.utils.SoundManager;
 
 public class MotivationGame {
 
@@ -253,6 +254,7 @@ public class MotivationGame {
             int touchX = Gdx.input.getX();
             int touchY = (Config.height - Gdx.input.getY());
             if (button.contains(touchX, touchY)) {
+                SoundManager.playWhip();
                 this.reportCurrentMotivationScore();
                 this.reset();
             }
