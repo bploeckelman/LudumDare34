@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 import lando.systems.ld34.LudumDare34;
 import lando.systems.ld34.resources.ResourceManager;
 import lando.systems.ld34.uielements.AreaButton;
+import lando.systems.ld34.uielements.PyramidButton;
 import lando.systems.ld34.utils.Assets;
 import lando.systems.ld34.world.*;
 
@@ -20,9 +21,10 @@ public class GameScreen extends AbstractScreen {
     final SpriteBatch      batch;
     final NavigationLayout layout;
 
+    public ResourceManager ResourceManager;
+
     ObjectMap<Area.Type, Area> areaMap;
     Area currentArea;
-    ResourceManager resourceManager;
     Background background;
 
     public GameScreen(LudumDare34 game) {
@@ -32,7 +34,7 @@ public class GameScreen extends AbstractScreen {
         layout = new NavigationLayout(this);
         SetupNavigation(layout);
 
-        resourceManager = new ResourceManager();
+        ResourceManager = new ResourceManager();
 
         background = new Background();
         areaMap = new ObjectMap<Area.Type, Area>();
@@ -75,15 +77,15 @@ public class GameScreen extends AbstractScreen {
         float third = height / 3;
         navLayout.layout(new Rectangle(0, third, 75, height - third));
 
-        //navLayout.add(new AreaButton("Pyramid", Area.Type.PYRAMID));
-
+        Rectangle pyramidBounds = new Rectangle(uiCamera.viewportWidth - 75, third, 75, height - third);
+        navLayout.add(new PyramidButton(pyramidBounds));
     }
 
     @Override
     public void update(float delta) {
         super.update(delta);
         layout.update();
-        resourceManager.update(delta);
+        ResourceManager.update(delta);
     }
 
     @Override
