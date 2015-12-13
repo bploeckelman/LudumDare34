@@ -43,7 +43,10 @@ public class Assets {
     public static Texture workersIcon;
     public static Texture upgradesIcon;
     public static Texture resourcesIcon;
-
+    public static Texture upIconOn;
+    public static Texture upIconOff;
+    public static Texture downIconOn;
+    public static Texture downIconOff;
 
     public static ArrayList<Texture> pryamidBlocks = new ArrayList<Texture>();
 
@@ -84,6 +87,11 @@ public class Assets {
         pryamidBlocks.add(new Texture("pyramidBlock2.png"));
 
         boxNinePatch = new NinePatch(boxTexture, 2, 2, 2, 2);
+
+        upIconOn = new Texture("up_orange.png");
+        upIconOff = new Texture("up_white.png");
+        downIconOn = new Texture("down_orange.png");
+        downIconOff = new Texture("down_white.png");
     }
 
     public static void dispose() {
@@ -103,6 +111,10 @@ public class Assets {
         pharoahIcon.dispose();
         upgradesIcon.dispose();
         resourcesIcon.dispose();
+        upIconOn.dispose();
+        upIconOff.dispose();
+        downIconOn.dispose();
+        downIconOff.dispose();
 
         for (Texture block : pryamidBlocks) {
             block.dispose();

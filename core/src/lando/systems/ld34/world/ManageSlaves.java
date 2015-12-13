@@ -2,6 +2,7 @@ package lando.systems.ld34.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -31,6 +32,10 @@ public class ManageSlaves extends Manage {
     Rectangle       quarryRemoveButton;
     Rectangle       farmRemoveButton;
     Rectangle       chopRemoveButton;
+    Texture         buildAddTex, buildRemoveTex;
+    Texture         quarryAddTex, quarryRemoveTex;
+    Texture         farmAddTex, farmRemoveTex;
+    Texture         woodAddTex, woodRemoveTex;
 
     float barWidth;
     float barHeight;
@@ -68,10 +73,13 @@ public class ManageSlaves extends Manage {
         buttonSize = 20f;
         final float barTop = bounds.y + bounds.height - 100f;
         final float leftMargin = bounds.x + bounds.width - barWidth - 2f * (buttonSize + widgetPadding) - 30f;
-        availableSlavesBar .bounds.set(leftMargin, barTop - 0f * (barHeight + lineSpacing), barWidth + 2f * (buttonSize + widgetPadding), barHeight);
-        buildingSlavesBar  .bounds.set(leftMargin, barTop - 1f * (barHeight + lineSpacing), barWidth, barHeight);
-        quarryingSlavesBar .bounds.set(leftMargin, barTop - 2f * (barHeight + lineSpacing), barWidth, barHeight);
-        farmingSlavesBar   .bounds.set(leftMargin, barTop - 3f * (barHeight + lineSpacing), barWidth, barHeight);
+        availableSlavesBar.bounds.set(leftMargin,
+                                      barTop - 0f * (barHeight + lineSpacing),
+                                      barWidth + 2f * (buttonSize + widgetPadding),
+                                      barHeight);
+        buildingSlavesBar.bounds.set(leftMargin, barTop - 1f * (barHeight + lineSpacing), barWidth, barHeight);
+        quarryingSlavesBar.bounds.set(leftMargin, barTop - 2f * (barHeight + lineSpacing), barWidth, barHeight);
+        farmingSlavesBar.bounds.set(leftMargin, barTop - 3f * (barHeight + lineSpacing), barWidth, barHeight);
         choppingSlavesBar  .bounds.set(leftMargin, barTop - 4f * (barHeight + lineSpacing), barWidth, barHeight);
 
         buildRemoveButton  = new Rectangle(leftMargin + barWidth + 1f * widgetPadding,              buildingSlavesBar.bounds.y,  buttonSize, buttonSize);
@@ -103,11 +111,20 @@ public class ManageSlaves extends Manage {
         farmingSlavesBar   .fillPercent.setValue(numFarmingSlaves   / (float) numFarmingSlavesMax);
         choppingSlavesBar  .fillPercent.setValue(numChoppingSlaves  / (float) numChoppingSlavesMax);
 
+        // checks for when buttons should be inactive (and switch the button texture to greyed out)
+        buildAddTex = (numAvailableSlaves > 0 && numBuildingSlaves < numBuildingSlavesMax) ? Assets.upIconOn : Assets.upIconOff;
+        buildRemoveTex = (numBuildingSlaves > 0) ? Assets.downIconOn : Assets.downIconOff;
+        quarryAddTex = (numAvailableSlaves > 0 && numQuarryingSlaves < numQuarryingSlavesMax) ? Assets.upIconOn : Assets.upIconOff;
+        quarryRemoveTex = (numQuarryingSlaves > 0) ? Assets.downIconOn : Assets.downIconOff;
+        farmAddTex = (numAvailableSlaves > 0 && numFarmingSlaves < numFarmingSlavesMax) ? Assets.upIconOn : Assets.upIconOff;
+        farmRemoveTex = (numFarmingSlaves > 0) ? Assets.downIconOn : Assets.downIconOff;
+        woodAddTex = (numAvailableSlaves > 0 && numChoppingSlaves < numChoppingSlavesMax) ? Assets.upIconOn : Assets.upIconOff;
+        woodRemoveTex = (numFarmingSlaves > 0) ? Assets.downIconOn : Assets.downIconOff;
+
         if (!Gdx.input.justTouched()) {
             return;
         }
 
-        // TODO: add checks for when buttons should be inactive (and switch the button texture to greyed out)
         final float x = Gdx.input.getX();
         final float y = LudumDare34.GameScreen.uiCamera.viewportHeight - Gdx.input.getY();
         int num = 0;
@@ -162,8 +179,6 @@ public class ManageSlaves extends Manage {
         x = MathUtils.floor(availableSlavesBar.bounds.x - glyphLayout.width - widgetPadding);
         y = availableSlavesBar.bounds.y + availableSlavesBar.bounds.height / 2f + glyphLayout.height / 2f;
         availableSlavesBar.render(batch);
-        batch.draw(Assets.testTexture, buildRemoveButton.x, buildRemoveButton.y, buttonSize, buttonSize);
-        batch.draw(Assets.testTexture, buildAddButton.x,    buildAddButton.y,    buttonSize, buttonSize);
         Assets.font.setColor(Color.BLACK);
         Assets.font.draw(batch, "Available Slaves:", x, y);
         String availableText = numAvailableSlaves + "/" + numTotalSlaves;
@@ -178,8 +193,8 @@ public class ManageSlaves extends Manage {
         x = MathUtils.floor(buildingSlavesBar.bounds.x - glyphLayout.width - widgetPadding);
         y = buildingSlavesBar.bounds.y + buildingSlavesBar.bounds.height / 2f + glyphLayout.height / 2f;
         buildingSlavesBar.render(batch);
-        batch.draw(Assets.testTexture, quarryRemoveButton.x, quarryRemoveButton.y, buttonSize, buttonSize);
-        batch.draw(Assets.testTexture, quarryAddButton.x,    quarryAddButton.y,    buttonSize, buttonSize);
+        batch.draw(buildRemoveTex, buildRemoveButton.x, buildRemoveButton.y, buttonSize, buttonSize);
+        batch.draw(buildAddTex,    buildAddButton.x,    buildAddButton.y,    buttonSize, buttonSize);
         Assets.font.setColor(Color.BLACK);
         Assets.font.draw(batch, "Building:", x, y);
         String buildingText = numBuildingSlaves + "/" + numBuildingSlavesMax;
@@ -193,8 +208,8 @@ public class ManageSlaves extends Manage {
         x = MathUtils.floor(quarryingSlavesBar.bounds.x - glyphLayout.width - widgetPadding);
         y = quarryingSlavesBar.bounds.y + quarryingSlavesBar.bounds.height / 2f + glyphLayout.height / 2f;
         quarryingSlavesBar.render(batch);
-        batch.draw(Assets.testTexture, quarryRemoveButton.x, quarryRemoveButton.y, buttonSize, buttonSize);
-        batch.draw(Assets.testTexture, quarryAddButton.x,    quarryAddButton.y,    buttonSize, buttonSize);
+        batch.draw(quarryRemoveTex, quarryRemoveButton.x, quarryRemoveButton.y, buttonSize, buttonSize);
+        batch.draw(quarryAddTex,    quarryAddButton.x,    quarryAddButton.y,    buttonSize, buttonSize);
         Assets.font.setColor(Color.BLACK);
         Assets.font.draw(batch, "Mining:", x, y);
         String quarryingText = numQuarryingSlaves + "/" + numQuarryingSlavesMax;
@@ -208,8 +223,8 @@ public class ManageSlaves extends Manage {
         x = MathUtils.floor(farmingSlavesBar.bounds.x - glyphLayout.width - widgetPadding);
         y = farmingSlavesBar.bounds.y + farmingSlavesBar.bounds.height / 2f + glyphLayout.height / 2f;
         farmingSlavesBar.render(batch);
-        batch.draw(Assets.testTexture, farmRemoveButton.x, farmRemoveButton.y, buttonSize, buttonSize);
-        batch.draw(Assets.testTexture, farmAddButton.x,    farmAddButton.y,    buttonSize, buttonSize);
+        batch.draw(farmRemoveTex, farmRemoveButton.x, farmRemoveButton.y, buttonSize, buttonSize);
+        batch.draw(farmAddTex,    farmAddButton.x,    farmAddButton.y,    buttonSize, buttonSize);
         Assets.font.setColor(Color.BLACK);
         Assets.font.draw(batch, "Farming:", x, y);
         String farmingText = numFarmingSlaves + "/" + numFarmingSlavesMax;
@@ -223,8 +238,8 @@ public class ManageSlaves extends Manage {
         x = MathUtils.floor(choppingSlavesBar.bounds.x - glyphLayout.width - widgetPadding);
         y = choppingSlavesBar.bounds.y + choppingSlavesBar.bounds.height / 2f + glyphLayout.height / 2f;
         choppingSlavesBar.render(batch);
-        batch.draw(Assets.testTexture, chopRemoveButton.x, chopRemoveButton.y, buttonSize, buttonSize);
-        batch.draw(Assets.testTexture, chopAddButton.x,    chopAddButton.y,    buttonSize, buttonSize);
+        batch.draw(woodRemoveTex, chopRemoveButton.x, chopRemoveButton.y, buttonSize, buttonSize);
+        batch.draw(woodAddTex,    chopAddButton.x,    chopAddButton.y,    buttonSize, buttonSize);
         Assets.font.setColor(Color.BLACK);
         Assets.font.draw(batch, "Chopping:", x, y);
         String choppingText = numChoppingSlaves + "/" + numChoppingSlavesMax;
