@@ -39,6 +39,8 @@ public abstract class NavigationButton {
         }
     }
 
+    protected Color ImageColor = new Color(0, 0, 0, 1);
+
     public void render(SpriteBatch batch) {
         boolean highlight = Highlighted || Selected;
 
@@ -48,7 +50,7 @@ public abstract class NavigationButton {
         }
 
         if (Image != null) {
-            batch.setColor(Color.BLACK);
+            batch.setColor(ImageColor);
             batch.draw(Image, Bounds.x, Bounds.y, Bounds.width, Bounds.height);
         } else {
             batch.setColor(highlight ? Color.YELLOW : Color.BLACK);

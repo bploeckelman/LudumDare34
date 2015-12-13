@@ -42,12 +42,8 @@ public class Assets {
     public static Texture quarryIcon;
     public static Texture fieldIcon;
     public static Texture woodsIcon;
+    public static Texture pyramidIcon;
 
-    public static Texture slavesIcon;
-    public static Texture pharoahIcon;
-    public static Texture workersIcon;
-    public static Texture upgradesIcon;
-    public static Texture resourcesIcon;
     public static Texture upIconOn;
     public static Texture upIconOff;
     public static Texture downIconOn;
@@ -93,12 +89,7 @@ public class Assets {
         quarryIcon = new Texture("quarry.png");
         fieldIcon = new Texture("food.png");
         woodsIcon = new Texture("woods.png");
-
-        slavesIcon = new Texture("slaves.png");
-        workersIcon = new Texture("workers.png");
-        pharoahIcon = new Texture("paroah.png");
-        upgradesIcon = new Texture("upgrades.png");
-        resourcesIcon = new Texture("resources.png");
+        pyramidIcon = new Texture("pyramidIcon.png");
 
         pryamidBlocks.add(new Texture("pyramidBlock.png"));
         pryamidBlocks.add(new Texture("pyramidBlock2.png"));
@@ -129,12 +120,8 @@ public class Assets {
         quarryIcon.dispose();
         fieldIcon.dispose();
         woodsIcon.dispose();
+        pyramidIcon.dispose();
 
-        slavesIcon.dispose();
-        workersIcon.dispose();
-        pharoahIcon.dispose();
-        upgradesIcon.dispose();
-        resourcesIcon.dispose();
         upIconOn.dispose();
         upIconOff.dispose();
         downIconOn.dispose();

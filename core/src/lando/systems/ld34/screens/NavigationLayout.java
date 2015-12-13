@@ -13,6 +13,7 @@ import lando.systems.ld34.utils.Assets;
 import lando.systems.ld34.world.Area;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Brian on 12/12/2015.
@@ -20,6 +21,8 @@ import java.util.ArrayList;
 public class NavigationLayout {
 
     public static Area.Type CurrentArea;
+
+    public static HashMap<Area.Type, AreaButton> AreaButtons = new HashMap<Area.Type, AreaButton>();
 
     private final GameScreen _screen;
     private ArrayList<AreaButton> _areaButtons = new ArrayList<AreaButton>();
@@ -32,7 +35,9 @@ public class NavigationLayout {
     }
 
     public void add(AreaButton button) {
+
         _areaButtons.add(button);
+        AreaButtons.put(button.AreaLocation, button);
     }
 
     public void add(ManagementButton button) {
@@ -105,7 +110,7 @@ public class NavigationLayout {
     }
 
     private boolean isManagementScreen() {
-        return CurrentArea == Area.Type.MGMT;
+        return (CurrentArea == Area.Type.MGMT);
     }
 
     public void update() {

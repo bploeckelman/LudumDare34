@@ -24,7 +24,7 @@ public class Pyramid {
     private int _groupMax = 1;
 
     private ArrayList<PyramidBlock> _blocks = new ArrayList<PyramidBlock>();
-    private int _placedBlocks = 0;
+    private int _pyramidHeight = 0;
 
     private Rectangle _bounds;
     private ArrayList<LeftRight> _leftRightList = new ArrayList<LeftRight>();
@@ -92,6 +92,7 @@ public class Pyramid {
                 block.bounds.x = max;
                 if (block.currentRow == block.finalRow) {
                     block.isPlaced = true;
+                    _pyramidHeight = Math.max(_pyramidHeight, (block.finalRow + 1));
                     lr.left -= BlockSize;
                     lr.right = Math.max(lr.right, lr.left + BlockSize);
                 } else {
@@ -124,12 +125,8 @@ public class Pyramid {
         }
     }
 
-    public int getBlocks() {
-        return _blocks.size();
-    }
-
-    public int getPlacedBlocks() {
-        return _placedBlocks;
+    public int getHeight() {
+        return _pyramidHeight;
     }
 
     private void addBlock() {

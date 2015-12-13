@@ -82,6 +82,7 @@ public class GameScreen extends AbstractScreen {
     }
 
     public void TransitionToArea(Area.Type area) {
+        NavigationLayout.CurrentArea = area;
         final Area nextArea = areaMap.get(area);
         Timeline.createSequence()
                 .push(Tween.to(sceneAlpha, 1, SCENEFADE)
