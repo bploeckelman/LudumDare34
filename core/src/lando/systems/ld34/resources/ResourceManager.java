@@ -14,6 +14,8 @@ public class ResourceManager {
     public enum Resources {BUILD, STONE, WOOD, FOOD, GOLD, SLAVES}
 
     private ObjectMap<Resources, ResourceInfo> resources;
+    public int nextSlaveFoodAmount = 0;
+    public int totalSlaves = 0;
 
     public ResourceManager(){
         resources = new ObjectMap<Resources, ResourceInfo>();
@@ -27,6 +29,8 @@ public class ResourceManager {
 
 
     public void update(float dt) {
+        nextSlaveFoodAmount = getFoodForNextSlave();
+        totalSlaves = getTotalSlaves();
         for (ResourceInfo resource : resources.values()) {
             resource.update(dt);
         }
@@ -73,6 +77,11 @@ public class ResourceManager {
 
     public int getPyramidHeight(){
         return (int) ((Math.sqrt((8.0 * resources.get(Resources.BUILD).amount) + 1) - 1)  / 2.0);
+    }
+
+    public int getFoodForNextSlave(){
+        int totalSlaves = getTotalSlaves();
+        return (totalSlaves * (totalSlaves +1 ))/2;
     }
 
     public float getWhipTargetRange(Resources type){

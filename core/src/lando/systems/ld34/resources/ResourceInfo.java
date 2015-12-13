@@ -15,7 +15,7 @@ import lando.systems.ld34.utils.Assets;
 public class ResourceInfo {
 
     private static float effDecay = .01f;
-    private static float buildDT = .1f;
+    private static float stoneToBlocks = .1f;
 
     public float amount;
     public float efficiency;
@@ -75,22 +75,26 @@ public class ResourceInfo {
                 break;
             case SLAVES:
                 maxSlaves = 10000000;
-                slaves = 10;
+                slaves = 5;
                 break;
         }
     }
 
     public void update(float dt){
+        efficiency -= effDecay*dt;
+        if (efficiency < 0) efficiency = 0;
 
         switch (type){
             case SLAVES:
+                int nextSlave = LudumDare34.GameScreen.ResourceManager.nextSlaveFoodAmount;
+                if (LudumDare34.GameScreen.ResourceManager.removeResource(ResourceManager.Resources.FOOD, nextSlave)){
+                    slaves++;
+                }
                 break;
             case BUILD:
-                efficiency -= effDecay*dt;
-                if (efficiency < 0) efficiency = 0;
                 float stones = (slaves * efficiency * dt);
                 if (LudumDare34.GameScreen.ResourceManager.removeResource(ResourceManager.Resources.STONE, stones)) {
-                    amount += stones * buildDT;
+                    amount += stones * stoneToBlocks;
                 }
                 if (amount > maxAmount) amount = maxAmount;
                 if (amount == maxAmount){
@@ -102,8 +106,7 @@ public class ResourceInfo {
                 }
                 break;
             default:
-                efficiency -= effDecay*dt;
-                if (efficiency < 0) efficiency = 0;
+
                 amount += (slaves * efficiency * dt);
                 if (amount > maxAmount) amount = maxAmount;
         }
