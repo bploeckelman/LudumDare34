@@ -116,14 +116,16 @@ public class MotivationGame {
         Assets.nice2NinePatch.draw(batch, bg.x, bg.y, bg.width, bg.height);
 
         // Shader bar
-        Gdx.gl20.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
         batch.setShader(Assets.motivationBarShader);
+        batch.setBlendFunction(GL20.GL_ONE, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Assets.motivationBarShader.setUniformf("u_target_x", targetU);
         Assets.motivationBarShader.setUniformf("u_target_width", targetRangeU);
         Assets.motivationBarShader.setUniformf("u_target_falloff_width", targetFalloffRangeU);
         Assets.motivationBarShader.setUniformf("u_indicator_x", indicatorPosition);
         Assets.motivationBarShader.setUniformf("u_indicator_dir", indicatorDirection);
         batch.draw(Assets.testTexture, bar.x, bar.y, bar.width, bar.height);
+        batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+
         batch.setShader(null);
 
         // Button

@@ -61,7 +61,8 @@ void main()
 
     float distance_from_indicator = GetDistanceFromIndicator();
     if (distance_from_indicator <= c_indicator_tail) {
-        color = color + (vec4(1,1,1,1) * max(0.,(1. - (distance_from_indicator / c_indicator_tail))));
+        vec4 tailColor = (vec4(1,1,1,1) * max(0.,(1. - (distance_from_indicator / c_indicator_tail))));
+        color = max(color, tailColor);
     }
 
     gl_FragColor = color;

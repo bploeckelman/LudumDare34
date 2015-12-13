@@ -18,6 +18,6 @@ public class Background {
     }
 
     public void render (SpriteBatch batch){
-        batch.draw(Assets.background, 0, 0, Config.width, Config.height, xOffset.intValue(), 0, 96, 128, false, false);
+        batch.draw(Assets.background, 0, 0, Config.width, Config.height, xOffset.intValue(), 0, Assets.background.getWidth()/6, Assets.background.getHeight(), false, false);
     }
 }
