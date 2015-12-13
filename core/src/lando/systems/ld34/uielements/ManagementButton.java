@@ -1,5 +1,6 @@
 package lando.systems.ld34.uielements;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import lando.systems.ld34.LudumDare34;
 import lando.systems.ld34.world.Manage;
@@ -13,8 +14,8 @@ public class ManagementButton extends NavigationButton {
 
     public Manage.Type Screen;
 
-    public ManagementButton(String text, Manage.Type screen) {
-        super(text);
+    public ManagementButton(String text, Texture image, Manage.Type screen) {
+        super(text,  image);
 
         Screen = screen;
     }

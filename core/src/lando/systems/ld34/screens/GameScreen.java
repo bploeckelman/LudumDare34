@@ -75,13 +75,13 @@ public class GameScreen extends AbstractScreen {
     }
 
     private void SetupNavigation(NavigationLayout navLayout) {
-        AreaButton managementAreaButton = new AreaButton("Management", Area.Type.MGMT);
+        AreaButton managementAreaButton = new AreaButton("Management", Assets.managementIcon, Area.Type.MGMT);
         AreaButton.SelectedButton = managementAreaButton;
 
         navLayout.add(managementAreaButton);
-        navLayout.add(new AreaButton("Quarry", Area.Type.QUARRY));
-        navLayout.add(new AreaButton("Field", Area.Type.FIELD));
-        navLayout.add(new AreaButton("Woods", Area.Type.WOODS));
+        navLayout.add(new AreaButton("Quarry", Assets.quarryIcon, Area.Type.QUARRY));
+        navLayout.add(new AreaButton("Field", Assets.fieldIcon, Area.Type.FIELD));
+        navLayout.add(new AreaButton("Woods", Assets.woodsIcon, Area.Type.WOODS));
 
         // layout added buttons first before adding pyramid button - hacky but fuck it
         float height = uiCamera.viewportHeight;
@@ -91,15 +91,15 @@ public class GameScreen extends AbstractScreen {
                 background.SandHeight, 75, height - background.SandHeight);
         navLayout.add(new PyramidButton(pyramidBounds));
 
-        ManagementButton skillsManagementButton = new ManagementButton("Workers", Manage.Type.WORKERS);
+        ManagementButton skillsManagementButton = new ManagementButton("Workers", Assets.workersIcon, Manage.Type.WORKERS);
         ManagementButton.SelectedButton = skillsManagementButton;
         ShowManagementScreen(skillsManagementButton.Screen);
 
         navLayout.add(skillsManagementButton);
-        navLayout.add(new ManagementButton("Slaves", Manage.Type.SLAVES));
-        navLayout.add(new ManagementButton("Pharoah", Manage.Type.PHAROAH));
-        navLayout.add(new ManagementButton("Upgrades", Manage.Type.UPGRADES));
-        navLayout.add(new ManagementButton("Resources", Manage.Type.RESOURCES));
+        navLayout.add(new ManagementButton("Slaves", Assets.slavesIcon, Manage.Type.SLAVES));
+        navLayout.add(new ManagementButton("Pharoah", Assets.pharoahIcon, Manage.Type.PHAROAH));
+        navLayout.add(new ManagementButton("Upgrades", Assets.upgradesIcon, Manage.Type.UPGRADES));
+        navLayout.add(new ManagementButton("Resources", Assets.resourcesIcon, Manage.Type.RESOURCES));
 
         navLayout.layoutManagement(new Rectangle(0, 0, uiCamera.viewportWidth, background.SandHeight));
     }

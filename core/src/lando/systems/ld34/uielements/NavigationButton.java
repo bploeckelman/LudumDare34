@@ -23,8 +23,9 @@ public abstract class NavigationButton {
 
     public float SelectionThickness = 3f;
 
-    public NavigationButton(String text) {
+    public NavigationButton(String text, Texture image) {
         Text = text;
+        Image = image;
 
         Bounds = new Rectangle(0, 0, 50, 50);
         _glyphLayout = new GlyphLayout(Assets.font, text);
@@ -41,13 +42,18 @@ public abstract class NavigationButton {
     public void render(SpriteBatch batch) {
         boolean highlight = Highlighted || Selected;
 
-        batch.setColor(highlight ? Color.GOLD : Color.YELLOW);
-
-        batch.draw(Assets.whiteTexture, Bounds.x, Bounds.y, Bounds.width, Bounds.height);
+        if (highlight) {
+            batch.setColor(175f/255f, 238f/255f, 238f/255f, 0.4f);
+            batch.draw(Assets.whiteTexture, Bounds.x, Bounds.y, Bounds.width, Bounds.height);
+        }
 
         if (Image != null) {
+            batch.setColor(Color.BLACK);
             batch.draw(Image, Bounds.x, Bounds.y, Bounds.width, Bounds.height);
         } else {
+            batch.setColor(highlight ? Color.GOLD : Color.YELLOW);
+            batch.draw(Assets.whiteTexture, Bounds.x, Bounds.y, Bounds.width, Bounds.height);
+
             Assets.font.setColor(Color.BLACK);
             Assets.font.draw(batch,
                     Text,

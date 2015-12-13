@@ -18,6 +18,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import lando.systems.ld34.utils.accessors.*;
 
+import java.util.ArrayList;
+
 /**
  * Brian Ploeckelman created on 9/10/2015.
  */
@@ -31,7 +33,22 @@ public class Assets {
     public static Texture boxTexture;
     public static Texture background;
 
+    public static Texture managementIcon;
+    public static Texture quarryIcon;
+    public static Texture fieldIcon;
+    public static Texture woodsIcon;
+
+    public static Texture slavesIcon;
+    public static Texture pharoahIcon;
+    public static Texture workersIcon;
+    public static Texture upgradesIcon;
+    public static Texture resourcesIcon;
+
+
+    public static ArrayList<Texture> pryamidBlocks = new ArrayList<Texture>();
+
     public static NinePatch boxNinePatch;
+
 
     public static void load() {
         if (tween == null) {
@@ -52,6 +69,20 @@ public class Assets {
         whiteTexture = new Texture("pixel.png");
         boxTexture = new Texture("box.png");
 
+        managementIcon = new Texture("management.png");
+        quarryIcon = new Texture("quarry.png");
+        fieldIcon = new Texture("food.png");
+        woodsIcon = new Texture("woods.png");
+
+        slavesIcon = new Texture("slaves.png");
+        workersIcon = new Texture("workers.png");
+        pharoahIcon = new Texture("paroah.png");
+        upgradesIcon = new Texture("upgrades.png");
+        resourcesIcon = new Texture("resources.png");
+
+        pryamidBlocks.add(new Texture("pyramidBlock.png"));
+        pryamidBlocks.add(new Texture("pyramidBlock2.png"));
+
         boxNinePatch = new NinePatch(boxTexture, 2, 2, 2, 2);
     }
 
@@ -61,6 +92,21 @@ public class Assets {
         testTexture.dispose();
         whiteTexture.dispose();
         boxTexture.dispose();
+
+        managementIcon.dispose();
+        quarryIcon.dispose();
+        fieldIcon.dispose();
+        woodsIcon.dispose();
+
+        slavesIcon.dispose();
+        workersIcon.dispose();
+        pharoahIcon.dispose();
+        upgradesIcon.dispose();
+        resourcesIcon.dispose();
+
+        for (Texture block : pryamidBlocks) {
+            block.dispose();
+        }
     }
 
     private static ShaderProgram compileShaderProgram(FileHandle vertSource, FileHandle fragSource) {
@@ -74,5 +120,4 @@ public class Assets {
         }
         return shader;
     }
-
 }

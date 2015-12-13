@@ -1,5 +1,6 @@
 package lando.systems.ld34.uielements;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import lando.systems.ld34.LudumDare34;
@@ -14,8 +15,8 @@ public class AreaButton extends NavigationButton {
 
     public static AreaButton SelectedButton;
 
-    public AreaButton(String text, Area.Type area) {
-        super(text);
+    public AreaButton(String text, Texture image, Area.Type area) {
+        super(text, image);
         AreaLocation = area;
     }
 
