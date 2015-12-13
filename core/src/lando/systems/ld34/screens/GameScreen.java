@@ -20,6 +20,7 @@ public class GameScreen extends AbstractScreen {
     ObjectMap<Area.Type, Area> areaMap;
     Area currentArea;
     ResourceManager resourceManager;
+    Background background;
 
     public GameScreen(LudumDare34 game) {
         super(game);
@@ -30,6 +31,7 @@ public class GameScreen extends AbstractScreen {
 
         resourceManager = new ResourceManager();
 
+        background = new Background();
         areaMap = new ObjectMap<Area.Type, Area>();
         areaMap.put(Area.Type.MGMT, new AreaMgmt(this));
         areaMap.put(Area.Type.PYRAMID, new AreaPyramid(this));
@@ -72,6 +74,7 @@ public class GameScreen extends AbstractScreen {
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
+        background.render(batch);
         currentArea.render(batch);
         batch.end();
 

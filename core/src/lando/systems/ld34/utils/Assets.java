@@ -29,6 +29,7 @@ public class Assets {
     public static Texture testTexture;
     public static Texture whiteTexture;
     public static Texture boxTexture;
+    public static Texture background;
 
     public static NinePatch boxNinePatch;
 
@@ -46,6 +47,7 @@ public class Assets {
         batch = new SpriteBatch();
         font = new BitmapFont();
 
+        background = new Texture("background.png");
         testTexture = new Texture("badlogic.jpg");
         whiteTexture = new Texture("pixel.png");
         boxTexture = new Texture("box.png");
