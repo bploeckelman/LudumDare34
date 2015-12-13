@@ -1,4 +1,4 @@
-package lando.systems.ld34.utils.ui;
+package lando.systems.ld34.uielements;
 
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.primitives.MutableFloat;
