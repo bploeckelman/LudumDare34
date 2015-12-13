@@ -1,5 +1,13 @@
 package lando.systems.ld34.resources;
 
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import lando.systems.ld34.Config;
+import lando.systems.ld34.uielements.ProgressBar;
+import lando.systems.ld34.utils.Assets;
+
 /**
  * Created by dsgraham on 12/12/15.
  */
@@ -15,7 +23,17 @@ public class ResourceInfo {
     public ResourceManager.Resources type;
 
 
+    // Center Top of panel
+    Vector2 screenPos = new Vector2(Config.width/2, Config.height - 50);
+    private String typeLabel = "";
+    private ProgressBar amountPB;
+    private ProgressBar effPB;
+
     public ResourceInfo(ResourceManager.Resources type){
+        amountPB = new ProgressBar();
+        amountPB.bounds = new Rectangle(screenPos.x - 50, screenPos.y, 120, 20);
+        effPB = new ProgressBar();
+        effPB.bounds = new Rectangle(screenPos.x - 80, screenPos.y, 120, 20);
         amount = 10;
         slaves = 1;
         maxAmount = 100;
@@ -23,6 +41,11 @@ public class ResourceInfo {
         maxSlaves = 10;
         efficiency = 1;
         this.type = type;
+        switch (type){
+            case STONE:
+                typeLabel = "Stones";
+                break;
+        }
     }
 
     public void update(float dt){
@@ -75,6 +98,18 @@ public class ResourceInfo {
         if (efficiency >= maxEfficiency){
             efficiency = maxEfficiency;
         }
+    }
+
+
+    public void render(SpriteBatch batch){
+        GlyphLayout layout = new GlyphLayout(Assets.font, typeLabel);
+        Assets.font.draw(batch, typeLabel, amountPB.bounds.x - (layout.width + 1), amountPB.bounds.y + (amountPB.bounds.height/2) + layout.height/2);
+        amountPB.bounds.y = screenPos.y - (layout.height + amountPB.bounds.height)/2;
+        amountPB.fillPercent.setValue(amount / maxAmount);
+        amountPB.render(batch);
+        String amountText = (int)amount+"/"+maxAmount;
+        layout.setText(Assets.font, amountText);
+        Assets.font.draw(batch, amountText, amountPB.bounds.x + (amountPB.bounds.width /2) - layout.width/2, amountPB.bounds.y + (amountPB.bounds.height/2) + layout.height/2);
     }
 
 }

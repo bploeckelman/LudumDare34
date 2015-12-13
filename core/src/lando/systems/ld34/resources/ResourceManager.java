@@ -1,5 +1,6 @@
 package lando.systems.ld34.resources;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ObjectMap;
 
@@ -100,5 +101,9 @@ public class ResourceManager {
 
     public void addEfficiency(Resources type, float motivationAmount){
         resources.get(type).addEfficiency(motivationAmount);
+    }
+
+    public void render(Resources type, SpriteBatch batch){
+        resources.get(type).render(batch);
     }
 }

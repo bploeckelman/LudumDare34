@@ -25,10 +25,6 @@ public class ProgressBar {
         fillPercent = new MutableFloat(0.0f);
         boundsColor = new Color(0f, 0f, 0f, 1f);
         fillColor = new Color(0f, 1f, 0f, 1f);
-        Tween.to(fillPercent, -1, 3)
-                .target(1f)
-                .repeatYoyo(-1, 0)
-                .start(Assets.tween);
     }
 
     public void render(SpriteBatch batch) {
