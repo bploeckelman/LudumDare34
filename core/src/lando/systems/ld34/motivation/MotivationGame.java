@@ -149,17 +149,17 @@ public class MotivationGame {
 
         // Game BG
         batch.setColor(Color.GRAY);
-        batch.draw(Assets.onePixelWhite, bg.x, bg.y, bg.width, bg.height);
+        batch.draw(Assets.whiteTexture, bg.x, bg.y, bg.width, bg.height);
 
         // Bar
         batch.setColor(Color.BLUE);
-        batch.draw(Assets.onePixelWhite, bar.x, bar.y, bar.width, bar.height);
+        batch.draw(Assets.whiteTexture, bar.x, bar.y, bar.width, bar.height);
 
 
         // Target
         batch.setColor(Color.ORANGE);
         batch.draw(
-                Assets.onePixelWhite,
+                Assets.whiteTexture,
                 targetFalloff.x,
                 targetFalloff.y,
                 targetFalloff.width,
@@ -167,7 +167,7 @@ public class MotivationGame {
         );
         batch.setColor(Color.RED);
         batch.draw(
-                Assets.onePixelWhite,
+                Assets.whiteTexture,
                 target.x,
                 target.y,
                 target.width,
@@ -177,7 +177,7 @@ public class MotivationGame {
         // Indicator
         batch.setColor(Color.WHITE);
         batch.draw(
-                Assets.onePixelWhite,
+                Assets.whiteTexture,
                 indicator.x,
                 indicator.y,
                 indicator.width,
@@ -187,7 +187,7 @@ public class MotivationGame {
         // Button
         batch.setColor(Color.GREEN);
         batch.draw(
-                Assets.onePixelWhite,
+                Assets.whiteTexture,
                 button.x,
                 button.y,
                 button.width,
