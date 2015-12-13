@@ -92,7 +92,7 @@ public class ManageUpgrades extends Manage {
         availableForestSlavesBar   .fillColor.set(0f, 0.5f, 0f, 1f);
 
         final float barWidth = bounds.width / 3f;
-        final float leftMargin = bounds.x + bounds.width - barWidth - 2f * (buttonSize + widgetPadding) - 40f;
+        final float leftMargin = bounds.x + bounds.width - barWidth - 2f * (buttonSize + widgetPadding) - 20f;
         final float barHeight     = 20f;
         final float lineSpacing   = 10f;
         final float widgetPadding = 10f;
@@ -182,7 +182,7 @@ public class ManageUpgrades extends Manage {
 
         glyphLayout.setText(Assets.font, "Upgrade Management");
         x = bounds.x + bounds.width / 2f - glyphLayout.width / 2f;
-        y = bounds.y + bounds.height - glyphLayout.height;
+        y = bounds.y + bounds.height - glyphLayout.height - 10f;
         Assets.batch.setColor(160f / 255f, 82f / 255f, 45f / 255f, 1f);
         final float marginx = 30f;
         final float marginy = 15f;

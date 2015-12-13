@@ -45,6 +45,7 @@ public class AreaMgmt extends Area {
 
     @Override
     public void render(SpriteBatch batch) {
+        Assets.niceNinePatch.draw(batch, bounds.x, bounds.y, bounds.width, bounds.height);
         currentManage.render(batch);
     }
 
