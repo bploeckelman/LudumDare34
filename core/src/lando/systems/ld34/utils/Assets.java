@@ -3,11 +3,13 @@ package lando.systems.ld34.utils;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenManager;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Rectangle;
@@ -29,6 +31,8 @@ public class Assets {
     public static Texture boxTexture;
     public static Texture background;
 
+    public static NinePatch boxNinePatch;
+
     public static void load() {
         if (tween == null) {
             tween = new TweenManager();
@@ -43,16 +47,20 @@ public class Assets {
         batch = new SpriteBatch();
         font = new BitmapFont();
 
+        background = new Texture("background.png");
         testTexture = new Texture("badlogic.jpg");
         whiteTexture = new Texture("pixel.png");
         boxTexture = new Texture("box.png");
 
+        boxNinePatch = new NinePatch(boxTexture, 2, 2, 2, 2);
     }
 
     public static void dispose() {
         batch.dispose();
         font.dispose();
         testTexture.dispose();
+        whiteTexture.dispose();
+        boxTexture.dispose();
     }
 
     private static ShaderProgram compileShaderProgram(FileHandle vertSource, FileHandle fragSource) {
