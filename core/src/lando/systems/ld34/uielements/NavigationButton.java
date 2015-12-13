@@ -21,7 +21,7 @@ public abstract class NavigationButton {
     public boolean Highlighted;
     public boolean Selected;
 
-    public float SelectionThickness = 1f;
+    public float SelectionThickness = 3f;
 
     public NavigationButton(String text) {
         Text = text;
@@ -62,6 +62,7 @@ public abstract class NavigationButton {
     }
 
     protected void renderSelected(SpriteBatch batch) {
+        batch.setColor(Color.RED);
         float offset = SelectionThickness + 1;
         Assets.boxNinePatch.draw(batch, Bounds.x - offset, Bounds.y - offset,
                 Bounds.width + (offset * 2), Bounds.height + (offset * 2));
