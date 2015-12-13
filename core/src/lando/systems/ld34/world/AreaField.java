@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import lando.systems.ld34.screens.GameScreen;
 import lando.systems.ld34.utils.Assets;
+import lando.systems.ld34.world.pyramid.Pyramid;
 
 /**
  * Brian Ploeckelman created on 12/12/2015.
@@ -11,6 +12,8 @@ import lando.systems.ld34.utils.Assets;
 public class AreaField extends Area {
 
     GlyphLayout glyphLayout;
+
+    Pyramid _pyramid = new Pyramid();
 
     public AreaField(GameScreen gameScreen) {
         super(gameScreen, Type.FIELD);
@@ -20,7 +23,7 @@ public class AreaField extends Area {
 
     @Override
     public void update(float delta) {
-
+        _pyramid.update(delta);
     }
 
     @Override
@@ -38,6 +41,9 @@ public class AreaField extends Area {
         gameScreen.ResourceManager.render(resourceType, batch);
 
         batch.setColor(1f, 1f, 1f, 1f);
+
+        _pyramid.render(batch);
+
     }
 
 }
