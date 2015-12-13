@@ -75,4 +75,12 @@ public class ResourceManager {
     public int getPyramidHeight(){
         return (int) MathUtils.log2(resources.get(Resources.BUILD).amount);
     }
+
+    public float getWhipTargetRange(Resources type){
+        return .1f;
+    }
+
+    public float getWhipFalloffRange(Resources type){
+        return .5f;
+    }
 }
