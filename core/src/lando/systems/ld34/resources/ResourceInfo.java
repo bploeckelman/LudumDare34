@@ -116,6 +116,19 @@ public class ResourceInfo {
 
     }
 
+    public boolean upgradeSkilledWorker(){
+        int gold = costOfNextSkilled();
+        if (LudumDare34.GameScreen.ResourceManager.removeResource(ResourceManager.Resources.GOLD, gold)){
+            skilledWorkers++;
+            return true;
+        }
+        return false;
+    }
+
+    public int costOfNextSkilled(){
+        return skilledWorkers * skilledWorkers * 10;
+    }
+
     /**
      * This will try to add slaves to this resource.  Check return value to see what was added.
      *
