@@ -8,6 +8,7 @@ import lando.systems.ld34.Config;
 import lando.systems.ld34.LudumDare34;
 import lando.systems.ld34.uielements.ProgressBar;
 import lando.systems.ld34.utils.Assets;
+import lando.systems.ld34.utils.Utils;
 
 /**
  * Created by dsgraham on 12/12/15.
@@ -175,7 +176,7 @@ public class ResourceInfo {
     }
 
     public float getWhipFalloff(){
-        return (.8f - ((efficiency - minEfficiency) / (maxEfficiency - minEfficiency))) * .2f;
+        return Utils.clamp((.8f - ((efficiency - minEfficiency) / (maxEfficiency - minEfficiency))) * .2f, 0, 1);
     }
 
 
