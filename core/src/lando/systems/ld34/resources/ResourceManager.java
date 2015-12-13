@@ -8,20 +8,23 @@ import com.badlogic.gdx.utils.ObjectMap;
  */
 public class ResourceManager {
 
-    public enum Resources {STONE, WOOD, FOOD, GOLD, SLAVES}
+    public enum Resources {BUILD, STONE, WOOD, FOOD, GOLD, SLAVES}
 
     private ObjectMap<Resources, ResourceInfo> resources;
 
     public ResourceManager(){
         resources = new ObjectMap<Resources, ResourceInfo>();
+        resources.put(Resources.BUILD, new ResourceInfo(Resources.BUILD));
         resources.put(Resources.STONE, new ResourceInfo(Resources.STONE));
         resources.put(Resources.WOOD, new ResourceInfo(Resources.WOOD));
         resources.put(Resources.FOOD, new ResourceInfo(Resources.FOOD));
         resources.put(Resources.GOLD, new ResourceInfo(Resources.GOLD));
         resources.put(Resources.SLAVES, new ResourceInfo(Resources.SLAVES));
         resources.get(Resources.GOLD).efficiency = 0;
+        resources.get(Resources.GOLD).slaves = 0;
         resources.get(Resources.SLAVES).efficiency = 0;
         resources.get(Resources.SLAVES).maxSlaves = 1000;
+        resources.get(Resources.SLAVES).slaves = 10;
     }
 
     public void update(float dt) {
@@ -58,5 +61,13 @@ public class ResourceManager {
 
     public int removeSlaves(Resources type, int amount){
         return resources.get(type).removeSlaves(amount);
+    }
+
+    public int getTotalSlaves(){
+        int totalSlaves = 0;
+        for (ResourceInfo r : resources.values()){
+            totalSlaves += r.slaves;
+        }
+        return totalSlaves;
     }
 }

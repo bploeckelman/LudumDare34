@@ -48,7 +48,7 @@ public class ResourceInfo {
     }
 
     public int removeSlaves(int amount){
-        if (amount < 0) return 0;
+        if (amount <= 1) return 0; // keep at least one slave in each
         if (amount > slaves) amount = slaves;
         slaves -= amount;
         return amount;
