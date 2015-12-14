@@ -77,11 +77,24 @@ public class TutorialManager {
         info.pos = new Vector2(Config.width/2, 150);
         screens.add(info);
 
+        info = new TutorialInfo("Wood is used to upgrade each working area.", Area.Type.WOODS,
+                expandRectangle(LudumDare34.GameScreen.ResourceManager.getResourceInfo(ResourceManager.Resources.WOOD).bgPB.bounds));
+        info.pos = new Vector2(Config.width/2, 150);
+        screens.add(info);
+
         info = new TutorialInfo("When your slaves get lazy, you will have to 'motivate' them", Area.Type.WOODS,
                 expandRectangle(MotivationGame.gameArea));
         info.pos = new Vector2(Config.width/2, 150);
         screens.add(info);
 
+        //Food Tutorial Section
+        screens.add(new TutorialInfo("Here is your Farms\nYou get here by selecting this button", Area.Type.FIELD,
+                expandRectangle(NavigationLayout.AreaButtons.get(Area.Type.FIELD).Bounds)));
+
+        info = new TutorialInfo("Food is used to create more slaves.  When you have enough stocked up a new slave will be born.", Area.Type.FIELD,
+                expandRectangle(LudumDare34.GameScreen.ResourceManager.getResourceInfo(ResourceManager.Resources.FOOD).bgPB.bounds));
+        info.pos = new Vector2(Config.width/2, 150);
+        screens.add(info);
 
         //Quarry Tutorial Section
         screens.add(new TutorialInfo("Here is your Quarry\nYou get here by selecting this button", Area.Type.QUARRY,
