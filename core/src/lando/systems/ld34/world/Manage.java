@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import lando.systems.ld34.uielements.ProgressBar;
 import lando.systems.ld34.utils.Assets;
+import lando.systems.ld34.utils.Utils;
 
 public abstract class Manage {
 
@@ -29,11 +30,13 @@ public abstract class Manage {
     protected final Type        type;
     protected       GlyphLayout glyphLayout;
     public          Rectangle   bounds;
+    private         Color       color;
 
     public Manage(Type type, Rectangle bounds) {
         this.type = type;
         this.bounds = bounds;
         this.glyphLayout = new GlyphLayout();
+        this.color = new Color();
         Manage.barWidth      = bounds.width / 3f;
         Manage.barHeight     = 20f;
         Manage.lineHeight    = 20f;
@@ -73,9 +76,13 @@ public abstract class Manage {
         final float y = availableBar.bounds.y + availableBar.bounds.height / 2f + glyphLayout.height / 2f;
         final float n = availableBar.fillPercent.floatValue();
 
+        Utils.hsvToRgb(n * 120f / 365f, 1.0f, 1.0f, color);
+        availableBar.fillColor.set(color);
         availableBar.render(batch);
-        if (numTotal >= 0) Assets.font.setColor(1f - n, n, 0, 1f);
-        else               Assets.font.setColor(Color.WHITE);
+
+//        if (numTotal >= 0) Assets.font.setColor(1f - n, n, 0, 1f);
+//        else               Assets.font.setColor(Color.WHITE);
+        Assets.font.setColor(Color.WHITE);
         Assets.font.draw(batch, labelText, x, y);
 
         final String availableText = numAvailable + (numTotal >= 0 ? "/" + numTotal : "");
@@ -100,11 +107,13 @@ public abstract class Manage {
         final float y = progressBar.bounds.y + progressBar.bounds.height / 2f + glyphLayout.height / 2f;
         final float n = numItems / (float) numItemsMax;
 
+        Utils.hsvToRgb(n * 120f / 365f, 1.0f, 1.0f, color);
+        progressBar.fillColor.set(color);
         progressBar.render(batch);
         batch.draw(removeTexture, removeButton.x, removeButton.y, buttonSize, buttonSize);
         batch.draw(addTexture,    addButton.x,    addButton.y,    buttonSize, buttonSize);
 
-        Assets.font.setColor(1f - n, n, 0f, 1f);
+        Assets.font.setColor(Color.WHITE);
         Assets.font.draw(batch, labelText, x, y);
 
         String buildingText = numItems + "/" + numItemsMax;
@@ -127,12 +136,15 @@ public abstract class Manage {
         final float y = progressBar.bounds.y + progressBar.bounds.height / 2f + glyphLayout.height / 2f;
         final float n = availableItems / (float) availableItemsMax;
 
+        Utils.hsvToRgb(n * 120f / 365f, 1.0f, 1.0f, color);
+        progressBar.fillColor.set(color);
         progressBar.render(batch);
         batch.draw(upgradeTexture, upgradeButton.x, upgradeButton.y, buttonSize, buttonSize);
 
-        Assets.font.setColor(1f - n, n, 0f, 1f);
-        if (availableItemsMax >= 0) Assets.font.setColor(1f - n, n, 0, 1f);
-        else                        Assets.font.setColor(Color.WHITE);
+//        Assets.font.setColor(1f - n, n, 0f, 1f);
+//        if (availableItemsMax >= 0) Assets.font.setColor(1f - n, n, 0, 1f);
+//        else                        Assets.font.setColor(Color.WHITE);
+        Assets.font.setColor(Color.WHITE);
         Assets.font.draw(batch, labelText, x, y);
 
         final String itemText = availableItems + (availableItemsMax >= 0 ? "/" + availableItemsMax : "");
@@ -156,10 +168,17 @@ public abstract class Manage {
         glyphLayout.setText(Assets.font, labelText + " (level " + resourceLevel + "):");
         final float x = MathUtils.floor(progressBar.bounds.x - glyphLayout.width - widgetPadding);
         final float y = progressBar.bounds.y + progressBar.bounds.height / 2f + glyphLayout.height / 2f;
-        //        final float n = availableStone / (float) availableStoneMax;
+        final float n1 = availableItems / (float) availableItemsMax;
 
+        Utils.hsvToRgb(n1 * 120f / 365f, 1.0f, 1.0f, color);
+        progressBar.fillColor.set(color);
         progressBar.render(batch);
+
+        final float n2 = availableSlaves / (float) availableSlavesMax;
+        Utils.hsvToRgb(n2 * 120f / 365f, 1.0f, 1.0f, color);
+        slavesProgressBar.fillColor.set(color);
         slavesProgressBar.render(batch);
+
         batch.draw(upgradeTexture, upgradeButton.x, upgradeButton.y, buttonSize, buttonSize);
 
         //        Assets.font.setColor(1f - n, n, 0f, 1f);

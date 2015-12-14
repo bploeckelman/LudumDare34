@@ -156,6 +156,7 @@ public class Pyramid {
     private Random _rand = new Random();
 
     private Texture getBlockTexture() {
-        return Assets.pryamidBlocks.get(_rand.nextInt(Assets.pryamidBlocks.size()));
+        return Assets.blockTexture;
+//        return Assets.pryamidBlocks.get(_rand.nextInt(Assets.pryamidBlocks.size()));
     }
 }

@@ -36,7 +36,9 @@ public class Assets {
     public static Texture boxTexture;
     public static Texture niceBoxTexture;
     public static Texture niceBox2Texture;
+    public static Texture blockTexture;
     public static Texture background;
+    public static Texture mgmtBackground;
 
     public static Texture managementIcon;
     public static Texture quarryIcon;
@@ -59,7 +61,7 @@ public class Assets {
     public static NinePatch nice2NinePatch;
 
     public static ShaderProgram motivationBarShader;
-    public static GlyphLayout glyphLayout;
+    public static GlyphLayout   glyphLayout;
 
 
     public static void load() {
@@ -87,11 +89,13 @@ public class Assets {
         boxTexture = new Texture("box.png");
         niceBoxTexture = new Texture("ninepatch.png");
         niceBox2Texture = new Texture("ninepatch-bg.png");
+        blockTexture = new Texture("block.png");
+        mgmtBackground = new Texture("management.png");
 
-        managementIcon = new Texture("management.png");
-        quarryIcon = new Texture("quarry.png");
-        fieldIcon = new Texture("food.png");
-        woodsIcon = new Texture("woods.png");
+        managementIcon = new Texture("gear.png");
+        quarryIcon = new Texture("pickaxe.png");
+        fieldIcon = new Texture("bread.png");
+        woodsIcon = new Texture("axe.png");
         pyramidIcon = new Texture("pyramidIcon.png");
 
         pryamidBlocks.add(new Texture("pyramidBlock.png"));
@@ -122,6 +126,8 @@ public class Assets {
         boxTexture.dispose();
         niceBoxTexture.dispose();
         niceBox2Texture.dispose();
+        blockTexture.dispose();
+        mgmtBackground.dispose();
 
         managementIcon.dispose();
         quarryIcon.dispose();
