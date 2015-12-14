@@ -23,8 +23,8 @@ public class ManagementButton extends NavigationButton {
 
     }
     @Override
-    public void update(Vector3 mousePos, boolean clicked) {
-        super.update(mousePos, clicked);
+    public void update(float delta, Vector3 mousePos, boolean clicked) {
+        super.update(delta, mousePos, clicked);
         Selected = (SelectedButton == this);
     }
 

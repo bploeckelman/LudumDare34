@@ -1,7 +1,6 @@
 package lando.systems.ld34.uielements;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import lando.systems.ld34.LudumDare34;
 import lando.systems.ld34.screens.NavigationLayout;
@@ -22,8 +21,8 @@ public class AreaButton extends NavigationButton {
     }
 
     @Override
-    public void update(Vector3 mousePos, boolean clicked) {
-        super.update(mousePos, clicked);
+    public void update(float delta, Vector3 mousePos, boolean clicked) {
+        super.update(delta, mousePos, clicked);
         Selected = (SelectedButton == this);
     }
 

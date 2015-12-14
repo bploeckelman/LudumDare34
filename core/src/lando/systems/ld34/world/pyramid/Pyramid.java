@@ -116,8 +116,8 @@ public class Pyramid {
     }
 
     public void render(SpriteBatch batch) {
-        batch.setColor(Color.RED);
-        Assets.boxNinePatch.draw(batch, _bounds.x, _bounds.y, _bounds.width, _bounds.height);
+        //batch.setColor(Color.RED);
+        //Assets.boxNinePatch.draw(batch, _bounds.x, _bounds.y, _bounds.width, _bounds.height);
 
         batch.setColor(Color.WHITE);
         for (PyramidBlock block : _blocks) {
