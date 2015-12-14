@@ -44,7 +44,7 @@ public abstract class NavigationButton {
         }
     }
 
-    protected Color ImageColor = new Color(0, 0, 0, 1);
+    protected Color ImageColor = new Color(1, 1, 1, 1);
 
     public void render(SpriteBatch batch) {
         boolean highlight = Highlighted || Selected;

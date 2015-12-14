@@ -45,7 +45,11 @@ public class AreaMgmt extends Area {
 
     @Override
     public void render(SpriteBatch batch) {
+        batch.setColor(0.5f, 0.5f, 0.5f, 1.0f);
+        batch.draw(Assets.mgmtBackground, bounds.x, bounds.y, bounds.width, bounds.height);
+        batch.setColor(Color.WHITE);
         Assets.niceNinePatch.draw(batch, bounds.x, bounds.y, bounds.width, bounds.height);
+
         currentManage.render(batch);
     }
 
