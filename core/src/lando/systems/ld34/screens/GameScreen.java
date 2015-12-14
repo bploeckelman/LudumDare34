@@ -115,7 +115,7 @@ public class GameScreen extends AbstractScreen {
     }
 
     private void SetupNavigation(NavigationLayout navLayout) {
-        AreaButton managementAreaButton = new AreaButton("Management", Assets.managementIcon, Area.Type.MGMT, "Slave Mangement");
+        AreaButton managementAreaButton = new AreaButton("Management", Assets.managementIcon, Area.Type.MGMT, "Slave Management");
         AreaButton.SelectedButton = managementAreaButton;
 
         navLayout.add(managementAreaButton);
@@ -126,10 +126,11 @@ public class GameScreen extends AbstractScreen {
         // layout added buttons first before adding pyramid button - hacky but fuck it
         float height = uiCamera.viewportHeight;
 
-        float yOffset = background.SandHeight;
-        float boundsHeight = height - background.SandHeight - 40;
+        float boundsHeight = 190f;
+        float marginTop = 35f;
+        float yOffset = height - boundsHeight - marginTop;
 
-        navLayout.layoutAreaButtons(new Rectangle(0, yOffset, 50, boundsHeight));
+        navLayout.layoutAreaButtons(new Rectangle(0, yOffset, 32, boundsHeight));
 
         Rectangle pyramidBounds = new Rectangle(uiCamera.viewportWidth - 50, yOffset, 50, boundsHeight);
         navLayout.add(new PyramidButton(pyramidBounds));
@@ -143,10 +144,10 @@ public class GameScreen extends AbstractScreen {
         navLayout.add(new ManagementButton("Upgrades", Manage.Type.UPGRADES, "Upgrade your Buildings"));
         navLayout.add(new ManagementButton("Trade", Manage.Type.RESOURCES, "Trade Resources for Gold"));
         navLayout.add(skillsManagementButton);
-        navLayout.add(new ManagementButton("Pharoah", Manage.Type.PHAROAH, "Keep the Pharoah Happy"));
+        navLayout.add(new ManagementButton("Pharaoh", Manage.Type.PHAROAH, "Keep the Pharaoh Happy"));
 
 
-        navLayout.layoutManagement(new Rectangle(0, (uiCamera.viewportHeight - 40), uiCamera.viewportWidth, 40));
+        navLayout.layoutManagement(new Rectangle(0, (uiCamera.viewportHeight - 35), uiCamera.viewportWidth + 13f, 35));
     }
 
     public void addNotification(String msg){

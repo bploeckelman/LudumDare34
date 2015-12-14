@@ -34,7 +34,7 @@ public abstract class NavigationButton {
         Image = image;
         ToolTipText = tooltipText;
 
-        Bounds = new Rectangle(0, 0, 50, 50);
+        Bounds = new Rectangle(0, 0, 30, 30);
         _glyphLayout = new GlyphLayout(Assets.font, text);
     }
 
@@ -99,9 +99,9 @@ public abstract class NavigationButton {
                     Bounds.y + (Bounds.height + _glyphLayout.height) / 2);
         }
 
-        if (highlight && (Image != null)) {
-           renderSelected(batch);
-        }
+//        if (Selected && (Image != null)) {
+//           renderSelected(batch);
+//        }
 
         Assets.font.setColor(Color.WHITE);
         batch.setColor(Color.WHITE);
