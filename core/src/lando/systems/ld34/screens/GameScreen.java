@@ -125,11 +125,6 @@ public class GameScreen extends AbstractScreen {
         navLayout.add(new AreaButton("Field", Assets.fieldIcon, Area.Type.FIELD, "Farmlands"));
         navLayout.add(new AreaButton("Woods", Assets.woodsIcon, Area.Type.WOODS, "Woods"));
 
-        navLayout.AreaButtons.get(Area.Type.MGMT).efficiencyLevel = 40;
-        navLayout.AreaButtons.get(Area.Type.QUARRY).efficiencyLevel = 26;
-        navLayout.AreaButtons.get(Area.Type.FIELD).efficiencyLevel = 12;
-        navLayout.AreaButtons.get(Area.Type.WOODS).efficiencyLevel = 0;
-
         // layout added buttons first before adding pyramid button - hacky but fuck it
         float height = uiCamera.viewportHeight;
 
