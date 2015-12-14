@@ -14,13 +14,18 @@ public class Background {
 
     public MutableFloat xOffset;
     private int vTop;
+    private int height;
 
     public Background(){
         xOffset = new MutableFloat(0);
-        vTop = Assets.background.getHeight() - Assets.background.getHeight()*Config.height/Config.width;
+        float aspect = (float)Config.width/Config.height;
+        float scale = Config.width / (Assets.background.getWidth()/8f);
+
+        height = (int)(Config.height/scale);
+        vTop = Assets.background.getHeight() - height;
     }
 
     public void render (SpriteBatch batch){
-        batch.draw(Assets.background, 0, 0, Config.width, Config.height, xOffset.intValue(), vTop, Assets.background.getWidth()/8, Assets.background.getHeight()*Config.height/Config.width, false, false);
+        batch.draw(Assets.background, 0, 0, Config.width, Config.height, xOffset.intValue(), vTop, Assets.background.getWidth()/8, height, false, false);
     }
 }

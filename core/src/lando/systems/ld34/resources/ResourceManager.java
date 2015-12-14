@@ -88,7 +88,7 @@ public class ResourceManager {
     }
 
     public float getWhipTargetRange(Resources type){
-        return .05f;
+        return .05f + (.05f * resources.get(type).skilledWorkers);
     }
 
     public float getWhipFalloffRange(Resources type){
