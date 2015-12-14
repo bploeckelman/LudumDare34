@@ -109,12 +109,30 @@ public class ManageSlaves extends Manage {
         farmRemoveTex   = (numFarmingSlaves   > 0) ? Assets.downIconOn : Assets.downIconOff;
         woodRemoveTex   = (numChoppingSlaves  > 0) ? Assets.downIconOn : Assets.downIconOff;
 
+        final float x = Gdx.input.getX();
+        final float y = LudumDare34.GameScreen.uiCamera.viewportHeight - Gdx.input.getY();
+
+        if (buildRemoveButton.contains(x,y) || quarryRemoveButton.contains(x,y) || farmRemoveButton.contains(x,y) || chopRemoveButton.contains(x,y))
+        {
+            LudumDare34.GameScreen.hudManager.showTooltip("Remove Slave");
+        }
+
+        if (buildAddButton.contains(x,y) || quarryAddButton.contains(x,y) || farmAddButton.contains(x,y) || chopAddButton.contains(x,y)){
+            LudumDare34.GameScreen.hudManager.showTooltip("Add Slave");
+        }
+
+        if (availableSlavesBar.bounds.contains(x,y)){
+            LudumDare34.GameScreen.hudManager.showTooltip("Unassigned Slaves");
+        }
+
+        if (buildingSlavesBar.bounds.contains(x,y) || quarryingSlavesBar.bounds.contains(x,y) || farmingSlavesBar.bounds.contains(x,y) || choppingSlavesBar.bounds.contains(x,y)){
+            LudumDare34.GameScreen.hudManager.showTooltip("Slaves Currently Assigned");
+        }
+
         if (!Gdx.input.justTouched()) {
             return;
         }
 
-        final float x = Gdx.input.getX();
-        final float y = LudumDare34.GameScreen.uiCamera.viewportHeight - Gdx.input.getY();
         int num = 0;
         if (buildRemoveButton.contains(x,y)) {
             num = resources.removeSlaves(ResourceManager.Resources.BUILD, 1);
