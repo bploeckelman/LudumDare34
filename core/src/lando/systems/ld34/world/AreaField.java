@@ -32,19 +32,8 @@ public class AreaField extends Area {
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.setColor(211f / 255f, 211f / 255f, 211f / 255f, 1f);
-        //batch.draw(Assets.whiteTexture, 0, 0, gameScreen.camera.viewportWidth, gameScreen.camera.viewportHeight);
-
-        Assets.font.setColor(0f, 0f, 0f, 1f);
-        Assets.font.draw(batch,
-                "Field Area",
-                gameScreen.camera.viewportWidth / 2f - glyphLayout.width / 2f,
-                gameScreen.camera.viewportHeight / 2f - glyphLayout.height / 2f);
-        Assets.font.setColor(1f, 1f, 1f, 1f);
-
         gameScreen.ResourceManager.render(resourceType, batch);
         mg.render(batch);
-        batch.setColor(1f, 1f, 1f, 1f);
     }
 
 }
