@@ -14,7 +14,7 @@ import lando.systems.ld34.utils.Assets;
 public class AreaMgmt extends Area {
 
     GlyphLayout                    glyphLayout;
-    Rectangle                      bounds;
+    public static Rectangle        bounds;
     ObjectMap<Manage.Type, Manage> manageMap;
     Manage                         currentManage;
 

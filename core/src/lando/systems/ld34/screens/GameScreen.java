@@ -44,21 +44,25 @@ public class GameScreen extends AbstractScreen {
     public Pyramid Pyramid;
     private final FrameBuffer currentFBO;
     private MutableFloat sceneAlpha;
-    private final static float SCENEFADE = .3f;
-    private final static float BACKGROUNDTRANSITION = .5f;
+    public final static float SCENEFADE = .3f;
+    public final static float BACKGROUNDTRANSITION = .5f;
     public final static float gameLength = 600f;
     public final static GameStats stats = new GameStats();     // Hope we never need to restart this game
     public float gameTimer;
     public Shake shaker;
+    public TutorialManager tutorialManager;
+    private boolean firstRun = true;
 
     public GameScreen(LudumDare34 game) {
         super(game);
         gameTimer = 0;
+
         Gdx.gl.glClearColor(0, 0, 0, 0);
         sceneAlpha = new MutableFloat(1);
         currentFBO = new FrameBuffer(Pixmap.Format.RGBA8888, Config.width, Config.height, false);
 
         hudManager = new HUDManager();
+
         LudumDare34.GameScreen = this;
 
         Pyramid = new Pyramid(new Rectangle(0, 40, uiCamera.viewportWidth, 250));
@@ -84,6 +88,8 @@ public class GameScreen extends AbstractScreen {
         TransitionToArea(AreaButton.SelectedButton.AreaLocation);
 
         shaker = new Shake(120, 2.0f);
+        tutorialManager = new TutorialManager();
+
     }
 
     public void TransitionToArea(Area.Type area) {
@@ -161,6 +167,11 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void update(float delta) {
         super.update(delta);
+        if (!firstRun && tutorialManager.isDisplayed()){
+            tutorialManager.update(delta);
+            return;
+        }
+        firstRun = false;
         if (!gameOver()) {
             gameTimer += delta;
             if (gameOver()){
@@ -206,6 +217,7 @@ public class GameScreen extends AbstractScreen {
             layout.render(batch, uiCamera);
 
         hudManager.render(batch);
+        tutorialManager.render(batch);
         batch.end();
 
     }

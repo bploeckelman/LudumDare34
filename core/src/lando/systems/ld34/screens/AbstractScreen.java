@@ -40,7 +40,7 @@ public abstract class AbstractScreen extends ScreenAdapter {
 
     public void update(float delta) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            Gdx.app.exit();
+            //Gdx.app.exit();
         }
         camera.update();
         updateMouseVectors(camera);
