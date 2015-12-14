@@ -91,8 +91,7 @@ public class Pyramid {
             if (block.bounds.x >= max) {
                 block.bounds.x = max;
                 if (block.currentRow == block.finalRow) {
-                    block.isPlaced = true;
-                    _pyramidHeight = Math.max(_pyramidHeight, (block.finalRow + 1));
+                    placeBlock(block);
                     lr.left -= BlockSize;
                     lr.right = Math.max(lr.right, lr.left + BlockSize);
                 } else {
@@ -105,7 +104,7 @@ public class Pyramid {
             if (block.bounds.x <= min) {
                 block.bounds.x = min;
                 if (block.currentRow == block.finalRow) {
-                    block.isPlaced = true;
+                    placeBlock(block);
                     lr.right += BlockSize;
                     lr.left = Math.min(lr.left, lr.right - BlockSize);
                 } else {
@@ -113,6 +112,11 @@ public class Pyramid {
                 }
             }
         }
+    }
+
+    private void placeBlock(PyramidBlock block) {
+        block.isPlaced = true;
+        _pyramidHeight = Math.max(_pyramidHeight, (block.finalRow + 1));
     }
 
     public void render(SpriteBatch batch) {

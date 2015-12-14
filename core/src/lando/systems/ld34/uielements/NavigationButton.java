@@ -25,7 +25,7 @@ public abstract class NavigationButton {
 
     public float SelectionThickness = 3f;
 
-    public float efficiencyLevel = 100;
+    public float efficiencyLevel = 1;
     private double _alertTime = 0;
     private Color _alertColor;
 
@@ -44,7 +44,9 @@ public abstract class NavigationButton {
             LudumDare34.GameScreen.hudManager.showTooltip(ToolTipText);
         }
 
-        if (efficiencyLevel > 40) {
+        float warningLevel = 0.4f;
+
+        if (efficiencyLevel > warningLevel) {
             _alertTime = 0f;
         } else {
             _alertTime += delta;
@@ -52,7 +54,7 @@ public abstract class NavigationButton {
             Color red = new Color(1f, 0f, 0f, 1f);
             _alertColor = new Color(1f, 1f, 0f, 1f);
 
-            float level = (efficiencyLevel / 40f);
+            float level = (efficiencyLevel / warningLevel);
 
             _alertColor.lerp(red, (1 - level));
 
@@ -97,7 +99,7 @@ public abstract class NavigationButton {
                     Bounds.y + (Bounds.height + _glyphLayout.height) / 2);
         }
 
-        if (Selected && (Image != null)) {
+        if (highlight && (Image != null)) {
            renderSelected(batch);
         }
 

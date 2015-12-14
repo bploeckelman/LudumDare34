@@ -2,6 +2,8 @@ package lando.systems.ld34.resources;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ObjectMap;
+import lando.systems.ld34.screens.NavigationLayout;
+import lando.systems.ld34.world.Area;
 
 
 /**
@@ -33,6 +35,12 @@ public class ResourceManager {
         for (ResourceInfo resource : resources.values()) {
             resource.update(dt);
         }
+
+        // bind this tightly like doug's butt hole before he went to prison
+        NavigationLayout.AreaButtons.get(Area.Type.WOODS).efficiencyLevel = resources.get(Resources.WOOD).efficiency;
+        NavigationLayout.AreaButtons.get(Area.Type.FIELD).efficiencyLevel = resources.get(Resources.FOOD).efficiency;
+        NavigationLayout.AreaButtons.get(Area.Type.QUARRY).efficiencyLevel = resources.get(Resources.STONE).efficiency;
+        NavigationLayout.AreaButtons.get(Area.Type.PYRAMID).efficiencyLevel = resources.get(Resources.BUILD).efficiency;
     }
 
     /**
