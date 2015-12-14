@@ -97,8 +97,20 @@ public class TutorialManager {
         screens.add(info);
 
         //Quarry Tutorial Section
-        screens.add(new TutorialInfo("Here is your Quarry\nYou get here by selecting this button", Area.Type.QUARRY,
+        screens.add(new TutorialInfo("Here is your Quarry\nYou get here by selecting this button.", Area.Type.QUARRY,
                 expandRectangle(NavigationLayout.AreaButtons.get(Area.Type.QUARRY).Bounds)));
+
+        info = new TutorialInfo("Stones are converted to building blocks for the pyramid.", Area.Type.QUARRY,
+                expandRectangle(LudumDare34.GameScreen.resourceManager.getResourceInfo(ResourceManager.Resources.STONE).bgPB.bounds));
+        info.pos = new Vector2(Config.width/2, 150);
+        screens.add(info);
+
+        info = new TutorialInfo("Speaking of the Pyramid", Area.Type.QUARRY, new Rectangle());
+        screens.add(info);
+
+        //Pyramid Tutorial Section
+        screens.add(new TutorialInfo("The Monumental Monument.\nYou get here by selecting this button.", Area.Type.PYRAMID,
+                expandRectangle(new Rectangle(Config.width - 50, Config.height/2 - 190/2, 50, 190))));
     }
 
     public boolean isDisplayed(){
@@ -165,7 +177,16 @@ public class TutorialManager {
         TutorialInfo info = screens.get(0);
         drawHightlight(batch, info);
 
-        Assets.glyphLayout.setText(Assets.font, info.text, new Color(1,1,1,sceneAlpha.floatValue()), info.wrapWidth, Align.center, true);
+        String coloredReplace = info.text;
+        Color c = new Color(1,1,1,sceneAlpha.floatValue());
+        int intAlpha = (int)(sceneAlpha.floatValue() * 255);
+        StringBuilder sb = new StringBuilder();
+        sb.append(Integer.toHexString(intAlpha));
+        if (sb.length() < 2) sb.insert(0, '0'); // pad with leading zero if needed
+        sb.insert(0, "999999");
+        String hex = sb.toString();
+
+        Assets.glyphLayout.setText(Assets.font, coloredReplace.replace("xxxxxxxx", hex), c, info.wrapWidth, Align.center, true);
         float txtH = Assets.glyphLayout.height;
         float boxWidth = (info.wrapWidth + 20);
         Rectangle bounds = new Rectangle(info.pos.x - boxWidth /2 - 10, info.pos.y - txtH /2 - 10, boxWidth, txtH + 20);
@@ -173,10 +194,12 @@ public class TutorialManager {
         batch.setColor(62f / 255, 42f / 255, 0, sceneAlpha.floatValue());
         batch.draw(Assets.whiteTexture, bounds.x, bounds.y, bounds.width, bounds.height);
 
-        batch.setColor(new Color(1,1,1,sceneAlpha.floatValue()));
+        batch.setColor(new Color(1, 1, 1, sceneAlpha.floatValue()));
         Assets.niceNinePatch.draw(batch, bounds.x, bounds.y, bounds.width, bounds.height);
 
         Assets.font.draw(batch, Assets.glyphLayout, bounds.x + 10, bounds.y + bounds.height - 10);
+
+
 
     }
 

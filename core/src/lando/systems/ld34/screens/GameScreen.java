@@ -144,7 +144,7 @@ public class GameScreen extends AbstractScreen {
 
         navLayout.layoutAreaButtons(new Rectangle(0, yOffset, 32, boundsHeight));
 
-        Rectangle pyramidBounds = new Rectangle(uiCamera.viewportWidth - 50, yOffset, 50, boundsHeight);
+        Rectangle pyramidBounds = new Rectangle(uiCamera.viewportWidth - 50, Config.height/2 - boundsHeight/2, 50, boundsHeight);
         navLayout.add(new PyramidButton(pyramidBounds));
 
         ManagementButton skillsManagementButton = new ManagementButton("Workers", Manage.Type.WORKERS, "Manage Skilled Workers");
