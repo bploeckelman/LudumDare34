@@ -20,7 +20,7 @@ public class AreaPyramid extends Area {
 
     public AreaPyramid(GameScreen gameScreen) {
         super(gameScreen, Type.PYRAMID);
-        worldX = 5;
+        worldX = 4;
 
         glyphLayout = new GlyphLayout(Assets.font, "Pyramid Area");
         mg = new MotivationGame(

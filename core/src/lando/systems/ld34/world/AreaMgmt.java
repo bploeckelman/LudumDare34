@@ -20,7 +20,7 @@ public class AreaMgmt extends Area {
 
     public AreaMgmt(GameScreen gameScreen) {
         super(gameScreen, Type.MGMT);
-        worldX = 4;
+        worldX = 3;
         glyphLayout = new GlyphLayout(Assets.font, "Management Area");
 
         float w = gameScreen.uiCamera.viewportWidth / 2f;

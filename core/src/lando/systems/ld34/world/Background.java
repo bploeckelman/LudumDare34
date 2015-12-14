@@ -15,11 +15,12 @@ public class Background {
     public MutableFloat xOffset;
     private int vTop;
     private int height;
+    private float scale;
 
     public Background(){
         xOffset = new MutableFloat(0);
         float aspect = (float)Config.width/Config.height;
-        float scale = Config.width / (Assets.background.getWidth()/8f);
+        scale = Config.width / (Assets.background.getWidth()/8f);
 
         height = (int)(Config.height/scale);
         vTop = Assets.background.getHeight() - height;
@@ -27,5 +28,7 @@ public class Background {
 
     public void render (SpriteBatch batch){
         batch.draw(Assets.background, 0, 0, Config.width, Config.height, xOffset.intValue(), vTop, Assets.background.getWidth()/8, height, false, false);
+        float sunX = (Config.width * 4) - (xOffset.floatValue() * scale) + 550;
+        batch.draw(Assets.sunTexture, sunX , 320, 80, 80);
     }
 }

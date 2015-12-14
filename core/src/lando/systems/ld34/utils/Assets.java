@@ -50,6 +50,7 @@ public class Assets {
     public static Texture downIconOff;
     public static Texture plusIconOn;
     public static Texture plusIconOff;
+    public static Texture sunTexture;
 
     public static ArrayList<Texture> pryamidBlocks = new ArrayList<Texture>();
 
@@ -80,7 +81,7 @@ public class Assets {
         HUDFont = new BitmapFont();
         HUDFont.getData().setScale(1f);
 
-        background = new Texture("background.png");
+        background = new Texture("background.jpg");
         testTexture = new Texture("badlogic.jpg");
         whiteTexture = new Texture("pixel.png");
         boxTexture = new Texture("box.png");
@@ -95,6 +96,8 @@ public class Assets {
 
         pryamidBlocks.add(new Texture("pyramidBlock.png"));
         pryamidBlocks.add(new Texture("pyramidBlock2.png"));
+
+        sunTexture = new Texture("sun.png");
 
         boxNinePatch = new NinePatch(boxTexture, 2, 2, 2, 2);
         niceNinePatch = new NinePatch(niceBoxTexture, 6, 6, 6, 6);

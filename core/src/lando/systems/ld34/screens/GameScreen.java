@@ -45,9 +45,12 @@ public class GameScreen extends AbstractScreen {
     private MutableFloat sceneAlpha;
     private final static float SCENEFADE = .3f;
     private final static float BACKGROUNDTRANSITION = .5f;
+    private final static float gameLength = 100;
+    private float gameTimer;
 
     public GameScreen(LudumDare34 game) {
         super(game);
+        gameTimer = 0;
         Gdx.gl.glClearColor(0, 0, 0, 0);
         sceneAlpha = new MutableFloat(1);
         currentFBO = new FrameBuffer(Pixmap.Format.RGBA8888, Config.width, Config.height, false);
@@ -145,13 +148,26 @@ public class GameScreen extends AbstractScreen {
         hudManager.addNotification(msg);
     }
 
+    public boolean gameOver(){
+        return gameTimer > gameLength;
+    }
+
     @Override
     public void update(float delta) {
         super.update(delta);
-        layout.update();
-        ResourceManager.update(delta);
-        Pyramid.update(delta);
+        if (!gameOver()) {
+            gameTimer += delta;
+            if (gameOver()){
+                // TODO display game over and stats
+                TransitionToArea(Area.Type.PYRAMID);
+            }
+        }
+        if (!gameOver()) {
+            ResourceManager.update(delta);
+            layout.update();
+        }
         currentArea.update(delta);
+        Pyramid.update(delta);
         hudManager.update(delta);
     }
 
