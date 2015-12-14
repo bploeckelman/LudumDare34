@@ -136,7 +136,7 @@ public class GameScreen extends AbstractScreen {
         navLayout.add(new ManagementButton("Slaves", Manage.Type.SLAVES, "Manage Slave Labor"));
         navLayout.add(new ManagementButton("Pharoah", Manage.Type.PHAROAH, "Keep the Pharoah Happy"));
         navLayout.add(new ManagementButton("Upgrades", Manage.Type.UPGRADES, "Upgrade your Buildings"));
-        navLayout.add(new ManagementButton("Resources", Manage.Type.RESOURCES, "Check Storehouses"));
+        navLayout.add(new ManagementButton("Trade", Manage.Type.RESOURCES, "Trade Resources for Gold"));
 
         navLayout.layoutManagement(new Rectangle(0, (uiCamera.viewportHeight - 40), uiCamera.viewportWidth, 40));
     }
