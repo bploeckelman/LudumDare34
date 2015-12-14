@@ -50,7 +50,9 @@ public class Assets {
     public static Texture downIconOff;
     public static Texture plusIconOn;
     public static Texture plusIconOff;
+
     public static Texture sunTexture;
+    public static Texture moonTexture;
 
     public static ArrayList<Texture> pryamidBlocks = new ArrayList<Texture>();
 
@@ -98,6 +100,7 @@ public class Assets {
         pryamidBlocks.add(new Texture("pyramidBlock2.png"));
 
         sunTexture = new Texture("sun.png");
+        moonTexture = new Texture("full-moon.png");
 
         boxNinePatch = new NinePatch(boxTexture, 2, 2, 2, 2);
         niceNinePatch = new NinePatch(niceBoxTexture, 6, 6, 6, 6);

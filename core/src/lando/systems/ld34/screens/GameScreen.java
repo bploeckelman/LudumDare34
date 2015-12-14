@@ -45,8 +45,8 @@ public class GameScreen extends AbstractScreen {
     private MutableFloat sceneAlpha;
     private final static float SCENEFADE = .3f;
     private final static float BACKGROUNDTRANSITION = .5f;
-    private final static float gameLength = 100;
-    private float gameTimer;
+    public final static float gameLength = 600f;
+    public float gameTimer;
 
     public GameScreen(LudumDare34 game) {
         super(game);
