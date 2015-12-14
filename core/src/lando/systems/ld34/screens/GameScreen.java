@@ -77,6 +77,7 @@ public class GameScreen extends AbstractScreen {
         areaMap.put(Area.Type.QUARRY, new AreaQuarry(this));
         areaMap.put(Area.Type.FIELD, new AreaField(this));
         areaMap.put(Area.Type.WOODS, new AreaWoods(this));
+        areaMap.put(Area.Type.GAMEOVER, new AreaGameOver(this));
 
         currentArea = areaMap.get(Area.Type.MGMT);
 
@@ -166,7 +167,7 @@ public class GameScreen extends AbstractScreen {
             gameTimer += delta;
             if (gameOver()){
                 // TODO display game over and stats
-                TransitionToArea(Area.Type.PYRAMID);
+                TransitionToArea(Area.Type.GAMEOVER);
             }
         }
         if (!gameOver()) {
@@ -203,7 +204,8 @@ public class GameScreen extends AbstractScreen {
         batch.setColor(1, 1, 1, sceneAlpha.floatValue());
         batch.draw(currentTexture, 0, currentFBO.getHeight(), currentFBO.getWidth(), -currentFBO.getHeight());
         batch.setColor(1, 1, 1, 1);
-        layout.render(batch, uiCamera);
+        if (!gameOver())
+            layout.render(batch, uiCamera);
 
         hudManager.render(batch);
         batch.end();
