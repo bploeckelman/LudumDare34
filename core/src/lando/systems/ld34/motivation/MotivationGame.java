@@ -21,16 +21,21 @@ public class MotivationGame {
     private final static float GAME_Y = 200f;
 
     private final static float BUTTON_HEIGHT = 34f;
-    private final static float BUTTON_WIDTH = 80f;
-    private final static float BUTTON_X = 254f;
+    private final static float BUTTON_WIDTH = 96f;
+    private final static float BUTTON_X = 238f;
     private final static float BUTTON_Y = 6f;
+    private final static String BUTTON_TEXT = "Encourage!";
 
     private final static float BAR_HEIGHT = 34f; // pixels
-    private final static float BAR_WIDTH = 242f; // pixels
+    private final static float BAR_WIDTH = 226f; // pixels
     private final static float BAR_X = 6f; // pixels
     private final static float BAR_Y = 6f; // pixels
 
     private final static float INDICATOR_SPEED = 1.3f; // % of the bar per second (out of 1)
+
+    private final static float COOLDOWN_TIMER = 0.5f;
+
+    private final static String DISABLED_NO_SLAVES_MESSAGE = "No slaves to motivate.";
 
     private ResourceManager resourceManager;
     private ResourceManager.Resources resourceType;
@@ -43,10 +48,17 @@ public class MotivationGame {
     private Rectangle bar;
     private Rectangle button;
 
+    private boolean buttonIsHovered = false;
+
     private float indicatorPosition; // Where along the bar to place the indicator, from 0 to 1
     private float indicatorDirection;
 
-    private boolean isActive = false;
+    private boolean isOnCooldown = false;
+    private float cooldownTimer = 0;
+    private float currentScore = 0;
+
+    private boolean isDisabledNoSlaves = true;
+
 
     // Construct -------------------------------------------------------------------------------------------------------
 
@@ -75,74 +87,20 @@ public class MotivationGame {
                 MotivationGame.BUTTON_HEIGHT
         );
 
-        this.setTargetRangeU(resourceManager.getWhipTargetRange(resourceType));
-        this.setTargetFalloffRangeU(resourceManager.getWhipFalloffRange(resourceType));
+        this.targetRangeU = this.resourceManager.getWhipTargetRange(resourceType);
+        this.targetFalloffRangeU = this.resourceManager.getWhipFalloffRange(resourceType);
 
         this.reset();
-        this.start();
 
     }
 
 
     // Getter/Setters --------------------------------------------------------------------------------------------------
 
-    public void setTargetRangeU(float targetRangeU) {
-        this.targetRangeU = targetRangeU;
-    }
-
-    public void setTargetFalloffRangeU(float targetFalloffRangeU) {
-        this.targetFalloffRangeU = targetFalloffRangeU;
-    }
 
     // -----------------------------------------------------------------------------------------------------------------
 
-
-    public void reset() {
-        this.indicatorPosition = 0; // All the way to the left
-        this.indicatorDirection = 1; // Moving right
-        // Position the target
-        targetU = MathUtils.random(0, 1 - targetRangeU);    // NOTE: Falloff might be cut off; that's OK
-    }
-
-    public void render(SpriteBatch batch){
-
-        Color c = batch.getColor();
-
-        // Game BG
-        Assets.nice2NinePatch.draw(batch, bg.x, bg.y, bg.width, bg.height);
-
-        // Shader bar
-//        Gdx.gl20.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
-//        batch.enableBlending();
-        batch.setShader(Assets.motivationBarShader);
-//        batch.setBlendFunction(GL20.GL_ONE, GL20.GL_ONE_MINUS_SRC_ALPHA);
-        batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-        Assets.motivationBarShader.setUniformf("u_target_x", targetU);
-        Assets.motivationBarShader.setUniformf("u_target_width", targetRangeU);
-        Assets.motivationBarShader.setUniformf("u_target_falloff_width", targetFalloffRangeU);
-        Assets.motivationBarShader.setUniformf("u_indicator_x", indicatorPosition);
-        Assets.motivationBarShader.setUniformf("u_indicator_dir", indicatorDirection);
-        batch.draw(Assets.testTexture, bar.x, bar.y, bar.width, bar.height);
-//        batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-
-        batch.setShader(null);
-
-        // Button
-        batch.setColor(Color.GREEN);
-        batch.draw(
-                Assets.whiteTexture,
-                button.x,
-                button.y,
-                button.width,
-                button.height
-        );
-
-        batch.setColor(c);
-
-    }
-
-    private void reportCurrentMotivationScore() {
-
+    private float getCurrentMotivationScore() {
         float score = 0f;
 
         // All measurements are from 0 to 1
@@ -169,51 +127,151 @@ public class MotivationGame {
             }
         }
 
+        return score;
+    }
+
+    private void initiateCooldown() {
+        isOnCooldown = true;
+        cooldownTimer = COOLDOWN_TIMER;
+    }
+
+    private void reset() {
+        this.indicatorPosition = 0; // All the way to the left
+        this.indicatorDirection = 1; // Moving right
+        // Position the target
+        targetU = MathUtils.random(0, 1 - targetRangeU);    // NOTE: Falloff might be cut off; that's OK
+    }
+
+    private void reportMotivationScore(float score) {
         resourceManager.addEfficiency(resourceType, score);
         if (MathUtils.random() > score){
-            resourceManager.removeSlaves(resourceType, 1);
+            if (resourceManager.removeSlaves(resourceType, 1) > 0) {
+                SoundManager.playScream();
+            }
         }
     }
 
-    public void start() {
-        this.isActive = true;
+    /**
+     *
+     * @return boolean Whether or not the update function should continue.
+     */
+    private boolean onButtonPress() {
+        SoundManager.playWhip();
+        currentScore = getCurrentMotivationScore();
+        reportMotivationScore(currentScore);
+        initiateCooldown();
+        return false;
     }
 
-    public void stop() {
-        this.isActive = false;
+
+    // Per Frame Functions ---------------------------------------------------------------------------------------------
+
+    public void render(SpriteBatch batch){
+
+        Color c = batch.getColor();
+
+        // Game BG
+        Assets.nice2NinePatch.draw(batch, bg.x, bg.y, bg.width, bg.height);
+
+        // Shader bar
+        if (!isDisabledNoSlaves) {
+            batch.setShader(Assets.motivationBarShader);
+            batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+            Assets.motivationBarShader.setUniformf("u_target_x", targetU);
+            Assets.motivationBarShader.setUniformf("u_target_width", targetRangeU);
+            Assets.motivationBarShader.setUniformf("u_target_falloff_width", targetFalloffRangeU);
+            Assets.motivationBarShader.setUniformf("u_indicator_x", indicatorPosition);
+            Assets.motivationBarShader.setUniformf("u_indicator_dir", indicatorDirection);
+            Assets.motivationBarShader.setUniformi("u_is_on_cooldown", isOnCooldown ? 1 : 0);
+            Assets.motivationBarShader.setUniformf("u_cooldown_percent_remaining", cooldownTimer / COOLDOWN_TIMER);
+            Assets.motivationBarShader.setUniformf("hit_score", currentScore);
+            batch.draw(Assets.testTexture, bar.x, bar.y, bar.width, bar.height);
+            batch.setShader(null);
+        } else {
+            Assets.glyphLayout.setText(Assets.font, DISABLED_NO_SLAVES_MESSAGE);
+            Assets.font.setColor(Color.WHITE);
+            Assets.font.draw(
+                    batch,
+                    DISABLED_NO_SLAVES_MESSAGE,
+                    bar.x + (bar.width / 2) - (Assets.glyphLayout.width / 2) + 2,
+                    bar.y + (bar.height / 2) + (Assets.glyphLayout.height / 2)
+            );
+        }
+
+        // Button
+        if (buttonIsHovered) {
+            Assets.nice2NinePatch.draw(batch, button.x, button.y, button.width, button.height);
+        } else {
+            Assets.niceNinePatch.draw(batch, button.x, button.y, button.width, button.height);
+        }
+        Assets.glyphLayout.setText(Assets.font, BUTTON_TEXT);
+        Color buttonFontColor = isDisabledNoSlaves ? Color.GRAY : Color.WHITE;
+        Assets.font.setColor(buttonFontColor);
+        Assets.font.draw(
+                batch,
+                BUTTON_TEXT,
+                button.x + (button.width / 2) - (Assets.glyphLayout.width / 2) + 2,
+                button.y + (button.height / 2) + (Assets.glyphLayout.height / 2)
+        );
+
+        Assets.font.setColor(Color.WHITE);
+        batch.setColor(c);
+
     }
 
     public void update(float delta){
 
-        if (!isActive) {
-            return;
-        }
-
-//        setTargetFalloffRangeU(resourceManager.getWhipFalloffRange(resourceType));
-        setTargetFalloffRangeU(0.2f);
-
-        // Click?
-        if (Gdx.input.justTouched()) {
-            int touchX = Gdx.input.getX();
-            int touchY = (Config.height - Gdx.input.getY());
-            if (button.contains(touchX, touchY)) {
-                SoundManager.playWhip();
-                SoundManager.playScream();
-                this.reportCurrentMotivationScore();
-                this.reset();
+        // Cooldown
+        if (isOnCooldown) {
+            cooldownTimer -= delta;
+            if (cooldownTimer <= 0f) {
+                isOnCooldown = false;
+                reset();
+            } else {
+                return;
             }
         }
 
-        // Indicator
-        float indicatorDY = (MotivationGame.INDICATOR_SPEED * delta) * indicatorDirection;
-        this.indicatorPosition += indicatorDY;
-        // check bounds
-        if (this.indicatorPosition >= 1) {
-            this.indicatorDirection *= -1;
-            this.indicatorPosition -= (this.indicatorPosition - 1);
-        } else if (this.indicatorPosition <= 0) {
-            this.indicatorDirection *= -1;
-            this.indicatorPosition += (this.indicatorPosition * -1);
+        // Should we disable the interface due to lack of slaves?
+        isDisabledNoSlaves = (resourceManager.getSlaveAmount(resourceType) == 0);
+
+        if (!isDisabledNoSlaves) {
+
+            // Is the button hovered?
+            float mousePosX = Gdx.input.getX();
+            float mousePosY = Config.height - Gdx.input.getY();
+            buttonIsHovered = button.contains(mousePosX, mousePosY);
+
+            // Update the target range and falloff
+            float whipTargetRange = resourceManager.getWhipTargetRange(resourceType);
+            if (targetRangeU != whipTargetRange) {
+                targetRangeU = whipTargetRange;
+                reset();
+            }
+            targetFalloffRangeU = resourceManager.getWhipFalloffRange(resourceType);
+
+            // Check for button press
+            if (Gdx.input.justTouched()) {
+                int touchX = Gdx.input.getX();
+                int touchY = (Config.height - Gdx.input.getY());
+                if (button.contains(touchX, touchY)) {
+                    if (!onButtonPress()) {
+                        return;
+                    }
+                }
+            }
+
+            // Update the indicator
+            float indicatorDY = (MotivationGame.INDICATOR_SPEED * delta) * indicatorDirection;
+            this.indicatorPosition += indicatorDY;
+            // check bounds
+            if (this.indicatorPosition >= 1) {
+                this.indicatorDirection *= -1;
+                this.indicatorPosition -= (this.indicatorPosition - 1);
+            } else if (this.indicatorPosition <= 0) {
+                this.indicatorDirection *= -1;
+                this.indicatorPosition += (this.indicatorPosition * -1);
+            }
         }
 
     }
