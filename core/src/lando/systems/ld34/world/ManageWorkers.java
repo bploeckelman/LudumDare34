@@ -92,12 +92,26 @@ public class ManageWorkers extends Manage {
         addFarmerTexture  = canBuyFarmer  ? Assets.plusIconOn : Assets.plusIconOff;
         addLoggerTexture  = canBuyLogger  ? Assets.plusIconOn : Assets.plusIconOff;
 
+        final float x = Gdx.input.getX();
+        final float y = LudumDare34.GameScreen.uiCamera.viewportHeight - Gdx.input.getY();
+
+        if (addBuilderButton.contains(x,y)){
+            LudumDare34.GameScreen.hudManager.showTooltip("Buy Skilled Worker for " + buildResource.costOfNextSkilled() + " Gold");
+        }
+        if (addMinerButton.contains(x,y)){
+            LudumDare34.GameScreen.hudManager.showTooltip("Buy Skilled Worker for " + stoneResource.costOfNextSkilled() + " Gold");
+        }
+        if (addFarmerButton.contains(x,y)){
+            LudumDare34.GameScreen.hudManager.showTooltip("Buy Skilled Worker for " + foodResource.costOfNextSkilled() + " Gold");
+        }
+        if (addLoggerButton.contains(x,y)){
+            LudumDare34.GameScreen.hudManager.showTooltip("Buy Skilled Worker for " + woodResource.costOfNextSkilled() + " Gold");
+        }
+
         if (!Gdx.input.justTouched()) {
             return;
         }
 
-        final float x = Gdx.input.getX();
-        final float y = LudumDare34.GameScreen.uiCamera.viewportHeight - Gdx.input.getY();
         if      (addBuilderButton.contains(x,y) && canBuyBuilder) buildResource.upgradeSkilledWorker();
         else if (addMinerButton.contains(x,y)   && canBuyMiner)   stoneResource.upgradeSkilledWorker();
         else if (addFarmerButton.contains(x,y)  && canBuyFarmer)  foodResource.upgradeSkilledWorker();

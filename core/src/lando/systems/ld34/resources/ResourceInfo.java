@@ -127,7 +127,7 @@ public class ResourceInfo {
     }
 
     public int costOfNextSkilled(){
-        return skilledWorkers * skilledWorkers * 10;
+        return (skilledWorkers+1) * (skilledWorkers+1) * 10;
     }
 
     /**
@@ -183,7 +183,7 @@ public class ResourceInfo {
     }
 
     public void addEfficiency(float amount){
-        efficiency += amount * .3f;
+        efficiency += amount * .5f;
         if (efficiency >= maxEfficiency){
             efficiency = maxEfficiency;
         }
