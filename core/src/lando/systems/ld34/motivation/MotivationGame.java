@@ -214,6 +214,20 @@ public class MotivationGame {
                 button.y + (button.height / 2) + (Assets.glyphLayout.height / 2)
         );
 
+        // If we're on cooldown, let's indicate how they did
+        if (isOnCooldown) {
+            String scoreMessage = currentScore == 1f ? "Perfect!" : MathUtils.round(currentScore*100)+"%";
+            Assets.glyphLayout.setText(Assets.font, scoreMessage);
+            Assets.font.setColor(Color.WHITE);
+            Assets.font.draw(
+                    batch,
+                    scoreMessage,
+                    bar.x + (bar.width * indicatorPosition) - (Assets.glyphLayout.width / 2),
+                    bar.y + bar.height + Assets.glyphLayout.height +
+                            (bar.height * (1 - (cooldownTimer / COOLDOWN_TIMER)))
+            );
+        }
+
         Assets.font.setColor(Color.WHITE);
         batch.setColor(c);
 
