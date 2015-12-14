@@ -56,6 +56,8 @@ public class MotivationGame {
     private Rectangle whipIcon;
     private Rectangle whipBorder;
 
+    public static Rectangle gameArea;
+
     private boolean buttonIsHovered = false;
 
     private float indicatorPosition; // Where along the bar to place the indicator, from 0 to 1
@@ -97,6 +99,8 @@ public class MotivationGame {
                 MotivationGame.BUTTON_WIDTH,
                 MotivationGame.BUTTON_HEIGHT
         );
+
+        gameArea = new Rectangle(bg);
 
         ResourceInfo info = this.resourceManager.getResourceInfo(resourceType);
         whipBorder = new Rectangle(info.bgPB.bounds.x + info.bgPB.bounds.width + 5, info.bgPB.bounds.y, bg.width - info.bgPB.bounds.width - 5, info.bgPB.bounds.height);

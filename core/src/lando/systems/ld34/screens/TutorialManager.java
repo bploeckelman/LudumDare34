@@ -15,6 +15,9 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld34.Config;
 import lando.systems.ld34.LudumDare34;
+import lando.systems.ld34.motivation.MotivationGame;
+import lando.systems.ld34.resources.ResourceInfo;
+import lando.systems.ld34.resources.ResourceManager;
 import lando.systems.ld34.uielements.TutorialInfo;
 import lando.systems.ld34.utils.Assets;
 import lando.systems.ld34.world.Area;
@@ -46,24 +49,39 @@ public class TutorialManager {
                 new Rectangle(495, 320, 85, 85)));
 
         //Management Tutorial Section
-        TutorialInfo slaveSelectionTutorial = new TutorialInfo("Here is the Management Screen\nYou get to it by selecting this button", Area.Type.MGMT,
+        TutorialInfo info = new TutorialInfo("Here is the Management Screen\nYou get to it by selecting this button", Area.Type.MGMT,
                 expandRectangle(NavigationLayout.AreaButtons.get(Area.Type.MGMT).Bounds));
-        slaveSelectionTutorial.mgmtScreen = Manage.Type.SLAVES;
-        screens.add(slaveSelectionTutorial);
+        info.mgmtScreen = Manage.Type.SLAVES;
+        screens.add(info);
 
-        TutorialInfo slaveTutorial = new TutorialInfo("This is the Slave Management Screen", Area.Type.MGMT,
+        info = new TutorialInfo("This is the Slave Management Screen", Area.Type.MGMT,
                 expandRectangle(NavigationLayout.ResourceButtons.get(Manage.Type.SLAVES).Bounds));
-        screens.add(slaveTutorial);
+        screens.add(info);
 
-        slaveTutorial = new TutorialInfo("Here you can assign slaves to tasks", Area.Type.MGMT,
+        info = new TutorialInfo("Here you can assign slaves to tasks", Area.Type.MGMT,
                 expandRectangle(AreaMgmt.bounds));
-        slaveTutorial.pos = new Vector2(150, 150);
-        screens.add(slaveTutorial);
+        info.pos = new Vector2(150, 150);
+        screens.add(info);
 
-        TutorialInfo pharoahTutorial = new TutorialInfo("Here is the Pharaoh Screen", Area.Type.MGMT,
+        info = new TutorialInfo("Here is the Pharaoh Screen", Area.Type.MGMT,
                 expandRectangle(NavigationLayout.ResourceButtons.get(Manage.Type.PHAROAH).Bounds));
-        pharoahTutorial.mgmtScreen = Manage.Type.PHAROAH;
-        screens.add(pharoahTutorial);
+        info.mgmtScreen = Manage.Type.PHAROAH;
+        screens.add(info);
+
+        //Woods Tutorial Section
+        screens.add(new TutorialInfo("Here is your Woods\nYou get here by selecting this button", Area.Type.WOODS,
+                expandRectangle(NavigationLayout.AreaButtons.get(Area.Type.WOODS).Bounds)));
+
+        info = new TutorialInfo("You can see how many slaves you have, how effecetive they are and how many resources you have stored up.", Area.Type.WOODS,
+                expandRectangle(LudumDare34.GameScreen.ResourceManager.getResourceInfo(ResourceManager.Resources.WOOD).bgPB.bounds));
+        info.pos = new Vector2(Config.width/2, 150);
+        screens.add(info);
+
+        info = new TutorialInfo("When your slaves get lazy, you will have to 'motivate' them", Area.Type.WOODS,
+                expandRectangle(MotivationGame.gameArea));
+        info.pos = new Vector2(Config.width/2, 150);
+        screens.add(info);
+
 
         //Quarry Tutorial Section
         screens.add(new TutorialInfo("Here is your Quarry\nYou get here by selecting this button", Area.Type.QUARRY,
