@@ -42,8 +42,8 @@ public class Background {
 
     public void render (SpriteBatch batch){
         float percentComplete = LudumDare34.GameScreen.gameTimer / GameScreen.gameLength;
-        sunRect.x = (Config.width * 4) - (xOffset.floatValue() * scale) + 550;
-        float moonWorldPos = MathUtils.lerp(10, (Config.width * 4) + 550, percentComplete);
+        sunRect.x = (Config.width * 4) - (xOffset.floatValue() * scale) + 500;
+        float moonWorldPos = MathUtils.lerp(10, (Config.width * 4) + 500, percentComplete);
         moonRect.x = moonWorldPos - (xOffset.floatValue() * scale);
         moonRect.y = 320 + (MathUtils.sinDeg(percentComplete * 270 - 90) * 100);
 
