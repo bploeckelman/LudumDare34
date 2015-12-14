@@ -151,12 +151,38 @@ public class ManageUpgrades extends Manage {
         foodUpgradeTex   = resources.canUpgrade(ResourceManager.Resources.FOOD)  ? Assets.plusIconOn : Assets.plusIconOff;
         forestUpgradeTex = resources.canUpgrade(ResourceManager.Resources.WOOD)  ? Assets.plusIconOn : Assets.plusIconOff;
 
+        final float x = Gdx.input.getX();
+        final float y = LudumDare34.GameScreen.uiCamera.viewportHeight - Gdx.input.getY();
+
+        if (stoneUpgradeButton.contains(x, y)){
+            LudumDare34.GameScreen.hudManager.showTooltip("Upgrade your Quarry for " + stoneResource.woodToUpgade() + " Wood");
+        }
+        if (buildingUpgradeButton.contains(x, y)){
+            LudumDare34.GameScreen.hudManager.showTooltip("Upgrade your Pyramid Building for " + buildResource.woodToUpgade() + " Wood");
+        }
+        if (foodUpgradeButton.contains(x, y)){
+            LudumDare34.GameScreen.hudManager.showTooltip("Upgrade your Farms for " + foodResource.woodToUpgade() + " Wood");
+        }
+        if (forestUpgradeButton.contains(x, y)){
+            LudumDare34.GameScreen.hudManager.showTooltip("Upgrade your Lumbercamps for " + foodResource.woodToUpgade() + " Wood");
+        }
+
+        if (availableFoodBar.bounds.contains(x, y) || availableForestBar.bounds.contains(x, y) || availableStoneBar.bounds.contains(x,y)){
+            LudumDare34.GameScreen.hudManager.showTooltip("Your Current Resources");
+        }
+
+        if (availableBuildingSlavesBar.bounds.contains(x,y) || availableFoodSlavesBar.bounds.contains(x,y) || availableForestSlavesBar.bounds.contains(x,y) || availableStoneSlavesBar.bounds.contains(x,y)){
+            LudumDare34.GameScreen.hudManager.showTooltip("Slaves Assigned of Max");
+        }
+
+        if (availableWoodBar.bounds.contains(x,y)){
+            LudumDare34.GameScreen.hudManager.showTooltip("Wood available for Upgrades");
+        }
+
         if (!Gdx.input.justTouched()) {
             return;
         }
 
-        final float x = Gdx.input.getX();
-        final float y = LudumDare34.GameScreen.uiCamera.viewportHeight - Gdx.input.getY();
         if (stoneUpgradeButton.contains(x,y) && resources.canUpgrade(ResourceManager.Resources.STONE)) {
             stoneResource.upgradeLevel();
         }

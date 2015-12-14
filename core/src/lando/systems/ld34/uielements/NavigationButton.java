@@ -36,7 +36,7 @@ public abstract class NavigationButton {
 
     public void update(Vector3 mousePos, boolean clicked) {
         Highlighted = Bounds.contains(mousePos.x, mousePos.y);
-        if (Highlighted && !Selected){
+        if (Highlighted){
             LudumDare34.GameScreen.hudManager.showTooltip(ToolTipText);
         }
         if (Highlighted && !Selected && clicked) {

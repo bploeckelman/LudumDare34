@@ -19,10 +19,15 @@ public class HUDManager {
     Array<NotificationWindow> notifications;
 
     private String toolTipString;
+    private String lastToolTipString;
+    private float toolTipDelay;
+
+    private static final float TooltipDelay = .5f;
 
     public HUDManager(){
         notifications = new Array<NotificationWindow>();
         tooltipRect = new Rectangle();
+        lastToolTipString = null;
 
     }
 
@@ -40,6 +45,7 @@ public class HUDManager {
 
     public void update(float dt){
         NotificationWindow item;
+        toolTipDelay -= dt;
         int len = notifications.size;
         for (int i = len; --i >= 0;) {
             item = notifications.get(i);
@@ -57,11 +63,10 @@ public class HUDManager {
     public void render(SpriteBatch batch){
         float mouseX = LudumDare34.GameScreen.mouseScreenPos.x;
         float mouseY = LudumDare34.GameScreen.mouseScreenPos.y;
-        for (NotificationWindow not : notifications){
+        for (NotificationWindow not : notifications) {
             not.render(batch, not.rect.contains(mouseX, mouseY));
         }
-
-        if (toolTipString != null){
+        if (toolTipString != null && toolTipDelay <= 0){
 
             Assets.glyphLayout.setText(Assets.HUDFont, toolTipString, Color.WHITE, 100, Align.center, true);
             tooltipRect.width = 120;
@@ -72,15 +77,21 @@ public class HUDManager {
                 tooltipRect.x = mouseX - tooltipRect.width - 10;
             }
             if(mouseY < Config.height/2) {
-                tooltipRect.y = mouseY;
+                tooltipRect.y = mouseY + 10;
             } else {
-                tooltipRect.y = mouseY - tooltipRect.height;
+                tooltipRect.y = mouseY - tooltipRect.height - 10;
             }
 
             Assets.nice2NinePatch.draw(batch, tooltipRect.x, tooltipRect.y, tooltipRect.width, tooltipRect.height);
             Assets.HUDFont.draw(batch, Assets.glyphLayout, tooltipRect.x + 10, tooltipRect.y + (tooltipRect.height - 10));
 
         }
+
+        if (toolTipString == null || !toolTipString.equals(lastToolTipString)) {
+            toolTipDelay = TooltipDelay;
+        }
+
+        lastToolTipString = toolTipString;
         toolTipString = null;
     }
 }
