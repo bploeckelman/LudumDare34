@@ -86,7 +86,7 @@ public class Assets {
         HUDFont = new BitmapFont();
         HUDFont.getData().setScale(1f);
 
-        background = new Texture("background.jpg");
+        background = new Texture("background.png");
         testTexture = new Texture("badlogic.jpg");
         whiteTexture = new Texture("pixel.png");
         boxTexture = new Texture("box.png");

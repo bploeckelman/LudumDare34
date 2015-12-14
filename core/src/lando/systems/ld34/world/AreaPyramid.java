@@ -35,6 +35,7 @@ public class AreaPyramid extends Area {
 
     @Override
     public void render(SpriteBatch batch) {
+        gameScreen.ResourceManager.render(resourceType, batch);
         gameScreen.Pyramid.render(batch);
         mg.render(batch);
     }
