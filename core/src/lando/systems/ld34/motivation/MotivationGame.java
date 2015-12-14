@@ -6,10 +6,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld34.Config;
 import lando.systems.ld34.LudumDare34;
 import lando.systems.ld34.resources.ResourceManager;
 import lando.systems.ld34.utils.Assets;
+import lando.systems.ld34.utils.ParticleManager;
 import lando.systems.ld34.utils.SoundManager;
 
 public class MotivationGame {
@@ -62,6 +64,8 @@ public class MotivationGame {
     private boolean isDisabledNoSlaves = true;
     private boolean isDisabledHighEfficiency = false;
 
+    private ParticleManager particleManager;
+
 
     // Construct -------------------------------------------------------------------------------------------------------
 
@@ -70,7 +74,7 @@ public class MotivationGame {
      * @param resourceType String
      */
     public MotivationGame(ResourceManager resourceManager, ResourceManager.Resources resourceType) {
-
+        particleManager = new ParticleManager();
         this.resourceManager = resourceManager;
         this.resourceType = resourceType;
 
@@ -150,6 +154,8 @@ public class MotivationGame {
         resourceManager.addEfficiency(resourceType, score);
         if (MathUtils.random() > score){
             if (resourceManager.removeSlaves(resourceType, 1) > 0) {
+                particleManager.addBlood(new Vector2(bg.x + bg.width/2, bg.y + bg.height + 54), 500);
+                LudumDare34.GameScreen.hudManager.addNotification("You Killed a Slave");
                 SoundManager.playScream();
                 shakeDuration = 1f;
             }
@@ -162,6 +168,7 @@ public class MotivationGame {
      * @return boolean Whether or not the update function should continue.
      */
     private boolean onButtonPress() {
+        particleManager.addBlood(new Vector2(bg.x + bg.width/2, bg.y + bg.height + 54), 100);
         SoundManager.playWhip();
         currentScore = getCurrentMotivationScore();
         reportMotivationScore(currentScore);
@@ -176,11 +183,7 @@ public class MotivationGame {
 
         Color c = batch.getColor();
 
-        final float sz = 64f;
-        batch.draw(Assets.whippingTexture,
-                   bg.x + bg.width / 2f - sz / 2f,
-                   bg.y + bg.height + 20f,
-                   sz, sz);
+
 
         // Game BG
         Assets.nice2NinePatch.draw(batch, bg.x, bg.y, bg.width, bg.height);
@@ -249,12 +252,21 @@ public class MotivationGame {
             );
         }
 
+        particleManager.render(batch);
+
+        final float sz = 64f;
+        batch.draw(Assets.whippingTexture,
+                bg.x + bg.width / 2f - sz / 2f,
+                bg.y + bg.height + 20f,
+                sz, sz);
+
         Assets.font.setColor(Color.WHITE);
         batch.setColor(c);
 
     }
 
     public void update(float delta){
+        particleManager.update(delta);
 
         // Cooldown
         if (isOnCooldown) {
