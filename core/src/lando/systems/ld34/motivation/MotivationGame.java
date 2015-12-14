@@ -27,7 +27,7 @@ public class MotivationGame {
     private final static float BUTTON_WIDTH = 96f;
     private final static float BUTTON_X = 238f;
     private final static float BUTTON_Y = 6f;
-    private final static String BUTTON_TEXT = "Encourage!";
+    private final static String BUTTON_TEXT = "Motivate!";
 
     private final static float BAR_HEIGHT = 34f; // pixels
     private final static float BAR_WIDTH = 226f; // pixels
@@ -39,7 +39,7 @@ public class MotivationGame {
     private final static float COOLDOWN_TIMER = 0.5f;
 
     private final static String DISABLED_NO_SLAVES_MESSAGE = "No slaves to motivate.";
-    private final static String DISABLED_EFFICIENT = "No encouragement needed.";
+    private final static String DISABLED_EFFICIENT = "No motivation required at this time.";
 
     private ResourceManager resourceManager;
     private ResourceManager.Resources resourceType;
@@ -223,13 +223,19 @@ public class MotivationGame {
         }
 
         // Button
-        if (buttonIsHovered) {
+        if (buttonIsHovered && !isDisabledHighEfficiency && !isDisabledNoSlaves) {
             Assets.nice2NinePatch.draw(batch, button.x, button.y, button.width, button.height);
         } else {
+            if (isDisabledNoSlaves || isDisabledHighEfficiency) {
+                batch.setColor(0.5f, 0.5f, 0.5f, 1f);
+            } else {
+                batch.setColor(1f, 1f, 1f, 1f);
+            }
             Assets.niceNinePatch.draw(batch, button.x, button.y, button.width, button.height);
         }
+        batch.setColor(1f, 1f, 1f, 1f);
         Assets.glyphLayout.setText(Assets.font, BUTTON_TEXT);
-        Color buttonFontColor = isDisabledNoSlaves ? Color.GRAY : Color.WHITE;
+        Color buttonFontColor = (isDisabledNoSlaves || isDisabledHighEfficiency) ? Color.GRAY : Color.WHITE;
         Assets.font.setColor(buttonFontColor);
         Assets.font.draw(
                 batch,
