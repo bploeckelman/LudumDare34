@@ -2,6 +2,7 @@ package lando.systems.ld34.resources;
 
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld34.Config;
@@ -32,19 +33,31 @@ public class ResourceInfo {
 
 
     // Center Top of panel
-    Vector2 screenPos = new Vector2(Config.width/2, Config.height - 50);
+    Vector2 screenPos = new Vector2(Config.width/2 - 40f, Config.height - 50);
     private String typeLabel = "";
+    private ProgressBar bgPB;
     private ProgressBar amountPB;
     private ProgressBar effPB;
     private ProgressBar slavePB;
+    private Color color;
 
     public ResourceInfo(ResourceManager.Resources type){
-        amountPB = new ProgressBar();
-        amountPB.bounds = new Rectangle(screenPos.x, screenPos.y, 120, 20);
-        effPB = new ProgressBar();
-        effPB.bounds = new Rectangle(screenPos.x, screenPos.y - 30, 120, 20);
-        slavePB = new ProgressBar();
-        slavePB.bounds = new Rectangle(screenPos.x, screenPos.y - 60, 120, 20);
+        bgPB     = new ProgressBar(Assets.nice2NinePatch);
+        amountPB = new ProgressBar(Assets.nice2NinePatch);
+        effPB    = new ProgressBar(Assets.nice2NinePatch);
+        slavePB  = new ProgressBar(Assets.nice2NinePatch);
+        final float bgw = 220f;
+        final float bgh = 120f;
+        bgPB     .bounds.set(screenPos.x - 80f, screenPos.y - 80f, bgw, bgh);
+        amountPB .bounds.set(screenPos.x, screenPos.y, 120, 20);
+        effPB    .bounds.set(screenPos.x, screenPos.y - 30, 120, 20);
+        slavePB  .bounds.set(screenPos.x, screenPos.y - 60, 120, 20);
+        final Color boundsColor = new Color(160f / 255f, 82f / 255f, 45f / 255f, 1f);
+        bgPB     .boundsColor.set(1f, 1f, 1f, 1f);
+        amountPB .boundsColor = boundsColor;
+        effPB    .boundsColor = boundsColor;
+        slavePB  .boundsColor = boundsColor;
+        color = new Color();
         amount = 10;
         slaves = 1;
         maxAmount = 100;
@@ -200,16 +213,25 @@ public class ResourceInfo {
 
 
     public void render(SpriteBatch batch){
+        float n;
+
+        bgPB.render(batch);
+
         GlyphLayout layout = new GlyphLayout(Assets.font, typeLabel);
         Assets.font.draw(batch, typeLabel, amountPB.bounds.x - (layout.width + 1), amountPB.bounds.y + (amountPB.bounds.height / 2) + layout.height / 2);
-        amountPB.fillPercent.setValue((amount-lastMaxAmount) / (maxAmount-lastMaxAmount));
+        n = (amount - lastMaxAmount) / (float) (maxAmount - lastMaxAmount);
+        Utils.hsvToRgb(n * 120f / 365f, 1.0f, 1.0f, color);
+        amountPB.fillColor.set(color);
+        amountPB.fillPercent.setValue(n);
         amountPB.render(batch);
         String amountText = (int)amount+"/"+maxAmount;
         layout.setText(Assets.font, amountText);
         Assets.font.draw(batch, amountText, amountPB.bounds.x + (amountPB.bounds.width / 2) - layout.width / 2, amountPB.bounds.y + (amountPB.bounds.height / 2) + layout.height / 2);
 
-            layout.setText(Assets.font, "Efficiency");
+        layout.setText(Assets.font, "Efficiency");
         Assets.font.draw(batch, "Efficiency", effPB.bounds.x - (layout.width + 1), effPB.bounds.y + (effPB.bounds.height / 2) + layout.height / 2);
+        Utils.hsvToRgb(efficiency * 120f / 365f, 1.0f, 1.0f, color);
+        effPB.fillColor.set(color);
         effPB.fillPercent.setValue(efficiency);
         effPB.render(batch);
         amountText = (int)(efficiency*100)+"%";
@@ -218,7 +240,10 @@ public class ResourceInfo {
 
         layout.setText(Assets.font, "Slaves");
         Assets.font.draw(batch, "Slaves", slavePB.bounds.x - (layout.width + 1), slavePB.bounds.y + (slavePB.bounds.height / 2) + layout.height / 2);
-        slavePB.fillPercent.setValue((float)slaves/maxSlaves);
+        n = slaves / (float) maxSlaves;
+        Utils.hsvToRgb(n * 120f / 365f, 1.0f, 1.0f, color);
+        slavePB.fillColor.set(color);
+        slavePB.fillPercent.setValue(n);
         slavePB.render(batch);
         amountText = (slaves)+"/"+maxSlaves;
         layout.setText(Assets.font, amountText);
