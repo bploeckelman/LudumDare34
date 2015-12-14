@@ -47,6 +47,7 @@ public class GameScreen extends AbstractScreen {
     private final static float SCENEFADE = .3f;
     private final static float BACKGROUNDTRANSITION = .5f;
     public final static float gameLength = 600f;
+    public final static GameStats stats = new GameStats();     // Hope we never need to restart this game
     public float gameTimer;
     public Shake shaker;
 

@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld34.Config;
 import lando.systems.ld34.LudumDare34;
+import lando.systems.ld34.screens.GameScreen;
 import lando.systems.ld34.uielements.ProgressBar;
 import lando.systems.ld34.utils.Assets;
 import lando.systems.ld34.utils.Utils;
@@ -63,7 +64,7 @@ public class ResourceInfo {
         maxAmount = 100;
         maxEfficiency = 1;
         minEfficiency = 0;
-        maxSlaves = 5;
+        maxSlaves = 4;
         efficiency = 1;
         skilledWorkers = 0;
         level = 1;
@@ -97,7 +98,7 @@ public class ResourceInfo {
     }
 
     public void update(float dt){
-        efficiency -= effDecay*dt;
+        if (slaves > 0) efficiency -= effDecay*dt;
         if (efficiency < 0) efficiency = 0;
 
         switch (type){
@@ -105,6 +106,7 @@ public class ResourceInfo {
                 int nextSlave = LudumDare34.GameScreen.ResourceManager.nextSlaveFoodAmount;
                 if (LudumDare34.GameScreen.ResourceManager.removeResource(ResourceManager.Resources.FOOD, nextSlave)){
                     LudumDare34.GameScreen.addNotification("Slave Born");
+                    GameScreen.stats.slavesBorn++;
                     slaves++;
                 }
                 break;
@@ -123,7 +125,7 @@ public class ResourceInfo {
                 }
                 break;
             default:
-                maxAmount = 50 * (level * level);
+                maxAmount = 50 * (level);
                 amount += (slaves * efficiency * dt);
                 if (amount > maxAmount) amount = maxAmount;
         }
@@ -170,7 +172,7 @@ public class ResourceInfo {
         int wood = woodToUpgade();
         if (LudumDare34.GameScreen.ResourceManager.removeResource(ResourceManager.Resources.WOOD, wood)){
             level++;
-            maxSlaves = level * 5;
+            maxSlaves = level * 4;
             return true;
         }
         return false;

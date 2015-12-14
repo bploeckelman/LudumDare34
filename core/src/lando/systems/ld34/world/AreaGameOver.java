@@ -23,7 +23,7 @@ public class AreaGameOver extends Area {
         worldX = 4;
 
         float w = gameScreen.uiCamera.viewportWidth / 1.6f;
-        float h = gameScreen.uiCamera.viewportHeight / 2f;
+        float h = gameScreen.uiCamera.viewportHeight / 2.5f;
         float x = 10;
         float y = gameScreen.uiCamera.viewportHeight  -  (h + 10) ;
         bounds = new Rectangle(x, y, w, h);
@@ -57,9 +57,12 @@ public class AreaGameOver extends Area {
             currentY -= Assets.glyphLayout.height + 15;
             Assets.glyphLayout.setText(Assets.font, "Your grew your pyramid to " + LudumDare34.GameScreen.ResourceManager.getPyramidHeight() + " tiers tall.", Color.WHITE, bounds.width - 20, Align.center, true);
             Assets.font.draw(batch, Assets.glyphLayout, bounds.x + 10, currentY);
-            currentY -= Assets.glyphLayout.height + 5;
+            currentY -= Assets.glyphLayout.height + 10;
+            Assets.glyphLayout.setText(Assets.font, GameScreen.stats.getSlaveInfo(), Color.WHITE, bounds.width - 20, Align.center, true);
+            Assets.font.draw(batch, Assets.glyphLayout, bounds.x + 10, currentY);
+
         } else {
-            float currentY = bounds.y + bounds.height - 60;
+            float currentY = bounds.y + bounds.height - 30;
             Assets.glyphLayout.setText(Assets.font, "Made for Ludum Dare 34 by:", Color.WHITE, bounds.width - 20, Align.center, true);
             Assets.font.draw(batch, Assets.glyphLayout, bounds.x + 10, currentY);
             currentY -= Assets.glyphLayout.height + 15;

@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld34.Config;
 import lando.systems.ld34.LudumDare34;
 import lando.systems.ld34.resources.ResourceManager;
+import lando.systems.ld34.screens.GameScreen;
 import lando.systems.ld34.utils.Assets;
 import lando.systems.ld34.utils.ParticleManager;
 import lando.systems.ld34.utils.SoundManager;
@@ -154,9 +155,10 @@ public class MotivationGame {
         resourceManager.addEfficiency(resourceType, score);
         if (MathUtils.random() > score){
             if (resourceManager.removeSlaves(resourceType, 1) > 0) {
-                particleManager.addBlood(new Vector2(button.x + button.width/2, bg.y - 32), 500);
+                particleManager.addBlood(new Vector2(button.x + button.width / 2, bg.y - 32), 500);
                 LudumDare34.GameScreen.hudManager.addNotification("You Killed a Slave");
                 SoundManager.playScream();
+                GameScreen.stats.slavesKilledMotivating++;
                 shakeDuration = 1f;
             }
         }
@@ -168,6 +170,7 @@ public class MotivationGame {
      * @return boolean Whether or not the update function should continue.
      */
     private boolean onButtonPress() {
+        GameScreen.stats.motivations++;
         particleManager.addBlood(new Vector2(button.x + button.width/2, bg.y - 32), 100);
         SoundManager.playWhip();
         currentScore = getCurrentMotivationScore();
