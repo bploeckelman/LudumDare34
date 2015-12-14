@@ -149,6 +149,10 @@ public class ResourceInfo {
         return (level * (level+1))/2*10;
     }
 
+    public int costToTrade() {
+        return 10;
+    }
+
     public boolean upgradeLevel(){
         int wood = woodToUpgade();
         if (LudumDare34.GameScreen.ResourceManager.removeResource(ResourceManager.Resources.WOOD, wood)){

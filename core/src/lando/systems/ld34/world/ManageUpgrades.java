@@ -88,13 +88,6 @@ public class ManageUpgrades extends Manage {
         availableFoodSlavesBar     .fillColor.set(0f, 0.5f, 0f, 1f);
         availableForestSlavesBar   .fillColor.set(0f, 0.5f, 0f, 1f);
 
-        final float barWidth = bounds.width / 3f;
-        final float leftMargin = bounds.x + bounds.width - barWidth - 2f * (buttonSize + widgetPadding) - 20f;
-        final float barHeight     = 20f;
-        final float lineSpacing   = 10f;
-        final float widgetPadding = 10f;
-        final float buttonSize    = 20f;
-        final float barTop = bounds.y + bounds.height - 100f;
         final float barWidth1 = (barWidth + 1.0f * buttonSize + widgetPadding) / 2f;
         availableWoodBar          .bounds.set(leftMargin,             barTop - 0f * (barHeight + lineSpacing), barWidth  + 2.0f *(buttonSize + widgetPadding), barHeight);
         availableBuildingSlavesBar.bounds.set(leftMargin,             barTop - 1f * (barHeight + lineSpacing), barWidth1 * 2.0f, barHeight);
@@ -164,7 +157,7 @@ public class ManageUpgrades extends Manage {
             LudumDare34.GameScreen.hudManager.showTooltip("Upgrade your Farms for " + foodResource.woodToUpgade() + " Wood");
         }
         if (forestUpgradeButton.contains(x, y)){
-            LudumDare34.GameScreen.hudManager.showTooltip("Upgrade your Lumbercamps for " + foodResource.woodToUpgade() + " Wood");
+            LudumDare34.GameScreen.hudManager.showTooltip("Upgrade your Lumber camps for " + woodResource.woodToUpgade() + " Wood");
         }
 
         if (availableFoodBar.bounds.contains(x, y) || availableForestBar.bounds.contains(x, y) || availableStoneBar.bounds.contains(x,y)){

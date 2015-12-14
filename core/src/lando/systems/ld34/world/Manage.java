@@ -74,10 +74,11 @@ public abstract class Manage {
         final float n = availableBar.fillPercent.floatValue();
 
         availableBar.render(batch);
-        Assets.font.setColor(1f - n, n, 0, 1f);
+        if (numTotal >= 0) Assets.font.setColor(1f - n, n, 0, 1f);
+        else               Assets.font.setColor(Color.WHITE);
         Assets.font.draw(batch, labelText, x, y);
 
-        final String availableText = numAvailable + "/" + numTotal;
+        final String availableText = numAvailable + (numTotal >= 0 ? "/" + numTotal : "");
         glyphLayout.setText(Assets.fontSmall, availableText);
         Assets.fontSmall.setColor(Color.WHITE);
         Assets.fontSmall.draw(batch, availableText,
@@ -110,6 +111,33 @@ public abstract class Manage {
         glyphLayout.setText(Assets.fontSmall, buildingText);
         Assets.fontSmall.setColor(Color.WHITE);
         Assets.fontSmall.draw(batch, buildingText,
+                              progressBar.bounds.x + progressBar.bounds.width / 2f - glyphLayout.width / 2f,
+                              progressBar.bounds.y + progressBar.bounds.height / 2f + glyphLayout.height / 2f);
+    }
+
+    protected void drawUpgrade1ColRow(SpriteBatch batch,
+                                      String labelText,
+                                      ProgressBar progressBar,
+                                      Texture upgradeTexture,
+                                      Rectangle upgradeButton,
+                                      int availableItems,
+                                      int availableItemsMax) {
+        glyphLayout.setText(Assets.font, labelText);
+        final float x = MathUtils.floor(progressBar.bounds.x - glyphLayout.width - widgetPadding);
+        final float y = progressBar.bounds.y + progressBar.bounds.height / 2f + glyphLayout.height / 2f;
+        final float n = availableItems / (float) availableItemsMax;
+
+        progressBar.render(batch);
+        batch.draw(upgradeTexture, upgradeButton.x, upgradeButton.y, buttonSize, buttonSize);
+
+        Assets.font.setColor(1f - n, n, 0f, 1f);
+        if (availableItemsMax >= 0) Assets.font.setColor(1f - n, n, 0, 1f);
+        else                        Assets.font.setColor(Color.WHITE);
+        Assets.font.draw(batch, labelText, x, y);
+
+        final String itemText = availableItems + (availableItemsMax >= 0 ? "/" + availableItemsMax : "");
+        glyphLayout.setText(Assets.fontSmall, itemText);
+        Assets.fontSmall.draw(batch, itemText,
                               progressBar.bounds.x + progressBar.bounds.width / 2f - glyphLayout.width / 2f,
                               progressBar.bounds.y + progressBar.bounds.height / 2f + glyphLayout.height / 2f);
     }

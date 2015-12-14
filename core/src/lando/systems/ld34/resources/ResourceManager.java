@@ -115,7 +115,19 @@ public class ResourceManager {
         return resources.get(Resources.WOOD).amount > resources.get(type).woodToUpgade();
     }
 
+    public boolean canTrade(Resources type) {
+        return resources.get(type).amount >= resources.get(type).costToTrade();
+    }
+
     public void upgradeResource(Resources type){
         resources.get(type).upgradeLevel();
     }
+
+    public void tradeResource(Resources type) {
+        if (!canTrade(type)) return;
+        if (removeResource(type, resources.get(type).costToTrade())) {
+            addAmount(Resources.GOLD, 1);
+        }
+    }
+
 }
