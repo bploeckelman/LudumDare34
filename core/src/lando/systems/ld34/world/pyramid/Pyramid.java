@@ -9,7 +9,6 @@ import lando.systems.ld34.resources.ResourceManager;
 import lando.systems.ld34.utils.Assets;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Created by Brian on 12/12/2015.
@@ -52,7 +51,17 @@ public class Pyramid {
         _leftRightList.add(leftRight);
     }
 
+   // float _time = 0;
+
     public void update(float delta) {
+/*
+        _time += delta;
+        if (_time > 2) {
+            addBlock();
+            _time = 0;
+        }
+*/
+
         // check for new blocks
         if ((int) LudumDare34.GameScreen.ResourceManager.getAmount(ResourceManager.Resources.BUILD) > _blocks.size()) {
             addBlock();
@@ -115,6 +124,10 @@ public class Pyramid {
     private void placeBlock(PyramidBlock block) {
         block.isPlaced = true;
         _pyramidHeight = Math.max(_pyramidHeight, (block.finalRow + 1));
+
+        if (((BlockSize / _scale) * _pyramidHeight) > _bounds.height) {
+            _scale *= 2;
+        }
     }
 
     public void render(SpriteBatch batch) {
@@ -123,7 +136,7 @@ public class Pyramid {
 
         float scaleOffset = ((_scale - 1) / (_scale * 2));
         float xOffset = _bounds.width * scaleOffset;
-        float yOffset = _bounds.y * scaleOffset;
+        float yOffset = _bounds.y * ((_scale -1) / _scale);
         batch.setColor(Color.WHITE);
         for (PyramidBlock block : _blocks) {
              batch.draw(block.image, xOffset + block.bounds.x / _scale, yOffset + block.bounds.y / _scale, block.bounds.width /_scale, block.bounds.height /_scale);

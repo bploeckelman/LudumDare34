@@ -60,10 +60,7 @@ public class GameScreen extends AbstractScreen {
         hudManager = new HUDManager();
         LudumDare34.GameScreen = this;
 
-        float w = uiCamera.viewportWidth;
-        float h = uiCamera.viewportHeight - uiCamera.viewportHeight / 6f;
-        float y = uiCamera.viewportHeight / 2f - h / 2f;
-        Pyramid = new Pyramid(new Rectangle(0, y, w, h));
+        Pyramid = new Pyramid(new Rectangle(0, 40, uiCamera.viewportWidth, 250));
 
         batch = Assets.batch;
 
