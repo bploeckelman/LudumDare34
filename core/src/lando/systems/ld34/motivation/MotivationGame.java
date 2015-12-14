@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import lando.systems.ld34.Config;
+import lando.systems.ld34.LudumDare34;
 import lando.systems.ld34.resources.ResourceManager;
 import lando.systems.ld34.utils.Assets;
 import lando.systems.ld34.utils.SoundManager;
@@ -145,12 +146,15 @@ public class MotivationGame {
     }
 
     private void reportMotivationScore(float score) {
+        float shakeDuration = 0.5f;
         resourceManager.addEfficiency(resourceType, score);
         if (MathUtils.random() > score){
             if (resourceManager.removeSlaves(resourceType, 1) > 0) {
                 SoundManager.playScream();
+                shakeDuration = 1f;
             }
         }
+        LudumDare34.GameScreen.shaker.shake(shakeDuration);
     }
 
     /**
@@ -190,7 +194,7 @@ public class MotivationGame {
                     DISABLED_NO_SLAVES_MESSAGE,
                     bar.x + (bar.width / 2) - (Assets.glyphLayout.width / 2) + 2,
                     bar.y + (bar.height / 2) + (Assets.glyphLayout.height / 2)
-            );
+                            );
         } else if (isDisabledHighEfficiency) {
             Assets.glyphLayout.setText(Assets.font, DISABLED_EFFICIENT);
             Assets.font.setColor(Color.WHITE);

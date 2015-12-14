@@ -45,9 +45,9 @@ public class AreaPyramid extends Area {
                 gameScreen.camera.viewportHeight / 2f - glyphLayout.height / 2f);
         Assets.font.setColor(1f, 1f, 1f, 1f);
         gameScreen.ResourceManager.render(resourceType, batch);
-        mg.render(batch);
         batch.setColor(1f, 1f, 1f, 1f);
 
         gameScreen.Pyramid.render(batch);
+        mg.render(batch);
     }
 }

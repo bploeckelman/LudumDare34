@@ -20,6 +20,7 @@ import lando.systems.ld34.uielements.AreaButton;
 import lando.systems.ld34.uielements.ManagementButton;
 import lando.systems.ld34.uielements.PyramidButton;
 import lando.systems.ld34.utils.Assets;
+import lando.systems.ld34.utils.camera.Shake;
 import lando.systems.ld34.world.*;
 import lando.systems.ld34.world.pyramid.Pyramid;
 
@@ -47,6 +48,7 @@ public class GameScreen extends AbstractScreen {
     private final static float BACKGROUNDTRANSITION = .5f;
     public final static float gameLength = 600f;
     public float gameTimer;
+    public Shake shaker;
 
     public GameScreen(LudumDare34 game) {
         super(game);
@@ -82,6 +84,8 @@ public class GameScreen extends AbstractScreen {
         SetupNavigation(layout);
         sceneAlpha.setValue(1);
         TransitionToArea(AreaButton.SelectedButton.AreaLocation);
+
+        shaker = new Shake(120, 2.0f);
     }
 
     public void TransitionToArea(Area.Type area) {
@@ -177,6 +181,7 @@ public class GameScreen extends AbstractScreen {
         currentArea.update(delta);
         Pyramid.update(delta);
         hudManager.update(delta);
+        shaker.update(delta, camera, Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
     }
 
     @Override
