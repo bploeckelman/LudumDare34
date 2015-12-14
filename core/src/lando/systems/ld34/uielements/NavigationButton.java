@@ -14,10 +14,6 @@ import lando.systems.ld34.utils.Assets;
  */
 public abstract class NavigationButton {
 
-    public enum AlertLevel {
-        None, Warning, Critical
-    }
-
     public Rectangle Bounds;
     public Texture Image;
     public String Text;
@@ -29,7 +25,9 @@ public abstract class NavigationButton {
 
     public float SelectionThickness = 3f;
 
-    public AlertLevel alertLevel;
+    public float efficiencyLevel = 100;
+    private double _alertTime = 0;
+    private Color _alertColor;
 
     public NavigationButton(String text, Texture image, String tooltipText) {
         Text = text;
@@ -44,6 +42,24 @@ public abstract class NavigationButton {
         Highlighted = Bounds.contains(mousePos.x, mousePos.y);
         if (Highlighted){
             LudumDare34.GameScreen.hudManager.showTooltip(ToolTipText);
+        }
+
+        if (efficiencyLevel > 40) {
+            _alertTime = 0f;
+        } else {
+            _alertTime += delta;
+
+            Color red = new Color(1f, 0f, 0f, 1f);
+            _alertColor = new Color(1f, 1f, 0f, 1f);
+
+            float level = (efficiencyLevel / 40f);
+
+            _alertColor.lerp(red, (1 - level));
+
+            float flashSpeed = 4 + ((1 - level) *4);
+
+            float flash =(float) ((Math.sin(flashSpeed * _alertTime) + 1) /2);
+            _alertColor.lerp(ImageColor, flash);
         }
 
         if (Highlighted && !Selected && clicked) {
@@ -62,7 +78,11 @@ public abstract class NavigationButton {
         }
 
         if (Image != null) {
-            batch.setColor(ImageColor);
+            if (_alertTime > 0) {
+                batch.setColor(_alertColor);
+            } else {
+                batch.setColor(ImageColor);
+            }
             batch.draw(Image, Bounds.x, Bounds.y, Bounds.width, Bounds.height);
         } else {
             batch.setColor(highlight ? Color.YELLOW : Color.BLACK);
@@ -73,8 +93,8 @@ public abstract class NavigationButton {
 
             Assets.font.draw(batch,
                     Text,
-                    Bounds.x + (Bounds.width - _glyphLayout.width)/2,
-                    Bounds.y + (Bounds.height + _glyphLayout.height)/2);
+                    Bounds.x + (Bounds.width - _glyphLayout.width) / 2,
+                    Bounds.y + (Bounds.height + _glyphLayout.height) / 2);
         }
 
         if (Selected && (Image != null)) {
