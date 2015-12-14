@@ -28,7 +28,7 @@ public class Background {
     public Color darkColor;
 
     public Background(){
-        xOffset = new MutableFloat(0);
+        xOffset = new MutableFloat(3 * 256);
         float aspect = (float)Config.width/Config.height;
         scale = Config.width / (Assets.background.getWidth()/8f);
 

@@ -80,13 +80,14 @@ public class GameScreen extends AbstractScreen {
 
         layout = new NavigationLayout(this);
         SetupNavigation(layout);
-
+        sceneAlpha.setValue(1);
         TransitionToArea(AreaButton.SelectedButton.AreaLocation);
     }
 
     public void TransitionToArea(Area.Type area) {
         NavigationLayout.CurrentArea = area;
         final Area nextArea = areaMap.get(area);
+        if (currentArea == nextArea) return;
         Timeline.createSequence()
                 .push(Tween.to(sceneAlpha, 1, SCENEFADE)
                       .target(0))
@@ -132,14 +133,16 @@ public class GameScreen extends AbstractScreen {
         navLayout.add(new PyramidButton(pyramidBounds));
 
         ManagementButton skillsManagementButton = new ManagementButton("Workers", Manage.Type.WORKERS, "Manage Skilled Workers");
-        ManagementButton.SelectedButton = skillsManagementButton;
-        ShowManagementScreen(skillsManagementButton.Screen);
+        ManagementButton slaveManagementButton = new ManagementButton("Slaves", Manage.Type.SLAVES, "Manage Slave Labor");
+        ManagementButton.SelectedButton = slaveManagementButton;
+        ShowManagementScreen(slaveManagementButton.Screen);
 
-        navLayout.add(skillsManagementButton);
-        navLayout.add(new ManagementButton("Slaves", Manage.Type.SLAVES, "Manage Slave Labor"));
-        navLayout.add(new ManagementButton("Pharoah", Manage.Type.PHAROAH, "Keep the Pharoah Happy"));
+        navLayout.add(slaveManagementButton);
         navLayout.add(new ManagementButton("Upgrades", Manage.Type.UPGRADES, "Upgrade your Buildings"));
         navLayout.add(new ManagementButton("Trade", Manage.Type.RESOURCES, "Trade Resources for Gold"));
+        navLayout.add(skillsManagementButton);
+        navLayout.add(new ManagementButton("Pharoah", Manage.Type.PHAROAH, "Keep the Pharoah Happy"));
+
 
         navLayout.layoutManagement(new Rectangle(0, (uiCamera.viewportHeight - 40), uiCamera.viewportWidth, 40));
     }

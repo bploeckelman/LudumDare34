@@ -30,11 +30,12 @@ public class AreaMgmt extends Area {
         bounds = new Rectangle(x, y, w, h);
 
         manageMap = new ObjectMap<Manage.Type, Manage>();
-        manageMap.put(Manage.Type.WORKERS, new ManageWorkers(bounds));
         manageMap.put(Manage.Type.SLAVES, new ManageSlaves(bounds));
-        manageMap.put(Manage.Type.PHAROAH, new ManagePharoah(bounds));
         manageMap.put(Manage.Type.UPGRADES, new ManageUpgrades(bounds));
+        manageMap.put(Manage.Type.WORKERS, new ManageWorkers(bounds));
         manageMap.put(Manage.Type.RESOURCES, new ManageResources(bounds));
+        manageMap.put(Manage.Type.PHAROAH, new ManagePharoah(bounds));
+
         currentManage = manageMap.get(Manage.Type.SLAVES);
     }
 

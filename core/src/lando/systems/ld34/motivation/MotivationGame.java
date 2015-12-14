@@ -36,6 +36,7 @@ public class MotivationGame {
     private final static float COOLDOWN_TIMER = 0.5f;
 
     private final static String DISABLED_NO_SLAVES_MESSAGE = "No slaves to motivate.";
+    private final static String DISABLED_EFFICIENT = "No encouragement needed.";
 
     private ResourceManager resourceManager;
     private ResourceManager.Resources resourceType;
@@ -58,6 +59,7 @@ public class MotivationGame {
     private float currentScore = 0;
 
     private boolean isDisabledNoSlaves = true;
+    private boolean isDisabledHighEfficiency = false;
 
 
     // Construct -------------------------------------------------------------------------------------------------------
@@ -174,7 +176,25 @@ public class MotivationGame {
         Assets.nice2NinePatch.draw(batch, bg.x, bg.y, bg.width, bg.height);
 
         // Shader bar
-        if (!isDisabledNoSlaves) {
+        if (isDisabledNoSlaves) {
+            Assets.glyphLayout.setText(Assets.font, DISABLED_NO_SLAVES_MESSAGE);
+            Assets.font.setColor(Color.WHITE);
+            Assets.font.draw(
+                    batch,
+                    DISABLED_NO_SLAVES_MESSAGE,
+                    bar.x + (bar.width / 2) - (Assets.glyphLayout.width / 2) + 2,
+                    bar.y + (bar.height / 2) + (Assets.glyphLayout.height / 2)
+            );
+        } else if (isDisabledHighEfficiency) {
+            Assets.glyphLayout.setText(Assets.font, DISABLED_EFFICIENT);
+            Assets.font.setColor(Color.WHITE);
+            Assets.font.draw(
+                    batch,
+                    DISABLED_EFFICIENT,
+                    bar.x + (bar.width / 2) - (Assets.glyphLayout.width / 2) + 2,
+                    bar.y + (bar.height / 2) + (Assets.glyphLayout.height / 2)
+            );
+        } else {
             batch.setShader(Assets.motivationBarShader);
             batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
             Assets.motivationBarShader.setUniformf("u_target_x", targetU);
@@ -187,15 +207,6 @@ public class MotivationGame {
             Assets.motivationBarShader.setUniformf("hit_score", currentScore);
             batch.draw(Assets.testTexture, bar.x, bar.y, bar.width, bar.height);
             batch.setShader(null);
-        } else {
-            Assets.glyphLayout.setText(Assets.font, DISABLED_NO_SLAVES_MESSAGE);
-            Assets.font.setColor(Color.WHITE);
-            Assets.font.draw(
-                    batch,
-                    DISABLED_NO_SLAVES_MESSAGE,
-                    bar.x + (bar.width / 2) - (Assets.glyphLayout.width / 2) + 2,
-                    bar.y + (bar.height / 2) + (Assets.glyphLayout.height / 2)
-            );
         }
 
         // Button
@@ -248,8 +259,9 @@ public class MotivationGame {
 
         // Should we disable the interface due to lack of slaves?
         isDisabledNoSlaves = (resourceManager.getSlaveAmount(resourceType) == 0);
+        isDisabledHighEfficiency = resourceManager.getEfficiency(resourceType) > resourceManager.getResourceInfo(resourceType).maxEfficiency * .9f;
 
-        if (!isDisabledNoSlaves) {
+        if (!isDisabledNoSlaves && !isDisabledHighEfficiency) {
 
             // Is the button hovered?
             float mousePosX = Gdx.input.getX();
