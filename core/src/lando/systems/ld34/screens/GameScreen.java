@@ -54,6 +54,7 @@ public class GameScreen extends AbstractScreen {
     public Shake shaker;
     public TutorialManager tutorialManager;
     private boolean firstRun = true;
+    private final static float ANGER_SPEED = 0.5f;
     public float currentAnger = 0f;
 
     public GameScreen(LudumDare34 game) {
@@ -194,8 +195,7 @@ public class GameScreen extends AbstractScreen {
         hudManager.update(delta);
         shaker.update(delta, camera, Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
 
-        final float annoyanceRate = 15.5f;
-        currentAnger = Utils.clamp(currentAnger + annoyanceRate * delta, 0f, 100f);
+        currentAnger = Utils.clamp(currentAnger + ANGER_SPEED * delta, 0f, 100f);
         if (currentAnger == 100f) {
             triggerDisaster();
         }
@@ -298,8 +298,10 @@ public class GameScreen extends AbstractScreen {
                 int removed = MathUtils.random(1, amount);
                 if (targetResourceType == ResourceManager.Resources.SLAVES) {
                     resourceManager.getResourceInfo(targetResourceType).slaves -= removed;
+                    stats.slavesKilledByDisaster += removed;
                 } else {
                     resourceManager.getResourceInfo(targetResourceType).amount -= removed;
+                    stats.resourcesLostByDisaster += removed;
                 }
                 String resourceName = "";
                 switch (targetResourceType) {
@@ -317,6 +319,7 @@ public class GameScreen extends AbstractScreen {
             } else {
                 resourceManager.getResourceInfo(targetResourceType).efficiency = 0f;
                 disasterResult = "efficiency reduced to 0%!";
+                stats.efficiencyReducesByDisaster++;
             }
         }
         if (thingToFuckUp == 3) {
@@ -327,6 +330,7 @@ public class GameScreen extends AbstractScreen {
                 int toRemove = MathUtils.random(1, numSlaves);
                 int killed = resourceManager.removeSlaves(targetResourceType, toRemove);
                 disasterResult = killed + " slave" + (killed > 1 ? "s " : " ") + "killed!";
+                stats.slavesKilledByDisaster += killed;
             }
         }
         if (thingToFuckUp == 4) {

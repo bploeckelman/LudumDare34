@@ -1,5 +1,6 @@
 package lando.systems.ld34.world;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -16,10 +17,15 @@ import lando.systems.ld34.utils.Utils;
  */
 public class ManagePharoah extends Manage {
 
+    private static final int minAngerForSacrifice = 5;
+
     ResourceManager resources;
     GameScreen      game;
     ProgressBar     pharaohMoodBar;
+    ProgressBar     buttonBackgroundBar;
+    Rectangle       sacrificeButton;
     Color           color;
+    boolean         canSacrifice = false;
 
     public ManagePharoah(Rectangle bounds) {
         super(Type.PHAROAH, bounds);
@@ -27,6 +33,8 @@ public class ManagePharoah extends Manage {
         game = LudumDare34.GameScreen;
 
         pharaohMoodBar = new ProgressBar(Assets.nice2NinePatch);
+        buttonBackgroundBar = new ProgressBar(Assets.nice2NinePatch);
+
         final Color boundsColor = new Color(160f / 255f, 82f / 255f, 45f / 255f, 1f);
         pharaohMoodBar.boundsColor = boundsColor;
         pharaohMoodBar.fillColor.set(0f, 0.5f, 0f, 1f);
@@ -34,12 +42,38 @@ public class ManagePharoah extends Manage {
                                   barTop + 25f - Assets.pharaohTexture.getHeight(),
                                   barWidth + 2.0f * (buttonSize + widgetPadding),
                                   barHeight);
+        final float w = barWidth * 1.5f;
+        final float h = barHeight * 1.25f;
+        buttonBackgroundBar.bounds.set(pharaohMoodBar.bounds.x + pharaohMoodBar.bounds.width / 2f - w / 2f,
+                                       pharaohMoodBar.bounds.y - h - widgetPadding,
+                                       w, h);
+        sacrificeButton = new Rectangle(buttonBackgroundBar.bounds);
         color = new Color();
     }
 
     @Override
     public void update(float delta) {
         pharaohMoodBar.fillPercent.setValue(game.currentAnger / 100f);
+
+        canSacrifice = (resources.getResourceInfo(ResourceManager.Resources.SLAVES).slaves > 0)
+                       && game.currentAnger > minAngerForSacrifice;
+
+        final float x = Gdx.input.getX();
+        final float y = LudumDare34.GameScreen.uiCamera.viewportHeight - Gdx.input.getY();
+        if (sacrificeButton.contains(x,y)) {
+            if (canSacrifice) game.hudManager.showTooltip("Sacrifice a slave to reduce Pharaoh's anger");
+            else              game.hudManager.showTooltip("Must have 1 slave available to sacrifice");
+        }
+
+        if (!Gdx.input.justTouched()) {
+            return;
+        }
+
+        if (sacrificeButton.contains(x,y) && canSacrifice) {
+            resources.getResourceInfo(ResourceManager.Resources.SLAVES).slaves--;
+            game.currentAnger = 0;
+            game.addNotification("Pharaoh has been appeased,\nfor now...");
+        }
     }
 
     @Override
@@ -59,6 +93,16 @@ public class ManagePharoah extends Manage {
         y = pharaohMoodBar.bounds.y + pharaohMoodBar.bounds.height / 2f + glyphLayout.height / 2f;// - Assets.pharaohTexture.getHeight() - widgetPadding;
         pharaohMoodBar.fillColor.set(color);
         pharaohMoodBar.render(batch);
+        if (canSacrifice) {
+            batch.setColor(1f, 1f, 1f, 1f);
+            buttonBackgroundBar.boundsColor.set(1f, 1f, 1f, 1f);
+        } else {
+            batch.setColor(0.5f, 0.5f, 0.5f, 1f);
+            buttonBackgroundBar.boundsColor.set(0.5f, 0.5f, 0.5f, 1f);
+        }
+        buttonBackgroundBar.render(batch);
+        batch.setColor(1f, 1f, 1f, 1f);
+        buttonBackgroundBar.boundsColor.set(1f, 1f, 1f, 1f);
 
         Assets.font.setColor(Color.WHITE);
         Assets.font.draw(batch, "Anger:", x, y);
@@ -69,5 +113,16 @@ public class ManagePharoah extends Manage {
         Assets.fontSmall.draw(batch, availableText,
                               pharaohMoodBar.bounds.x + pharaohMoodBar.bounds.width / 2f - glyphLayout.width / 2f,
                               pharaohMoodBar.bounds.y + pharaohMoodBar.bounds.height / 2f + glyphLayout.height / 2f);
+
+        if (canSacrifice) {
+            Assets.font.setColor(1f, 1f, 1f, 1f);
+        } else {
+            Assets.font.setColor(0.5f, 0.5f, 0.5f, 1f);
+        }
+        final String sacrificeText = "Sacrifice a Slave";
+        glyphLayout.setText(Assets.font, sacrificeText);
+        Assets.font.draw(batch, sacrificeText,
+                         sacrificeButton.x + sacrificeButton.width / 2f - glyphLayout.width / 2f,
+                         sacrificeButton.y + sacrificeButton.height  / 2f + glyphLayout.height / 2f);
     }
 }

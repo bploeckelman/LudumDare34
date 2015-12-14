@@ -3,6 +3,7 @@ package lando.systems.ld34.resources;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ObjectMap;
+import lando.systems.ld34.LudumDare34;
 import lando.systems.ld34.screens.NavigationLayout;
 import lando.systems.ld34.world.Area;
 
@@ -38,6 +39,7 @@ public class ResourceManager {
         }
 
         // bind this tightly like doug's butt hole before he went to prison
+        NavigationLayout.AreaButtons.get(Area.Type.MGMT).efficiencyLevel = 1f - (LudumDare34.GameScreen.currentAnger / 100f);
         NavigationLayout.AreaButtons.get(Area.Type.WOODS).efficiencyLevel = resources.get(Resources.WOOD).efficiency;
         NavigationLayout.AreaButtons.get(Area.Type.FIELD).efficiencyLevel = resources.get(Resources.FOOD).efficiency;
         NavigationLayout.AreaButtons.get(Area.Type.QUARRY).efficiencyLevel = resources.get(Resources.STONE).efficiency;
