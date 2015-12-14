@@ -45,7 +45,7 @@ public class Background {
         sunRect.x = (Config.width * 4) - (xOffset.floatValue() * scale) + 500;
         float moonWorldPos = MathUtils.lerp(10, (Config.width * 4) + 500, percentComplete);
         moonRect.x = moonWorldPos - (xOffset.floatValue() * scale);
-        moonRect.y = 320 + (MathUtils.sinDeg(percentComplete * 270 - 90) * 100);
+        moonRect.y = 320 + (MathUtils.sinDeg(percentComplete * 200 - 20) * 100);
 
 
         Rectangle overlap = new Rectangle();
