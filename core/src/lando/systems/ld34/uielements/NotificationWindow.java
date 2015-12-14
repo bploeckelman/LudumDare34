@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Align;
 import lando.systems.ld34.Config;
 import lando.systems.ld34.utils.Assets;
 import lando.systems.ld34.utils.Utils;
@@ -45,9 +46,12 @@ public class NotificationWindow {
         if (hovered) alpha = Math.min(alpha, .4f);
         Assets.nice2NinePatch.setColor(new Color(1,1,1,alpha));
         Assets.HUDFont.setColor(new Color(1,1,1,alpha));
-        Assets.glyphLayout.setText(Assets.HUDFont, text);
+//        Assets.glyphLayout.setText(Assets.HUDFont, text);
+        Assets.glyphLayout.setText(Assets.HUDFont, text, Color.WHITE, 180, Align.center, true);
+
         Assets.nice2NinePatch.draw(batch, rect.x, rect.y, rect.width, rect.height);
-        Assets.HUDFont.draw(batch, text, rect.x + rect.width/2 - Assets.glyphLayout.width/2, rect.y + (rect.height+Assets.glyphLayout.height)/2 );
+//        Assets.HUDFont.draw(batch, text, rect.x + rect.width/2 - Assets.glyphLayout.width/2, rect.y + (rect.height+Assets.glyphLayout.height)/2 );
+        Assets.HUDFont.draw(batch, Assets.glyphLayout, rect.x + 10, rect.y + (rect.height - 10));
 
         Assets.nice2NinePatch.setColor(Color.WHITE);
         Assets.HUDFont.setColor(Color.WHITE);

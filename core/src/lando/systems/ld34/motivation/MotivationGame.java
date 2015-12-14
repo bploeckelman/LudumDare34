@@ -21,7 +21,7 @@ public class MotivationGame {
     private final static float GAME_HEIGHT = 46f;
     private final static float GAME_WIDTH = 340f;
     private final static float GAME_X = Config.width/2 - 170;
-    private final static float GAME_Y = 200f;
+    private final static float GAME_Y = 300f;
 
     private final static float BUTTON_HEIGHT = 34f;
     private final static float BUTTON_WIDTH = 96f;
@@ -154,7 +154,7 @@ public class MotivationGame {
         resourceManager.addEfficiency(resourceType, score);
         if (MathUtils.random() > score){
             if (resourceManager.removeSlaves(resourceType, 1) > 0) {
-                particleManager.addBlood(new Vector2(bg.x + bg.width/2, bg.y + bg.height + 54), 500);
+                particleManager.addBlood(new Vector2(button.x + button.width/2, bg.y - 32), 500);
                 LudumDare34.GameScreen.hudManager.addNotification("You Killed a Slave");
                 SoundManager.playScream();
                 shakeDuration = 1f;
@@ -168,7 +168,7 @@ public class MotivationGame {
      * @return boolean Whether or not the update function should continue.
      */
     private boolean onButtonPress() {
-        particleManager.addBlood(new Vector2(bg.x + bg.width/2, bg.y + bg.height + 54), 100);
+        particleManager.addBlood(new Vector2(button.x + button.width/2, bg.y - 32), 100);
         SoundManager.playWhip();
         currentScore = getCurrentMotivationScore();
         reportMotivationScore(currentScore);
@@ -262,8 +262,8 @@ public class MotivationGame {
 
         final float sz = 64f;
         batch.draw(Assets.whippingTexture,
-                bg.x + bg.width / 2f - sz / 2f,
-                bg.y + bg.height + 20f,
+                button.x + button.width/2 - sz/2,
+                bg.y - (10f + sz),
                 sz, sz);
 
         Assets.font.setColor(Color.WHITE);
