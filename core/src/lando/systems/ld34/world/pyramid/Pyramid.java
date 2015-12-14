@@ -17,7 +17,7 @@ import java.util.Random;
 public class Pyramid {
 
     public float BuildSpeed = 40;
-    public int BlockSize = 40;
+    public int BlockSize = 64;
 
     private boolean _addLeft = true;
     private int _groupIndex = 0;
@@ -28,6 +28,8 @@ public class Pyramid {
 
     private Rectangle _bounds;
     private ArrayList<LeftRight> _leftRightList = new ArrayList<LeftRight>();
+
+    private float _scale = 1;
 
     public Pyramid(Rectangle bounds) {
         _bounds = bounds;
@@ -50,18 +52,13 @@ public class Pyramid {
         _leftRightList.add(leftRight);
     }
 
-    private float _delay = 2f;
-
     public void update(float delta) {
-        _delay -= delta;
-        if (_delay > 0) return;
-
         // check for new blocks
         if ((int) LudumDare34.GameScreen.ResourceManager.getAmount(ResourceManager.Resources.BUILD) > _blocks.size()) {
             addBlock();
         }
 
-        float dx = BuildSpeed * delta;
+        float dx = BuildSpeed * delta * _scale;
 
         for (PyramidBlock block : _blocks) {
             if (block.isPlaced) continue;
@@ -82,6 +79,7 @@ public class Pyramid {
         if (block.movingUp) {
             float maxY = _bounds.y + ((block.currentRow + 1) * BlockSize);
             if (block.bounds.y >= maxY) {
+                block.bounds.y = maxY;
                 block.currentRow++;
                 block.movingUp = false;
             }
@@ -123,9 +121,12 @@ public class Pyramid {
         //batch.setColor(Color.RED);
         //Assets.boxNinePatch.draw(batch, _bounds.x, _bounds.y, _bounds.width, _bounds.height);
 
+        float scaleOffset = ((_scale - 1) / (_scale * 2));
+        float xOffset = _bounds.width * scaleOffset;
+        float yOffset = _bounds.y * scaleOffset;
         batch.setColor(Color.WHITE);
         for (PyramidBlock block : _blocks) {
-            batch.draw(block.image, block.bounds.x, block.bounds.y, block.bounds.width, block.bounds.height);
+             batch.draw(block.image, xOffset + block.bounds.x / _scale, yOffset + block.bounds.y / _scale, block.bounds.width /_scale, block.bounds.height /_scale);
         }
     }
 
@@ -134,8 +135,14 @@ public class Pyramid {
     }
 
     private void addBlock() {
+
+        float scaleOffset = ((_scale - 1) / (_scale * 2));
+        float xOffset = _bounds.width * _scale * scaleOffset;
+
         PyramidBlock block = createBlock();
-        int x = (int) ((_addLeft) ? _bounds.x - BlockSize : (_bounds.x + _bounds.width));
+        int x = (int) ((_addLeft) ? _bounds.x - (BlockSize /_scale) - xOffset
+                : (_bounds.x + _bounds.width) + xOffset);
+
         block.bounds = new Rectangle(x, _bounds.y, BlockSize, BlockSize);
         block.fromLeft = _addLeft;
         block.finalRow = _groupIndex;
@@ -157,10 +164,7 @@ public class Pyramid {
         return block;
     }
 
-    private Random _rand = new Random();
-
     private Texture getBlockTexture() {
         return Assets.blockTexture;
-//        return Assets.pryamidBlocks.get(_rand.nextInt(Assets.pryamidBlocks.size()));
     }
 }
