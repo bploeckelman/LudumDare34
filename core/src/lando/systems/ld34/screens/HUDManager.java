@@ -36,26 +36,21 @@ public class HUDManager {
     }
 
     public void addNotification(String msg){
-        float y = Config.height;
+        float y = 10;
         if (notifications.size > 0){
-            y = notifications.get(notifications.size-1).targetY - 50;
+            y = notifications.get(notifications.size-1).targetY + 40;
         }
         notifications.add(new NotificationWindow(null, msg, y));
     }
 
     public void update(float dt){
-        NotificationWindow item;
         toolTipDelay -= dt;
-        int len = notifications.size;
-        for (int i = len; --i >= 0;) {
-            item = notifications.get(i);
-            item.targetY = Config.height - (i * 50);
+        float currentY = 10;
+        for (NotificationWindow item : notifications){
+            item.targetY = currentY;
+            currentY += item.rect.height + 5;
             item.update(dt);
-
-            if (item.ttl <= 0) {
-                notifications.removeIndex(i);
-
-            }
+            if (item.ttl <= 0) notifications.removeValue(item, true);
         }
     }
 

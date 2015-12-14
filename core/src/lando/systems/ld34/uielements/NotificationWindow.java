@@ -25,18 +25,19 @@ public class NotificationWindow {
         this.text = text;
         targetY = y;
         ttl = 5;
-        this.rect = new Rectangle(Config.width - 200, targetY - 50, 199, 40);
+        Assets.glyphLayout.setText(Assets.HUDFont, text, Color.WHITE, 180, Align.center, true);
+        this.rect = new Rectangle(1, targetY, 199, Assets.glyphLayout.height + 20);
     }
 
     public void update(float dt){
         ttl -= dt;
-        float trueTarget = targetY - 50;
+        float trueTarget = targetY;
         if (rect.y != trueTarget){
             float dist = moveSpeed * dt;
-            if (dist > trueTarget - rect.y){
+            if (dist > rect.y - trueTarget){
                 rect.y = trueTarget;
             } else {
-                rect.y +=dist;
+                rect.y -=dist;
             }
         }
     }
@@ -44,10 +45,11 @@ public class NotificationWindow {
     public void render(SpriteBatch batch, boolean hovered){
         float alpha = Utils.clamp(ttl, 0, 1);
         if (hovered) alpha = Math.min(alpha, .4f);
-        Assets.nice2NinePatch.setColor(new Color(1,1,1,alpha));
-        Assets.HUDFont.setColor(new Color(1,1,1,alpha));
+        Color c = new Color(1,1,1,alpha);
+        Assets.nice2NinePatch.setColor(c);
+        Assets.HUDFont.setColor(c);
 //        Assets.glyphLayout.setText(Assets.HUDFont, text);
-        Assets.glyphLayout.setText(Assets.HUDFont, text, Color.WHITE, 180, Align.center, true);
+        Assets.glyphLayout.setText(Assets.HUDFont, text, c, 180, Align.center, true);
 
         Assets.nice2NinePatch.draw(batch, rect.x, rect.y, rect.width, rect.height);
 //        Assets.HUDFont.draw(batch, text, rect.x + rect.width/2 - Assets.glyphLayout.width/2, rect.y + (rect.height+Assets.glyphLayout.height)/2 );
