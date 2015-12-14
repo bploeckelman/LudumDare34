@@ -39,6 +39,7 @@ public class Assets {
     public static Texture blockTexture;
     public static Texture background;
     public static Texture mgmtBackground;
+    public static Texture whippingTexture;
 
     public static Texture managementIcon;
     public static Texture quarryIcon;
@@ -93,6 +94,7 @@ public class Assets {
         niceBox2Texture = new Texture("ninepatch-bg.png");
         blockTexture = new Texture("block.png");
         mgmtBackground = new Texture("management.png");
+        whippingTexture = new Texture("whipping_embossed_circle.png");
 
         managementIcon = new Texture("gear.png");
         quarryIcon = new Texture("pickaxe.png");
@@ -131,6 +133,7 @@ public class Assets {
         niceBox2Texture.dispose();
         blockTexture.dispose();
         mgmtBackground.dispose();
+        whippingTexture.dispose();
 
         managementIcon.dispose();
         quarryIcon.dispose();

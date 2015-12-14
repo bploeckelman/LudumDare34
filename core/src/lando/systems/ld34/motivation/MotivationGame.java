@@ -172,6 +172,12 @@ public class MotivationGame {
 
         Color c = batch.getColor();
 
+        final float sz = 64f;
+        batch.draw(Assets.whippingTexture,
+                   bg.x + bg.width / 2f - sz / 2f,
+                   bg.y + bg.height + 20f,
+                   sz, sz);
+
         // Game BG
         Assets.nice2NinePatch.draw(batch, bg.x, bg.y, bg.width, bg.height);
 
