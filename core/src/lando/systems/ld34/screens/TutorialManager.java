@@ -37,10 +37,16 @@ public class TutorialManager {
         sceneAlpha = new MutableFloat(1);
         screens = new Array<TutorialInfo>();
 
-        screens.add(new TutorialInfo("Starting Text", Area.Type.MGMT, new Rectangle(0, 0, 0, 0)));
+        screens.add(new TutorialInfo("Welcome to Pyramid Scheme.\nThe Pharaoh has tasked you, his favorite overseer, to help grow his burial tomb.", Area.Type.MGMT, new Rectangle(0, 0, 0, 0)));
+
+        screens.add(new TutorialInfo("We have 30 years until the eclipse that is foretelling his passing.", Area.Type.WOODS,
+                new Rectangle(40, 280, 100, 100)));
+
+        screens.add(new TutorialInfo("When it reaches the sun here the game is over.", Area.Type.PYRAMID,
+                new Rectangle(495, 320, 85, 85)));
 
         //Management Tutorial Section
-        TutorialInfo slaveSelectionTutorial = new TutorialInfo("Here is the Management Screen\nYou get to it by selectiong this button", Area.Type.MGMT,
+        TutorialInfo slaveSelectionTutorial = new TutorialInfo("Here is the Management Screen\nYou get to it by selecting this button", Area.Type.MGMT,
                 expandRectangle(NavigationLayout.AreaButtons.get(Area.Type.MGMT).Bounds));
         slaveSelectionTutorial.mgmtScreen = Manage.Type.SLAVES;
         screens.add(slaveSelectionTutorial);
