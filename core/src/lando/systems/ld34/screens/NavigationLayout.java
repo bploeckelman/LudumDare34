@@ -116,7 +116,7 @@ public class NavigationLayout {
         return (CurrentArea == Area.Type.MGMT);
     }
 
-    public void update() {
+    public void update(float delta) {
         Vector3 mousePos = _screen.getMouseScreenPos();
         // mouse y is top down, render is down up - reverse the y y? because. fucker.
         mousePos.y = _screen.uiCamera.viewportHeight - mousePos.y;
@@ -124,12 +124,12 @@ public class NavigationLayout {
         boolean clicked = Gdx.input.justTouched();
 
         for (NavigationButton button : _areaButtons) {
-            button.update(mousePos, clicked);
+            button.update(delta, mousePos, clicked);
         }
 
         if (isManagementScreen()) {
             for (NavigationButton button : _skillsButtons) {
-                button.update(mousePos, clicked);
+                button.update(delta, mousePos, clicked);
             }
         }
     }

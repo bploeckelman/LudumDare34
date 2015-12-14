@@ -14,6 +14,10 @@ import lando.systems.ld34.utils.Assets;
  */
 public abstract class NavigationButton {
 
+    public enum AlertLevel {
+        None, Warning, Critical
+    }
+
     public Rectangle Bounds;
     public Texture Image;
     public String Text;
@@ -25,6 +29,8 @@ public abstract class NavigationButton {
 
     public float SelectionThickness = 3f;
 
+    public AlertLevel alertLevel;
+
     public NavigationButton(String text, Texture image, String tooltipText) {
         Text = text;
         Image = image;
@@ -34,11 +40,12 @@ public abstract class NavigationButton {
         _glyphLayout = new GlyphLayout(Assets.font, text);
     }
 
-    public void update(Vector3 mousePos, boolean clicked) {
+    public void update(float delta, Vector3 mousePos, boolean clicked) {
         Highlighted = Bounds.contains(mousePos.x, mousePos.y);
         if (Highlighted){
             LudumDare34.GameScreen.hudManager.showTooltip(ToolTipText);
         }
+
         if (Highlighted && !Selected && clicked) {
             click();
         }

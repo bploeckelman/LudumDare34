@@ -24,8 +24,8 @@ public class PyramidButton extends AreaButton {
     }
 
     @Override
-    public void update(Vector3 mousePos, boolean clicked) {
-        super.update(mousePos, clicked);
+    public void update(float delta, Vector3 mousePos, boolean clicked) {
+        super.update(delta, mousePos, clicked);
         setBounds(Math.max(1, LudumDare34.GameScreen.Pyramid.getHeight()));
     }
 

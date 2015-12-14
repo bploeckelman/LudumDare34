@@ -167,7 +167,7 @@ public class GameScreen extends AbstractScreen {
         }
         if (!gameOver()) {
             ResourceManager.update(delta);
-            layout.update();
+            layout.update(delta);
         }
         currentArea.update(delta);
         Pyramid.update(delta);
