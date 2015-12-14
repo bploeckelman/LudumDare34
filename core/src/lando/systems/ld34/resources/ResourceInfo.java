@@ -34,9 +34,9 @@ public class ResourceInfo {
 
 
     // Center Top of panel
-    Vector2 screenPos = new Vector2(Config.width/2 - 40f, Config.height - 50);
+    Vector2 screenPos = new Vector2(Config.width/2 - 90, Config.height - 50);
     private String typeLabel = "";
-    private ProgressBar bgPB;
+    public  ProgressBar bgPB;
     private ProgressBar amountPB;
     private ProgressBar effPB;
     private ProgressBar slavePB;

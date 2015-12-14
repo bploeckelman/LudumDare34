@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld34.Config;
 import lando.systems.ld34.LudumDare34;
+import lando.systems.ld34.resources.ResourceInfo;
 import lando.systems.ld34.resources.ResourceManager;
 import lando.systems.ld34.screens.GameScreen;
 import lando.systems.ld34.utils.Assets;
@@ -52,6 +53,8 @@ public class MotivationGame {
     private Rectangle bg;
     private Rectangle bar;
     private Rectangle button;
+    private Rectangle whipIcon;
+    private Rectangle whipBorder;
 
     private boolean buttonIsHovered = false;
 
@@ -94,6 +97,11 @@ public class MotivationGame {
                 MotivationGame.BUTTON_WIDTH,
                 MotivationGame.BUTTON_HEIGHT
         );
+
+        ResourceInfo info = this.resourceManager.getResourceInfo(resourceType);
+        whipBorder = new Rectangle(info.bgPB.bounds.x + info.bgPB.bounds.width + 5, info.bgPB.bounds.y, bg.width - info.bgPB.bounds.width - 5, info.bgPB.bounds.height);
+        float whipSize = Math.min(whipBorder.width - 10, whipBorder.height - 10);
+        whipIcon = new Rectangle(whipBorder.x + whipBorder.width /2 - whipSize /2, whipBorder.y + whipBorder.height /2 - whipSize /2 ,whipSize, whipSize);
 
         this.targetRangeU = this.resourceManager.getWhipTargetRange(resourceType);
         this.targetFalloffRangeU = this.resourceManager.getWhipFalloffRange(resourceType);
@@ -155,7 +163,7 @@ public class MotivationGame {
         resourceManager.addEfficiency(resourceType, score);
         if (MathUtils.random() > score){
             if (resourceManager.removeSlaves(resourceType, 1) > 0) {
-                particleManager.addBlood(new Vector2(button.x + button.width / 2, bg.y - 32), 500);
+                particleManager.addBlood(new Vector2(bar.x + bar.width * indicatorPosition, bg.y + bg.height/2), 100);
                 LudumDare34.GameScreen.hudManager.addNotification("You Killed a Slave");
                 SoundManager.playScream();
                 GameScreen.stats.slavesKilledMotivating++;
@@ -171,7 +179,7 @@ public class MotivationGame {
      */
     private boolean onButtonPress() {
         GameScreen.stats.motivations++;
-        particleManager.addBlood(new Vector2(button.x + button.width/2, bg.y - 32), 100);
+        particleManager.addBlood(new Vector2(whipIcon.x + whipIcon.width/2, whipIcon.y + whipIcon.height/2), 100);
         SoundManager.playWhip();
         currentScore = getCurrentMotivationScore();
         reportMotivationScore(currentScore);
@@ -190,6 +198,8 @@ public class MotivationGame {
 
         // Game BG
         Assets.nice2NinePatch.draw(batch, bg.x, bg.y, bg.width, bg.height);
+
+
 
         // Shader bar
         if (isDisabledNoSlaves) {
@@ -263,11 +273,9 @@ public class MotivationGame {
 
         particleManager.render(batch);
 
-        final float sz = 64f;
-        batch.draw(Assets.whippingTexture,
-                button.x + button.width/2 - sz/2,
-                bg.y - (10f + sz),
-                sz, sz);
+        Assets.nice2NinePatch.draw(batch, whipBorder.x, whipBorder.y, whipBorder.width, whipBorder.height);
+
+        batch.draw(Assets.whippingTexture, whipIcon.x, whipIcon.y, whipIcon.width, whipIcon.height);
 
         Assets.font.setColor(Color.WHITE);
         batch.setColor(c);

@@ -27,7 +27,7 @@ public class ParticleManager {
     public void addBlood(Vector2 pos, int amount){
         for (int i = 0; i < amount; i ++){
             Particle part = particlePool.obtain();
-            float speed = MathUtils.random() * 100;
+            float speed = 10  + MathUtils.random() * 100;
             float dir = MathUtils.random(360f);
             float x = pos.x + .3f + (MathUtils.random()/3f);
             part.init(new Vector2(x, pos.y), new Vector2(MathUtils.sinDeg(dir) * speed, MathUtils.cosDeg(dir) * speed ), new Vector2(0,-50f),
