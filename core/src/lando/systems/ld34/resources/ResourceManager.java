@@ -1,6 +1,7 @@
 package lando.systems.ld34.resources;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ObjectMap;
 import lando.systems.ld34.screens.NavigationLayout;
 import lando.systems.ld34.world.Area;
@@ -12,7 +13,7 @@ import lando.systems.ld34.world.Area;
  */
 public class ResourceManager {
 
-    public enum Resources {BUILD, STONE, WOOD, FOOD, GOLD, SLAVES}
+    public enum Resources { BUILD, STONE, WOOD, FOOD, GOLD, SLAVES }
 
     private ObjectMap<Resources, ResourceInfo> resources;
     public int nextSlaveFoodAmount = 0;
@@ -135,6 +136,17 @@ public class ResourceManager {
         if (!canTrade(type)) return;
         if (removeResource(type, resources.get(type).costToTrade())) {
             addAmount(Resources.GOLD, 1);
+        }
+    }
+
+    public static Resources getRandomDisasterResource() {
+        int rand = MathUtils.random(1, 5);
+        switch (rand) {
+            case 1: return Resources.BUILD;
+            case 2: return Resources.STONE;
+            case 3: return Resources.WOOD;
+            case 4: return Resources.FOOD;
+            case 5: default: return Resources.SLAVES;
         }
     }
 

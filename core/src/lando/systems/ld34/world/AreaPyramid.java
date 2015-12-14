@@ -24,7 +24,7 @@ public class AreaPyramid extends Area {
 
         glyphLayout = new GlyphLayout(Assets.font, "Pyramid Area");
         mg = new MotivationGame(
-                LudumDare34.GameScreen.ResourceManager,
+                LudumDare34.GameScreen.resourceManager,
                 ResourceManager.Resources.BUILD);
     }
 
@@ -35,7 +35,7 @@ public class AreaPyramid extends Area {
 
     @Override
     public void render(SpriteBatch batch) {
-        gameScreen.ResourceManager.render(resourceType, batch);
+        gameScreen.resourceManager.render(resourceType, batch);
         gameScreen.Pyramid.render(batch);
         mg.render(batch);
     }

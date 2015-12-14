@@ -55,7 +55,9 @@ public class AreaGameOver extends Area {
             Assets.glyphLayout.setText(Assets.font, "Congratulations! You have completed the Pyramid.", Color.WHITE, bounds.width - 20, Align.center, true);
             Assets.font.draw(batch, Assets.glyphLayout, bounds.x + 10, currentY);
             currentY -= Assets.glyphLayout.height + 15;
-            Assets.glyphLayout.setText(Assets.font, "Your grew your pyramid to " + LudumDare34.GameScreen.ResourceManager.getPyramidHeight() + " tiers tall.", Color.WHITE, bounds.width - 20, Align.center, true);
+            Assets.glyphLayout.setText(Assets.font, "Your grew your pyramid to " + LudumDare34.GameScreen.resourceManager
+
+                    .getPyramidHeight() + " tiers tall.", Color.WHITE, bounds.width - 20, Align.center, true);
             Assets.font.draw(batch, Assets.glyphLayout, bounds.x + 10, currentY);
             currentY -= Assets.glyphLayout.height + 10;
             Assets.glyphLayout.setText(Assets.font, GameScreen.stats.getSlaveInfo(), Color.WHITE, bounds.width - 20, Align.center, true);

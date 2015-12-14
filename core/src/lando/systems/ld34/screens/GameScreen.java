@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ObjectMap;
 import lando.systems.ld34.Config;
@@ -20,6 +21,7 @@ import lando.systems.ld34.uielements.AreaButton;
 import lando.systems.ld34.uielements.ManagementButton;
 import lando.systems.ld34.uielements.PyramidButton;
 import lando.systems.ld34.utils.Assets;
+import lando.systems.ld34.utils.Utils;
 import lando.systems.ld34.utils.camera.Shake;
 import lando.systems.ld34.world.*;
 import lando.systems.ld34.world.pyramid.Pyramid;
@@ -33,7 +35,7 @@ public class GameScreen extends AbstractScreen {
     final NavigationLayout layout;
 
     // java# (tm)
-    public ResourceManager ResourceManager;
+    public ResourceManager resourceManager;
 
     ObjectMap<Area.Type, Area> areaMap;
     public Area currentArea;
@@ -52,6 +54,7 @@ public class GameScreen extends AbstractScreen {
     public Shake shaker;
     public TutorialManager tutorialManager;
     private boolean firstRun = true;
+    public float currentAnger = 0f;
 
     public GameScreen(LudumDare34 game) {
         super(game);
@@ -69,7 +72,7 @@ public class GameScreen extends AbstractScreen {
 
         batch = Assets.batch;
 
-        ResourceManager = new ResourceManager();
+        resourceManager = new ResourceManager();
 
         background = new Background();
         areaMap = new ObjectMap<Area.Type, Area>();
@@ -92,7 +95,7 @@ public class GameScreen extends AbstractScreen {
 
     }
 
-    public void TransitionToArea(Area.Type area) {
+    public void TransitionToArea(final Area.Type area) {
         NavigationLayout.CurrentArea = area;
         final Area nextArea = areaMap.get(area);
         if (currentArea == nextArea) return;
@@ -105,6 +108,7 @@ public class GameScreen extends AbstractScreen {
                     @Override
                     public void onEvent(int i, BaseTween<?> baseTween) {
                         currentArea = nextArea;
+                        AreaButton.SelectedButton = NavigationLayout.AreaButtons.get(area);
                     }
                 }))
                 .push(Tween.to(sceneAlpha, 1, SCENEFADE)
@@ -114,10 +118,12 @@ public class GameScreen extends AbstractScreen {
     }
 
     public void ShowManagementScreen(Manage.Type skillScreen) {
-        if (currentArea.type != Area.Type.MGMT) {
-            return;
-        }
-        ((AreaMgmt) currentArea).setCurrentManageType(skillScreen);
+//        if (currentArea.type != Area.Type.MGMT) {
+//            return;
+//        }
+//        ((AreaMgmt) currentArea).setCurrentManageType(skillScreen);
+        ((AreaMgmt) areaMap.get(Area.Type.MGMT)).setCurrentManageType(skillScreen);
+        ManagementButton.SelectedButton = NavigationLayout.ResourceButtons.get(skillScreen);
     }
 
     private void SetupNavigation(NavigationLayout navLayout) {
@@ -180,13 +186,19 @@ public class GameScreen extends AbstractScreen {
             }
         }
         if (!gameOver()) {
-            ResourceManager.update(delta);
+            resourceManager.update(delta);
             layout.update(delta);
         }
         currentArea.update(delta);
         Pyramid.update(delta);
         hudManager.update(delta);
         shaker.update(delta, camera, Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
+
+        final float annoyanceRate = 15.5f;
+        currentAnger = Utils.clamp(currentAnger + annoyanceRate * delta, 0f, 100f);
+        if (currentAnger == 100f) {
+            triggerDisaster();
+        }
     }
 
     @Override
@@ -221,5 +233,112 @@ public class GameScreen extends AbstractScreen {
         batch.end();
 
     }
+
+    private void triggerDisaster() {
+        currentAnger = 0f;
+
+        // Pick a random resource to fuck up
+        final ResourceManager.Resources targetResource = ResourceManager.getRandomDisasterResource();
+
+        // pick a random thing to fuck up for that resource
+        // 1 = reduce resource amount
+        // 2 = reset efficiency to zero
+        // 3 = kill assigned slave(s)
+        // NOTE: if type -> SLAVES then short circuit to 1
+        final int thingToFuckUp = MathUtils.random(1,3);
+
+        // TODO: pick a random disaster
+
+        // transition to that screen and run an effect?
+        Area.Type areaType = Area.Type.MGMT;
+        switch (targetResource) {
+            case BUILD:  areaType = (thingToFuckUp != 1 ? Area.Type.PYRAMID : Area.Type.QUARRY); break;
+            case STONE:  areaType = Area.Type.QUARRY;  break;
+            case WOOD:   areaType = Area.Type.WOODS;   break;
+            case FOOD:   areaType = Area.Type.FIELD;   break;
+            case SLAVES: areaType = Area.Type.MGMT;    break;
+        }
+        final Area.Type targetArea = areaType;
+        TransitionToArea(targetArea);
+        doDisaster(targetArea, targetResource, thingToFuckUp);
+    }
+
+    /**
+     * Yo dawg, I heard you liked hacky special case code, so I wrote this method to satisfy that desire...
+     */
+    private void doDisaster(Area.Type targetAreaType, ResourceManager.Resources targetResourceType, int thingToFuckUp) {
+        // Make sure we're on the right screen if we are killing slaves
+        if (targetAreaType == Area.Type.MGMT) {
+            ShowManagementScreen(Manage.Type.SLAVES);
+            ManagementButton.SelectedButton = NavigationLayout.ResourceButtons.get(Manage.Type.SLAVES);
+        }
+
+        // NOTE: if type -> SLAVES then short circuit to 1 (resource amount)
+        if (targetResourceType == ResourceManager.Resources.SLAVES) {
+            thingToFuckUp = 1;
+        }
+        if (targetResourceType == ResourceManager.Resources.BUILD && thingToFuckUp == 1) {
+            targetResourceType = ResourceManager.Resources.STONE;
+        }
+
+        // Fuck the thing up!
+        // 1 = reduce resource amount
+        // 2 = reset efficiency to zero
+        // 3 = kill assigned slave(s)
+        String disasterResult = "";
+        if (thingToFuckUp == 1) {
+            int amount = 0;
+            if (targetResourceType == ResourceManager.Resources.SLAVES) {
+                amount = (int) resourceManager.getResourceInfo(targetResourceType).slaves;
+            } else {
+                amount = (int) resourceManager.getResourceInfo(targetResourceType).amount;
+            }
+            if (amount == 0) thingToFuckUp = 2;
+            else {
+                int removed = MathUtils.random(1, amount);
+                if (targetResourceType == ResourceManager.Resources.SLAVES) {
+                    resourceManager.getResourceInfo(targetResourceType).slaves -= removed;
+                } else {
+                    resourceManager.getResourceInfo(targetResourceType).amount -= removed;
+                }
+                String resourceName = "";
+                switch (targetResourceType) {
+                    case STONE: resourceName  = "stone"; break;
+                    case WOOD:  resourceName  = "wood";  break;
+                    case FOOD:  resourceName  = "food";  break;
+                    case SLAVES: resourceName = "slave" + (removed > 1 ? "s" : ""); break;
+                }
+                disasterResult = removed + " " + resourceName + " destroyed!";
+            }
+        }
+        if (thingToFuckUp == 2) {
+            if (resourceManager.getEfficiency(targetResourceType) == 0f) {
+                thingToFuckUp = 3;
+            } else {
+                resourceManager.getResourceInfo(targetResourceType).efficiency = 0f;
+                disasterResult = "efficiency reduced to 0%!";
+            }
+        }
+        if (thingToFuckUp == 3) {
+            int numSlaves = resourceManager.getSlaveAmount(targetResourceType);
+            if (numSlaves == 0) {
+                thingToFuckUp = 4;
+            } else {
+                int toRemove = MathUtils.random(1, numSlaves);
+                int killed = resourceManager.removeSlaves(targetResourceType, toRemove);
+                disasterResult = killed + " slave" + (killed > 1 ? "s " : " ") + "killed!";
+            }
+        }
+        if (thingToFuckUp == 4) {
+            disasterResult = "thankfully nothing was destroyed...";
+        }
+
+        // trigger notification
+        addNotification("The Pharaoh's anger has caused a disaster:\n[RED]" + disasterResult + "[]");
+
+        // update statistics
+        stats.disastersTriggered++;
+    }
+
 
 }

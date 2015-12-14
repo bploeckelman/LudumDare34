@@ -41,7 +41,7 @@ public class ManageWorkers extends Manage {
 
     public ManageWorkers(Rectangle bounds) {
         super(Type.WORKERS, bounds);
-        resources = LudumDare34.GameScreen.ResourceManager;
+        resources = LudumDare34.GameScreen.resourceManager;
         buildersBar = new ProgressBar(Assets.nice2NinePatch);
         minersBar = new ProgressBar(Assets.nice2NinePatch);
         farmersBar = new ProgressBar(Assets.nice2NinePatch);

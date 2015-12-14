@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import lando.systems.ld34.LudumDare34;
 import lando.systems.ld34.resources.ResourceManager;
@@ -48,7 +47,7 @@ public class ManageSlaves extends Manage {
 
     public ManageSlaves(Rectangle bounds) {
         super(Type.SLAVES, bounds);
-        resources = LudumDare34.GameScreen.ResourceManager;
+        resources = LudumDare34.GameScreen.resourceManager;
         availableSlavesBar = new ProgressBar(Assets.nice2NinePatch);
         buildingSlavesBar  = new ProgressBar(Assets.nice2NinePatch);
         quarryingSlavesBar = new ProgressBar(Assets.nice2NinePatch);

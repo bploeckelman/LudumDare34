@@ -21,7 +21,7 @@ public class AreaWoods extends Area {
         worldX = 0;
         glyphLayout = new GlyphLayout(Assets.font, "Woods Area");
         mg = new MotivationGame(
-                LudumDare34.GameScreen.ResourceManager,
+                LudumDare34.GameScreen.resourceManager,
                 ResourceManager.Resources.WOOD);
     }
 
@@ -32,7 +32,7 @@ public class AreaWoods extends Area {
 
     @Override
     public void render(SpriteBatch batch) {
-        gameScreen.ResourceManager.render(resourceType, batch);
+        gameScreen.resourceManager.render(resourceType, batch);
         mg.render(batch);
     }
 

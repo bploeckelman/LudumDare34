@@ -40,7 +40,7 @@ public class ManageResources extends Manage {
 
     public ManageResources(Rectangle bounds) {
         super(Type.RESOURCES, bounds);
-        resources = LudumDare34.GameScreen.ResourceManager;
+        resources = LudumDare34.GameScreen.resourceManager;
         availableGoldBar  = new ProgressBar(Assets.nice2NinePatch);
         availableStoneBar = new ProgressBar(Assets.nice2NinePatch);
         availableFoodBar  = new ProgressBar(Assets.nice2NinePatch);

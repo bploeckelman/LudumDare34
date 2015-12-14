@@ -73,12 +73,12 @@ public class TutorialManager {
                 expandRectangle(NavigationLayout.AreaButtons.get(Area.Type.WOODS).Bounds)));
 
         info = new TutorialInfo("You can see how many slaves you have, how effecetive they are and how many resources you have stored up.", Area.Type.WOODS,
-                expandRectangle(LudumDare34.GameScreen.ResourceManager.getResourceInfo(ResourceManager.Resources.WOOD).bgPB.bounds));
+                expandRectangle(LudumDare34.GameScreen.resourceManager.getResourceInfo(ResourceManager.Resources.WOOD).bgPB.bounds));
         info.pos = new Vector2(Config.width/2, 150);
         screens.add(info);
 
         info = new TutorialInfo("Wood is used to upgrade each working area.", Area.Type.WOODS,
-                expandRectangle(LudumDare34.GameScreen.ResourceManager.getResourceInfo(ResourceManager.Resources.WOOD).bgPB.bounds));
+                expandRectangle(LudumDare34.GameScreen.resourceManager.getResourceInfo(ResourceManager.Resources.WOOD).bgPB.bounds));
         info.pos = new Vector2(Config.width/2, 150);
         screens.add(info);
 
@@ -92,7 +92,7 @@ public class TutorialManager {
                 expandRectangle(NavigationLayout.AreaButtons.get(Area.Type.FIELD).Bounds)));
 
         info = new TutorialInfo("Food is used to create more slaves.  When you have enough stocked up a new slave will be born.", Area.Type.FIELD,
-                expandRectangle(LudumDare34.GameScreen.ResourceManager.getResourceInfo(ResourceManager.Resources.FOOD).bgPB.bounds));
+                expandRectangle(LudumDare34.GameScreen.resourceManager.getResourceInfo(ResourceManager.Resources.FOOD).bgPB.bounds));
         info.pos = new Vector2(Config.width/2, 150);
         screens.add(info);
 

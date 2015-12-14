@@ -2,12 +2,10 @@ package lando.systems.ld34.world;
 
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import lando.systems.ld34.LudumDare34;
 import lando.systems.ld34.motivation.MotivationGame;
 import lando.systems.ld34.resources.ResourceManager;
 import lando.systems.ld34.screens.GameScreen;
-import lando.systems.ld34.uielements.ProgressBar;
 import lando.systems.ld34.utils.Assets;
 
 /**
@@ -24,7 +22,7 @@ public class AreaQuarry extends Area {
         worldX = 2;
         glyphLayout = new GlyphLayout(Assets.font, "Quarry Area");
         mg = new MotivationGame(
-                LudumDare34.GameScreen.ResourceManager,
+                LudumDare34.GameScreen.resourceManager,
                 ResourceManager.Resources.STONE);
     }
 
@@ -35,7 +33,7 @@ public class AreaQuarry extends Area {
 
     @Override
     public void render(SpriteBatch batch) {
-        gameScreen.ResourceManager.render(resourceType, batch);
+        gameScreen.resourceManager.render(resourceType, batch);
         mg.render(batch);
     }
 

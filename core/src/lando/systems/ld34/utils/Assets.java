@@ -40,6 +40,7 @@ public class Assets {
     public static Texture background;
     public static Texture mgmtBackground;
     public static Texture whippingTexture;
+    public static Texture pharaohTexture;
 
     public static Texture managementIcon;
     public static Texture quarryIcon;
@@ -81,10 +82,13 @@ public class Assets {
 
         batch = new SpriteBatch();
         font = new BitmapFont();
+        font.getData().markupEnabled = true;
         fontSmall = new BitmapFont();
         fontSmall.getData().setScale(0.95f);
+        fontSmall.getData().markupEnabled = true;
         HUDFont = new BitmapFont();
         HUDFont.getData().setScale(1f);
+        HUDFont.getData().markupEnabled = true;
 
         background = new Texture("background.png");
         testTexture = new Texture("badlogic.jpg");
@@ -95,6 +99,7 @@ public class Assets {
         blockTexture = new Texture("block.png");
         mgmtBackground = new Texture("management.png");
         whippingTexture = new Texture("whipping_embossed_circle.png");
+        pharaohTexture = new Texture("pharaoh.png");
 
         managementIcon = new Texture("gear.png");
         quarryIcon = new Texture("pickaxe.png");
@@ -134,6 +139,7 @@ public class Assets {
         blockTexture.dispose();
         mgmtBackground.dispose();
         whippingTexture.dispose();
+        pharaohTexture.dispose();
 
         managementIcon.dispose();
         quarryIcon.dispose();

@@ -47,7 +47,7 @@ public class AreaButton extends NavigationButton {
 
     @Override
     public void click() {
-        SelectedButton = this;
+//        SelectedButton = this;
         LudumDare34.GameScreen.TransitionToArea(AreaLocation);
         NavigationLayout.CurrentArea = AreaLocation;
     }

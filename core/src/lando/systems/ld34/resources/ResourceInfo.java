@@ -3,7 +3,6 @@ package lando.systems.ld34.resources;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld34.Config;
 import lando.systems.ld34.LudumDare34;
@@ -103,8 +102,8 @@ public class ResourceInfo {
 
         switch (type){
             case SLAVES:
-                int nextSlave = LudumDare34.GameScreen.ResourceManager.nextSlaveFoodAmount;
-                if (LudumDare34.GameScreen.ResourceManager.removeResource(ResourceManager.Resources.FOOD, nextSlave)){
+                int nextSlave = LudumDare34.GameScreen.resourceManager.nextSlaveFoodAmount;
+                if (LudumDare34.GameScreen.resourceManager.removeResource(ResourceManager.Resources.FOOD, nextSlave)){
                     LudumDare34.GameScreen.addNotification("Slave Born");
                     GameScreen.stats.slavesBorn++;
                     slaves++;
@@ -112,13 +111,13 @@ public class ResourceInfo {
                 break;
             case BUILD:
                 float stones = (slaves * efficiency * dt);
-                if (LudumDare34.GameScreen.ResourceManager.removeResource(ResourceManager.Resources.STONE, stones)) {
+                if (LudumDare34.GameScreen.resourceManager.removeResource(ResourceManager.Resources.STONE, stones)) {
                     amount += stones * stoneToBlocks;
                 }
                 if (amount > maxAmount) amount = maxAmount;
                 if (amount == maxAmount){
                     //TODO: Add Pun to screen here
-                    int height = LudumDare34.GameScreen.ResourceManager.getPyramidHeight();
+                    int height = LudumDare34.GameScreen.resourceManager.getPyramidHeight();
                     lastMaxAmount = (height * (height+1))/2;
                     height++;
                     maxAmount = (height * (height+1))/2;
@@ -134,7 +133,7 @@ public class ResourceInfo {
 
     public boolean upgradeSkilledWorker(){
         int gold = costOfNextSkilled();
-        if (LudumDare34.GameScreen.ResourceManager.removeResource(ResourceManager.Resources.GOLD, gold)){
+        if (LudumDare34.GameScreen.resourceManager.removeResource(ResourceManager.Resources.GOLD, gold)){
             skilledWorkers++;
             return true;
         }
@@ -170,7 +169,7 @@ public class ResourceInfo {
 
     public boolean upgradeLevel(){
         int wood = woodToUpgade();
-        if (LudumDare34.GameScreen.ResourceManager.removeResource(ResourceManager.Resources.WOOD, wood)){
+        if (LudumDare34.GameScreen.resourceManager.removeResource(ResourceManager.Resources.WOOD, wood)){
             level++;
             maxSlaves = level * 4;
             return true;

@@ -63,7 +63,7 @@ public class Pyramid {
 */
 
         // check for new blocks
-        if ((int) LudumDare34.GameScreen.ResourceManager.getAmount(ResourceManager.Resources.BUILD) > _blocks.size()) {
+        if ((int) LudumDare34.GameScreen.resourceManager.getAmount(ResourceManager.Resources.BUILD) > _blocks.size()) {
             addBlock();
         }
 

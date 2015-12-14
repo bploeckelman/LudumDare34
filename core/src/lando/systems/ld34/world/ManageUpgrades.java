@@ -58,7 +58,7 @@ public class ManageUpgrades extends Manage {
 
     public ManageUpgrades(Rectangle bounds) {
         super(Type.UPGRADES, bounds);
-        resources = LudumDare34.GameScreen.ResourceManager;
+        resources = LudumDare34.GameScreen.resourceManager;
 
         availableWoodBar           = new ProgressBar(Assets.nice2NinePatch);
         availableStoneBar          = new ProgressBar(Assets.nice2NinePatch);
