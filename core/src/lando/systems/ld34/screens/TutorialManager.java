@@ -40,7 +40,7 @@ public class TutorialManager {
         sceneAlpha = new MutableFloat(1);
         screens = new Array<TutorialInfo>();
 
-        screens.add(new TutorialInfo("Welcome to Pyramid Scheme.\nThe Pharaoh has tasked you, his favorite overseer, to help grow his burial tomb.", Area.Type.MGMT, new Rectangle(0, 0, 0, 0)));
+        screens.add(new TutorialInfo("Welcome to [YELLOW] Pyramid Scheme[].\nThe Pharaoh has tasked you, his favorite overseer, to help grow his burial tomb.", Area.Type.MGMT, new Rectangle(0, 0, 0, 0)));
 
         screens.add(new TutorialInfo("We have 30 years until the eclipse that is foretelling his passing.", Area.Type.WOODS,
                 new Rectangle(40, 280, 100, 100)));
@@ -61,6 +61,16 @@ public class TutorialManager {
         info = new TutorialInfo("Here you can assign slaves to tasks", Area.Type.MGMT,
                 expandRectangle(AreaMgmt.bounds));
         info.pos = new Vector2(150, 150);
+        screens.add(info);
+
+        info = new TutorialInfo("Here is the Upgrades Screen", Area.Type.MGMT,
+                expandRectangle(NavigationLayout.ResourceButtons.get(Manage.Type.UPGRADES).Bounds));
+        info.mgmtScreen = Manage.Type.UPGRADES;
+        screens.add(info);
+
+        info = new TutorialInfo("Here is the Trade Screen", Area.Type.MGMT,
+                expandRectangle(NavigationLayout.ResourceButtons.get(Manage.Type.RESOURCES).Bounds));
+        info.mgmtScreen = Manage.Type.RESOURCES;
         screens.add(info);
 
         info = new TutorialInfo("Here is the Pharaoh Screen", Area.Type.MGMT,
@@ -183,10 +193,9 @@ public class TutorialManager {
         StringBuilder sb = new StringBuilder();
         sb.append(Integer.toHexString(intAlpha));
         if (sb.length() < 2) sb.insert(0, '0'); // pad with leading zero if needed
-        sb.insert(0, "999999");
         String hex = sb.toString();
 
-        Assets.glyphLayout.setText(Assets.font, coloredReplace.replace("xxxxxxxx", hex), c, info.wrapWidth, Align.center, true);
+        Assets.glyphLayout.setText(Assets.font, coloredReplace.replace("xALPHAx", hex), c, info.wrapWidth, Align.center, true);
         float txtH = Assets.glyphLayout.height;
         float boxWidth = (info.wrapWidth + 20);
         Rectangle bounds = new Rectangle(info.pos.x - boxWidth /2 - 10, info.pos.y - txtH /2 - 10, boxWidth, txtH + 20);

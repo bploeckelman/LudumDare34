@@ -22,7 +22,7 @@ public class TutorialInfo {
     }
 
     public TutorialInfo(String text, Area.Type area, Manage.Type mgmtScreen, Vector2 centerPos, int wrapWidth, Rectangle bounds){
-        this.text = text + "\n\n[#xxxxxxxx]Click to Continue\nEscape to Cancel Tutorial[]";
+        this.text = text + "\n\n[#999999xALPHAx]Click to Continue\nEscape to Cancel Tutorial[]";
         this.area = area;
         this.pos = centerPos;
         this.hightlightBounds = bounds;

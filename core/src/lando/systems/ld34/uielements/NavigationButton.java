@@ -88,7 +88,7 @@ public abstract class NavigationButton {
             batch.draw(Image, Bounds.x, Bounds.y, Bounds.width, Bounds.height);
         } else {
             batch.setColor(highlight ? Color.YELLOW : Color.BLACK);
-            if (Text.equals("Pharaoh") && LudumDare34.GameScreen.currentAnger > 50) {
+            if (Text.equals("Pharaoh") && LudumDare34.GameScreen.currentAnger > 70) {
                 batch.setColor(Color.RED);
             }
             //batch.draw(Assets.whiteTexture, Bounds.x, Bounds.y, Bounds.width, Bounds.height);

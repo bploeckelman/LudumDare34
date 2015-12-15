@@ -25,9 +25,9 @@ public class ManageResources extends Manage {
     Rectangle       stoneButton;
     Rectangle       foodButton;
     Rectangle       woodButton;
-    Texture         stoneTexture;
-    Texture         foodTexture;
-    Texture         woodTexture;
+    Texture         stoneTexture = Assets.plusIconOn;
+    Texture         foodTexture = Assets.plusIconOn;
+    Texture         woodTexture = Assets.plusIconOn;
 
     int goldAmount;
     int stoneAmount;

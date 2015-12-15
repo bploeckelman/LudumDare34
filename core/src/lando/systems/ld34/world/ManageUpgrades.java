@@ -30,10 +30,10 @@ public class ManageUpgrades extends Manage {
     Rectangle       foodUpgradeButton;
     Rectangle       forestUpgradeButton;
     Rectangle       buildingUpgradeButton;
-    Texture         buildUpgradeTex;
-    Texture         stoneUpgradeTex;
-    Texture         foodUpgradeTex;
-    Texture         forestUpgradeTex;
+    Texture         buildUpgradeTex = Assets.plusIconOn;
+    Texture         stoneUpgradeTex = Assets.plusIconOn;
+    Texture         foodUpgradeTex = Assets.plusIconOn;
+    Texture         forestUpgradeTex = Assets.plusIconOn;
     int             woodResourceLevel;
     int             stoneResourceLevel;
     int             foodResourceLevel;

@@ -54,7 +54,7 @@ public class GameScreen extends AbstractScreen {
     public Shake shaker;
     public TutorialManager tutorialManager;
     private boolean firstRun = true;
-    private final static float ANGER_SPEED = 0.5f;
+    private static float ANGER_SPEED = 0.5f;
     public float currentAnger = 0f;
 
     public GameScreen(LudumDare34 game) {
@@ -189,13 +189,14 @@ public class GameScreen extends AbstractScreen {
         if (!gameOver()) {
             resourceManager.update(delta);
             layout.update(delta);
+            currentAnger = Utils.clamp(currentAnger + ANGER_SPEED * delta, 0f, 100f);
         }
         currentArea.update(delta);
         Pyramid.update(delta);
         hudManager.update(delta);
         shaker.update(delta, camera, Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
+        ANGER_SPEED = 1.5f + (gameTimer/gameLength * 3);
 
-        currentAnger = Utils.clamp(currentAnger + ANGER_SPEED * delta, 0f, 100f);
         if (currentAnger == 100f) {
             triggerDisaster();
         }
@@ -267,6 +268,7 @@ public class GameScreen extends AbstractScreen {
      * Yo dawg, I heard you liked hacky special case code, so I wrote this method to satisfy that desire...
      */
     private void doDisaster(Area.Type targetAreaType, ResourceManager.Resources targetResourceType, int thingToFuckUp) {
+        boolean damageDoneForReal = true;
         // Make sure we're on the right screen if we are killing slaves
         if (targetAreaType == Area.Type.MGMT) {
             ShowManagementScreen(Manage.Type.SLAVES);
@@ -335,10 +337,14 @@ public class GameScreen extends AbstractScreen {
         }
         if (thingToFuckUp == 4) {
             disasterResult = "thankfully nothing was destroyed...";
+            damageDoneForReal = false;
         }
 
+        if (damageDoneForReal){
+            shaker.shake(2);
+        }
         // trigger notification
-        addNotification("The Pharaoh's anger has caused a disaster:\n[RED]" + disasterResult + "[]");
+        addNotification("The Pharaoh's anger has caused a disaster:\n[#FF0000xALPHAx]" + disasterResult + "[]");
 
         // update statistics
         stats.disastersTriggered++;

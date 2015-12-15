@@ -99,7 +99,7 @@ public class ResourceManager {
     }
 
     public float getWhipTargetRange(Resources type){
-        return .05f + (.05f * resources.get(type).skilledWorkers);
+        return .05f + (.025f * resources.get(type).skilledWorkers);
     }
 
     public float getWhipFalloffRange(Resources type){
@@ -137,7 +137,7 @@ public class ResourceManager {
     public void tradeResource(Resources type) {
         if (!canTrade(type)) return;
         if (removeResource(type, resources.get(type).costToTrade())) {
-            addAmount(Resources.GOLD, 1);
+            addAmount(Resources.GOLD, 3);
         }
     }
 

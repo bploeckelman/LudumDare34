@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import lando.systems.ld34.Config;
 import lando.systems.ld34.LudumDare34;
 import lando.systems.ld34.screens.GameScreen;
@@ -18,6 +19,8 @@ public class ResourceInfo {
 
     private static float effDecay = .01f;
     private static float stoneToBlocks = .1f;
+
+    private Array<String> pyramidPuns;
 
     public float amount;
     public float efficiency;
@@ -42,6 +45,20 @@ public class ResourceInfo {
     private Color color;
 
     public ResourceInfo(ResourceManager.Resources type){
+        pyramidPuns = new Array<String>();
+        pyramidPuns.add("Where there is a [#FFFF00xALPHAx] whip there is a way.[]");
+        pyramidPuns.add("I once had to bury a guy in the desert.  I tried to apologize but he said [#FFFF00xALPHAx] 'I understand'[]");
+        pyramidPuns.add("We once had a sand dune in our Army.  He [#FFFF00xALPHAx] 'deserted'[]");
+        pyramidPuns.add("It's hard making a straight line here.  Let's [#FFFF00xALPHAx] 'try angle'[]");
+        pyramidPuns.add("I played tuba in a marching band.  She played trumpet.  We were both terrible but we had [#FFFF00xALPHAx] 'toot in common'[].");
+        pyramidPuns.add("What do the great pyramids have in common with dentures?  They're both in [#FFFF00xALPHAx] geezer[].");
+        pyramidPuns.add("It's hard to befriend a mummy cause they're always so wrapped up with themselves.");
+        pyramidPuns.add("I don't think I have a swimming problem, but my shrink says I'm in [#FFFF00xALPHAx] da Nile[].");
+        pyramidPuns.add("I like to take walks amidst the reeds by the river... it's quite lovely to [#FFFF00xALPHAx] 'peer amid'[] them.");
+        pyramidPuns.add("Where there is a Whip there is a way.");
+
+
+
         bgPB     = new ProgressBar(Assets.nice2NinePatch);
         amountPB = new ProgressBar(Assets.nice2NinePatch);
         effPB    = new ProgressBar(Assets.nice2NinePatch);
@@ -71,12 +88,15 @@ public class ResourceInfo {
         switch (type){
             case STONE:
                 typeLabel = "Stones";
+                efficiency = .7f;
                 break;
             case WOOD:
                 typeLabel = "Wood";
+                efficiency = .8f;
                 break;
             case FOOD:
                 typeLabel = "Food";
+                efficiency = .6f;
                 break;
             case BUILD:
                 typeLabel = "Blocks";
@@ -118,6 +138,10 @@ public class ResourceInfo {
                 if (amount == maxAmount){
                     //TODO: Add Pun to screen here
                     int height = LudumDare34.GameScreen.resourceManager.getPyramidHeight();
+                    if (height > 2) {
+                        String pun = pyramidPuns.get(height % pyramidPuns.size);
+                        LudumDare34.GameScreen.addNotification("New Pyramid Tier.\n\n" + pun);
+                    }
                     lastMaxAmount = (height * (height+1))/2;
                     height++;
                     maxAmount = (height * (height+1))/2;
@@ -125,7 +149,7 @@ public class ResourceInfo {
                 break;
             default:
                 maxAmount = 50 * (level);
-                amount += (slaves * efficiency * dt);
+                amount += ((slaves + (5 * skilledWorkers)) * efficiency * dt);
                 if (amount > maxAmount) amount = maxAmount;
         }
 
@@ -141,7 +165,7 @@ public class ResourceInfo {
     }
 
     public int costOfNextSkilled(){
-        return (skilledWorkers+1) * (skilledWorkers+1) * 10;
+        return (skilledWorkers+1) * 10;
     }
 
     /**
@@ -160,7 +184,7 @@ public class ResourceInfo {
     }
 
     public int woodToUpgade(){
-        return (level * (level+1))/2*10;
+        return (level * (level+1))/2*5;
     }
 
     public int costToTrade() {
@@ -208,7 +232,7 @@ public class ResourceInfo {
     }
 
     public float getWhipFalloff(){
-        float val = (1.2f - ((efficiency - minEfficiency) / (maxEfficiency - minEfficiency))) * .2f;
+        float val = (1.2f - ((efficiency - minEfficiency) / (maxEfficiency - minEfficiency))) * .3f;
         return Utils.clamp(val, 0, 1);
     }
 

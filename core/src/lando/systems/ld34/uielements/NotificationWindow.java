@@ -24,8 +24,17 @@ public class NotificationWindow {
         this.icon = icon;
         this.text = text;
         targetY = y;
-        ttl = 5;
-        Assets.glyphLayout.setText(Assets.HUDFont, text, Color.WHITE, 180, Align.center, true);
+        ttl = 8;
+
+
+        String coloredReplace = text;
+        int intAlpha = (int)(1 * 255);
+        StringBuilder sb = new StringBuilder();
+        sb.append(Integer.toHexString(intAlpha));
+        if (sb.length() < 2) sb.insert(0, '0'); // pad with leading zero if needed
+        String hex = sb.toString();
+
+        Assets.glyphLayout.setText(Assets.HUDFont, coloredReplace.replace("xALPHAx", hex), Color.WHITE, 180, Align.center, true);
         this.rect = new Rectangle(1, targetY, 199, Assets.glyphLayout.height + 20);
     }
 
@@ -46,10 +55,18 @@ public class NotificationWindow {
         float alpha = Utils.clamp(ttl, 0, 1);
         if (hovered) alpha = Math.min(alpha, .4f);
         Color c = new Color(1,1,1,alpha);
+
+        String coloredReplace = text;
+        int intAlpha = (int)(alpha * 255);
+        StringBuilder sb = new StringBuilder();
+        sb.append(Integer.toHexString(intAlpha));
+        if (sb.length() < 2) sb.insert(0, '0'); // pad with leading zero if needed
+        String hex = sb.toString();
+
         Assets.nice2NinePatch.setColor(c);
         Assets.HUDFont.setColor(c);
 //        Assets.glyphLayout.setText(Assets.HUDFont, text);
-        Assets.glyphLayout.setText(Assets.HUDFont, text, c, 180, Align.center, true);
+        Assets.glyphLayout.setText(Assets.HUDFont, coloredReplace.replace("xALPHAx", hex), c, 180, Align.center, true);
 
         Assets.nice2NinePatch.draw(batch, rect.x, rect.y, rect.width, rect.height);
 //        Assets.HUDFont.draw(batch, text, rect.x + rect.width/2 - Assets.glyphLayout.width/2, rect.y + (rect.height+Assets.glyphLayout.height)/2 );

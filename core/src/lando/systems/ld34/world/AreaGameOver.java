@@ -22,8 +22,8 @@ public class AreaGameOver extends Area {
         super(gameScreen, Type.PYRAMID);
         worldX = 4;
 
-        float w = gameScreen.uiCamera.viewportWidth / 1.6f;
-        float h = gameScreen.uiCamera.viewportHeight / 2.5f;
+        float w = gameScreen.uiCamera.viewportWidth / 1.4f;
+        float h = gameScreen.uiCamera.viewportHeight / 2.4f;
         float x = 10;
         float y = gameScreen.uiCamera.viewportHeight  -  (h + 10) ;
         bounds = new Rectangle(x, y, w, h);
@@ -55,35 +55,14 @@ public class AreaGameOver extends Area {
             Assets.glyphLayout.setText(Assets.font, "Congratulations! You have completed the Pyramid.", Color.WHITE, bounds.width - 20, Align.center, true);
             Assets.font.draw(batch, Assets.glyphLayout, bounds.x + 10, currentY);
             currentY -= Assets.glyphLayout.height + 15;
-            Assets.glyphLayout.setText(Assets.font, "Your grew your pyramid to " + LudumDare34.GameScreen.resourceManager
-
-                    .getPyramidHeight() + " tiers tall.", Color.WHITE, bounds.width - 20, Align.center, true);
-            Assets.font.draw(batch, Assets.glyphLayout, bounds.x + 10, currentY);
-            currentY -= Assets.glyphLayout.height + 10;
-            Assets.glyphLayout.setText(Assets.font, GameScreen.stats.getSlaveInfo(), Color.WHITE, bounds.width - 20, Align.center, true);
+            Assets.glyphLayout.setText(Assets.font, GameScreen.stats.getSlaveInfo(), Color.WHITE, bounds.width - 20, Align.left, true);
             Assets.font.draw(batch, Assets.glyphLayout, bounds.x + 10, currentY);
 
         } else {
             float currentY = bounds.y + bounds.height - 30;
-            Assets.glyphLayout.setText(Assets.font, "Made for Ludum Dare 34 by:", Color.WHITE, bounds.width - 20, Align.center, true);
+            String credits = "Made for Ludum Dare 34 by:\n\nBrian Ploeckelman\nDoug Graham\nBrian Rossman\nIan McNamara\nLuke Bain\n\n[#999999FF] No pixels were harmed in the making of this game[]";
+            Assets.glyphLayout.setText(Assets.font, credits, Color.WHITE, bounds.width - 20, Align.center, true);
             Assets.font.draw(batch, Assets.glyphLayout, bounds.x + 10, currentY);
-            currentY -= Assets.glyphLayout.height + 15;
-            Assets.glyphLayout.setText(Assets.font, "Brian Ploekelman", Color.WHITE, bounds.width - 20, Align.center, true);
-            Assets.font.draw(batch, Assets.glyphLayout, bounds.x + 10, currentY);
-            currentY -= Assets.glyphLayout.height + 5;
-            Assets.glyphLayout.setText(Assets.font, "Doug Graham", Color.WHITE, bounds.width - 20, Align.center, true);
-            Assets.font.draw(batch, Assets.glyphLayout, bounds.x + 10, currentY);
-            currentY -= Assets.glyphLayout.height + 5;
-            Assets.glyphLayout.setText(Assets.font, "Brian Rossman", Color.WHITE, bounds.width - 20, Align.center, true);
-            Assets.font.draw(batch, Assets.glyphLayout, bounds.x + 10, currentY);
-            currentY -= Assets.glyphLayout.height + 5;
-            Assets.glyphLayout.setText(Assets.font, "Ian McNamarra", Color.WHITE, bounds.width - 20, Align.center, true);
-            Assets.font.draw(batch, Assets.glyphLayout, bounds.x + 10, currentY);
-            currentY -= Assets.glyphLayout.height + 5;
-            Assets.glyphLayout.setText(Assets.font, "Luke Bain", Color.WHITE, bounds.width - 20, Align.center, true);
-            Assets.font.draw(batch, Assets.glyphLayout, bounds.x + 10, currentY);
-            currentY -= Assets.glyphLayout.height + 5;
-
 
         }
 
