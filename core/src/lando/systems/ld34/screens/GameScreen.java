@@ -6,6 +6,7 @@ import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.primitives.MutableFloat;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -19,6 +20,7 @@ import lando.systems.ld34.LudumDare34;
 import lando.systems.ld34.resources.ResourceManager;
 import lando.systems.ld34.uielements.AreaButton;
 import lando.systems.ld34.uielements.ManagementButton;
+import lando.systems.ld34.uielements.ProgressBar;
 import lando.systems.ld34.uielements.PyramidButton;
 import lando.systems.ld34.utils.Assets;
 import lando.systems.ld34.utils.Utils;
@@ -51,6 +53,7 @@ public class GameScreen extends AbstractScreen {
     public final static float gameLength = 600f;
     public final static GameStats stats = new GameStats();     // Hope we never need to restart this game
     public float gameTimer;
+    private ProgressBar timeBar;
     public Shake shaker;
     public TutorialManager tutorialManager;
     private boolean firstRun = true;
@@ -60,6 +63,8 @@ public class GameScreen extends AbstractScreen {
     public GameScreen(LudumDare34 game) {
         super(game);
         gameTimer = 0;
+        timeBar = new ProgressBar(Assets.niceNinePatch);
+        timeBar.bounds = new Rectangle(20, 5, Config.width - 40, 15);
 
         Gdx.gl.glClearColor(0, 0, 0, 0);
         sceneAlpha = new MutableFloat(1);
@@ -231,6 +236,11 @@ public class GameScreen extends AbstractScreen {
 
         hudManager.render(batch);
         tutorialManager.render(batch);
+        if (!tutorialManager.isDisplayed()){
+            timeBar.boundsColor = Color.WHITE;
+            timeBar.fillPercent.setValue(gameTimer/gameLength);
+            timeBar.render(batch);
+        }
         batch.end();
 
     }
