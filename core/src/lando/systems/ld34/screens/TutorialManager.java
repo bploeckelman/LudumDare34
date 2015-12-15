@@ -68,14 +68,39 @@ public class TutorialManager {
         info.mgmtScreen = Manage.Type.UPGRADES;
         screens.add(info);
 
+        info = new TutorialInfo("From this screen you can upgrade you work areas to hold me resources and slaves.", Area.Type.MGMT,
+                expandRectangle(AreaMgmt.bounds));
+        info.pos = new Vector2(150, 150);
+        screens.add(info);
+
         info = new TutorialInfo("Here is the Trade Screen", Area.Type.MGMT,
                 expandRectangle(NavigationLayout.ResourceButtons.get(Manage.Type.RESOURCES).Bounds));
         info.mgmtScreen = Manage.Type.RESOURCES;
         screens.add(info);
 
+        info = new TutorialInfo("This screen lets you sell your goods for [YELLOW] Gold[].", Area.Type.MGMT,
+                expandRectangle(AreaMgmt.bounds));
+        info.pos = new Vector2(150, 150);
+        screens.add(info);
+
+        info = new TutorialInfo("Here is the Skilled Worker Screen", Area.Type.MGMT,
+                expandRectangle(NavigationLayout.ResourceButtons.get(Manage.Type.WORKERS).Bounds));
+        info.mgmtScreen = Manage.Type.WORKERS;
+        screens.add(info);
+
+        info = new TutorialInfo("Spend your [YELLOW] gold[] here to get skilled workers", Area.Type.MGMT,
+                expandRectangle(AreaMgmt.bounds));
+        info.pos = new Vector2(150, 150);
+        screens.add(info);
+
         info = new TutorialInfo("Here is the Pharaoh Screen", Area.Type.MGMT,
                 expandRectangle(NavigationLayout.ResourceButtons.get(Manage.Type.PHAROAH).Bounds));
         info.mgmtScreen = Manage.Type.PHAROAH;
+        screens.add(info);
+
+        info = new TutorialInfo("Watch out for the Pharaohs anger. \n\n You wouldn't like him when he is angry.", Area.Type.MGMT,
+                expandRectangle(AreaMgmt.bounds));
+        info.pos = new Vector2(150, 150);
         screens.add(info);
 
         //Woods Tutorial Section

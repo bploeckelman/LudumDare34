@@ -25,10 +25,10 @@ public class ManageWorkers extends Manage {
     Rectangle       addMinerButton;
     Rectangle       addFarmerButton;
     Rectangle       addLoggerButton;
-    Texture         addBuilderTexture;
-    Texture         addMinerTexture;
-    Texture         addFarmerTexture;
-    Texture         addLoggerTexture;
+    Texture         addBuilderTexture = Assets.plusIconOn;
+    Texture         addMinerTexture = Assets.plusIconOn;
+    Texture         addFarmerTexture = Assets.plusIconOn;
+    Texture         addLoggerTexture = Assets.plusIconOn;
 
     int numBuilders;
     int numMiners;
