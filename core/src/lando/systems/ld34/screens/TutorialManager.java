@@ -121,6 +121,12 @@ public class TutorialManager {
         //Pyramid Tutorial Section
         screens.add(new TutorialInfo("The Monumental Monument.\nYou get here by selecting this button.", Area.Type.PYRAMID,
                 expandRectangle(new Rectangle(Config.width - 50, Config.height/2 - 190/2, 50, 190))));
+
+
+        info = new TutorialInfo("Good Luck out there. Grow the biggest pyramid", Area.Type.MGMT,
+                expandRectangle(NavigationLayout.AreaButtons.get(Area.Type.MGMT).Bounds));
+        info.mgmtScreen = Manage.Type.SLAVES;
+        screens.add(info);
     }
 
     public boolean isDisplayed(){
