@@ -96,9 +96,9 @@ public class ManageResources extends Manage {
 
         final float x = Gdx.input.getX();
         final float y = LudumDare34.GameScreen.uiCamera.viewportHeight - Gdx.input.getY();
-        if      (stoneButton.contains(x,y)) LudumDare34.GameScreen.hudManager.showTooltip("Trade " + resources.getResourceInfo(ResourceManager.Resources.STONE).costToTrade() + " stone for 1 gold");
-        else if (foodButton.contains(x,y))  LudumDare34.GameScreen.hudManager.showTooltip("Trade " + resources.getResourceInfo(ResourceManager.Resources.FOOD).costToTrade() + " food for 1 gold");
-        else if (woodButton.contains(x,y))  LudumDare34.GameScreen.hudManager.showTooltip("Trade " + resources.getResourceInfo(ResourceManager.Resources.WOOD).costToTrade() + " wood for 1 gold");
+        if      (stoneButton.contains(x,y)) LudumDare34.GameScreen.hudManager.showTooltip("Trade " + resources.getResourceInfo(ResourceManager.Resources.STONE).costToTrade() + " stone for 2 gold");
+        else if (foodButton.contains(x,y))  LudumDare34.GameScreen.hudManager.showTooltip("Trade " + resources.getResourceInfo(ResourceManager.Resources.FOOD).costToTrade() + " food for 2 gold");
+        else if (woodButton.contains(x,y))  LudumDare34.GameScreen.hudManager.showTooltip("Trade " + resources.getResourceInfo(ResourceManager.Resources.WOOD).costToTrade() + " wood for 2 gold");
 
         if (!Gdx.input.justTouched()) {
             return;

@@ -149,9 +149,11 @@ public class ResourceInfo {
                     maxAmount = (height * (height+1))/2;
                 }
                 break;
+            case GOLD:
+                maxAmount = 10000;
             default:
                 maxAmount = 50 * (level);
-                amount += ((slaves + (5 * skilledWorkers)) * efficiency * dt);
+                amount += ((slaves + (3 * skilledWorkers)) * efficiency * dt);
                 if (amount > maxAmount) amount = maxAmount;
         }
 

@@ -138,8 +138,8 @@ public class ResourceManager {
     public void tradeResource(Resources type) {
         if (!canTrade(type)) return;
         if (removeResource(type, resources.get(type).costToTrade())) {
-            addAmount(Resources.GOLD, 3);
-            SoundManager.purchase.play(0.2f);
+            addAmount(Resources.GOLD, 2);
+            SoundManager.purchase.play(0.1f);
         }
     }
 
