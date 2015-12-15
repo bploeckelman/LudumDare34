@@ -45,7 +45,7 @@ public class HUDManager {
 
     public void update(float dt){
         toolTipDelay -= dt;
-        float currentY = 10;
+        float currentY = 25;
         for (NotificationWindow item : notifications){
             item.targetY = currentY;
             currentY += item.rect.height + 5;
