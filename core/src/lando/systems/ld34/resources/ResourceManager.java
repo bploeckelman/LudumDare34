@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ObjectMap;
 import lando.systems.ld34.LudumDare34;
 import lando.systems.ld34.screens.NavigationLayout;
+import lando.systems.ld34.utils.SoundManager;
 import lando.systems.ld34.world.Area;
 
 
@@ -138,6 +139,7 @@ public class ResourceManager {
         if (!canTrade(type)) return;
         if (removeResource(type, resources.get(type).costToTrade())) {
             addAmount(Resources.GOLD, 3);
+            SoundManager.purchase.play(0.2f);
         }
     }
 

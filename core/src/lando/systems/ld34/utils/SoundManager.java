@@ -1,6 +1,9 @@
 package lando.systems.ld34.utils;
 
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.primitives.MutableFloat;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 
 import java.util.ArrayList;
@@ -9,8 +12,6 @@ import java.util.Random;
 
 /**
  * Author: Ian McNamara <ian.mcnamara@wisc.edu>
- * Teaching and Research Application Development
- * Copyright 2015 Board of Regents of the University of Wisconsin System
  */
 public class SoundManager{
 
@@ -18,6 +19,13 @@ public class SoundManager{
         NECK_CRACK
     }
 
+    public static Sound        stoneButton;
+    public static Sound        chosenWisely;
+    public static Sound        babyCry;
+    public static Sound        purchase;
+    public static Sound        earthquake;
+    public static Music        music;
+    public static MutableFloat musicVolume;
 
 
     public enum MusicOptions {
@@ -27,17 +35,18 @@ public class SoundManager{
 
     }
 
-    private static HashMap<SoundOptions, Sound> soundMap = new HashMap<SoundOptions, Sound>();
-    private static ArrayList<Sound> whipList = new ArrayList<Sound>();
-    private static ArrayList<Sound> screamList = new ArrayList<Sound>();
-    private static HashMap<MusicPieces, Sound> musicMap = new HashMap<MusicPieces, Sound>();
+    private static HashMap<SoundOptions, Sound> soundMap   = new HashMap<SoundOptions, Sound>();
+    private static ArrayList<Sound>             whipList   = new ArrayList<Sound>();
+    private static ArrayList<Sound>             screamList = new ArrayList<Sound>();
+    private static HashMap<MusicPieces, Sound>  musicMap   = new HashMap<MusicPieces, Sound>();
 
     public static void load() {
-        whipList.add(Gdx.audio.newSound(Gdx.files.internal("sounds/crack1.mp3")));
-        whipList.add(Gdx.audio.newSound(Gdx.files.internal("sounds/crack2.mp3")));
-        whipList.add(Gdx.audio.newSound(Gdx.files.internal("sounds/crack3.mp3")));
-        whipList.add(Gdx.audio.newSound(Gdx.files.internal("sounds/crack4.mp3")));
-        whipList.add(Gdx.audio.newSound(Gdx.files.internal("sounds/crack5.mp3")));
+//        whipList.add(Gdx.audio.newSound(Gdx.files.internal("sounds/crack1.mp3")));
+//        whipList.add(Gdx.audio.newSound(Gdx.files.internal("sounds/crack2.mp3")));
+//        whipList.add(Gdx.audio.newSound(Gdx.files.internal("sounds/crack3.mp3")));
+//        whipList.add(Gdx.audio.newSound(Gdx.files.internal("sounds/crack4.mp3")));
+//        whipList.add(Gdx.audio.newSound(Gdx.files.internal("sounds/crack5.mp3")));
+        whipList.add(Gdx.audio.newSound(Gdx.files.internal("sounds/whip.mp3")));
         screamList.add(Gdx.audio.newSound(Gdx.files.internal("sounds/scream1.mp3")));
         screamList.add(Gdx.audio.newSound(Gdx.files.internal("sounds/scream2.mp3")));
         screamList.add(Gdx.audio.newSound(Gdx.files.internal("sounds/scream3.mp3")));
@@ -46,9 +55,28 @@ public class SoundManager{
         screamList.add(Gdx.audio.newSound(Gdx.files.internal("sounds/scream6.mp3")));
         screamList.add(Gdx.audio.newSound(Gdx.files.internal("sounds/scream7.mp3")));
         soundMap.put(SoundOptions.NECK_CRACK, Gdx.audio.newSound(Gdx.files.internal("sounds/neckcrack.mp3")));
+
+        stoneButton = Gdx.audio.newSound(Gdx.files.internal("sounds/stone_button.mp3"));
+        chosenWisely = Gdx.audio.newSound(Gdx.files.internal("sounds/wisely.mp3"));
+        babyCry = Gdx.audio.newSound(Gdx.files.internal("sounds/baby_crying.mp3"));
+        purchase = Gdx.audio.newSound(Gdx.files.internal("sounds/trade_buy.mp3"));
+        earthquake = Gdx.audio.newSound(Gdx.files.internal("sounds/earthquake.wav"));
+
+        musicVolume = new MutableFloat(0.01f);
+        music = Gdx.audio.newMusic(Gdx.files.internal("sounds/music.mp3"));
+        music.setLooping(true);
+        music.play();
+        music.setVolume(musicVolume.floatValue());
+        Tween.to(musicVolume, -1, 10f)
+                .target(0.1f)
+                .start(Assets.tween);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
+
+    public static void update(float delta) {
+        music.setVolume(musicVolume.floatValue());
+    }
 
     public static void dispose() {
         SoundOptions[] allSounds = SoundOptions.values();
@@ -85,12 +113,11 @@ public class SoundManager{
 
     private static void playRandom(ArrayList<Sound> soundList) {
         int value = _rand.nextInt(soundList.size());
-        soundList.get(value).play();
+        soundList.get(value).play(0.2f);
     }
 
     public static void playSound(SoundOptions soundOption) {
         //Gdx.app.log("DEBUG", "SoundManager.playSound | soundOption='" + String.valueOf(soundOption) + "'");
-        soundMap.get(soundOption).play();
     }
 
     private static MusicOptions currentOption;

@@ -10,6 +10,7 @@ import lando.systems.ld34.LudumDare34;
 import lando.systems.ld34.screens.GameScreen;
 import lando.systems.ld34.uielements.ProgressBar;
 import lando.systems.ld34.utils.Assets;
+import lando.systems.ld34.utils.SoundManager;
 import lando.systems.ld34.utils.Utils;
 
 /**
@@ -125,6 +126,7 @@ public class ResourceInfo {
                 int nextSlave = LudumDare34.GameScreen.resourceManager.nextSlaveFoodAmount;
                 if (LudumDare34.GameScreen.resourceManager.removeResource(ResourceManager.Resources.FOOD, nextSlave)){
                     LudumDare34.GameScreen.addNotification("Slave Born");
+                    SoundManager.babyCry.play(0.1f);
                     GameScreen.stats.slavesBorn++;
                     slaves++;
                 }

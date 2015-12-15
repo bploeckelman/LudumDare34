@@ -23,6 +23,7 @@ import lando.systems.ld34.uielements.ManagementButton;
 import lando.systems.ld34.uielements.ProgressBar;
 import lando.systems.ld34.uielements.PyramidButton;
 import lando.systems.ld34.utils.Assets;
+import lando.systems.ld34.utils.SoundManager;
 import lando.systems.ld34.utils.Utils;
 import lando.systems.ld34.utils.camera.Shake;
 import lando.systems.ld34.world.*;
@@ -178,6 +179,7 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void update(float delta) {
+        SoundManager.update(delta);
         super.update(delta);
         if (!firstRun && tutorialManager.isDisplayed()){
             tutorialManager.update(delta);
@@ -355,6 +357,7 @@ public class GameScreen extends AbstractScreen {
         }
         // trigger notification
         addNotification("The Pharaoh's anger has caused a disaster:\n[#FF0000xALPHAx]" + disasterResult + "[]");
+        SoundManager.earthquake.play(0.2f);
 
         // update statistics
         stats.disastersTriggered++;

@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector3;
 import lando.systems.ld34.LudumDare34;
 import lando.systems.ld34.screens.NavigationLayout;
 import lando.systems.ld34.utils.Assets;
+import lando.systems.ld34.utils.SoundManager;
 import lando.systems.ld34.world.Area;
 
 /**
@@ -48,6 +49,7 @@ public class AreaButton extends NavigationButton {
     @Override
     public void click() {
 //        SelectedButton = this;
+        SoundManager.stoneButton.play(0.2f);
         LudumDare34.GameScreen.TransitionToArea(AreaLocation);
         NavigationLayout.CurrentArea = AreaLocation;
     }

@@ -16,7 +16,6 @@ import com.badlogic.gdx.utils.Array;
 import lando.systems.ld34.Config;
 import lando.systems.ld34.LudumDare34;
 import lando.systems.ld34.motivation.MotivationGame;
-import lando.systems.ld34.resources.ResourceInfo;
 import lando.systems.ld34.resources.ResourceManager;
 import lando.systems.ld34.uielements.TutorialInfo;
 import lando.systems.ld34.utils.Assets;
@@ -24,7 +23,6 @@ import lando.systems.ld34.world.Area;
 import lando.systems.ld34.world.AreaMgmt;
 import lando.systems.ld34.world.Manage;
 
-import javax.swing.plaf.LabelUI;
 
 /**
  * Created by dsgraham on 12/14/15.
@@ -40,12 +38,12 @@ public class TutorialManager {
         sceneAlpha = new MutableFloat(1);
         screens = new Array<TutorialInfo>();
 
-        screens.add(new TutorialInfo("Welcome to [YELLOW] Pyramid Scheme[].\nThe Pharaoh has tasked you, his favorite overseer, to help grow his burial tomb.", Area.Type.MGMT, new Rectangle(0, 0, 0, 0)));
+        screens.add(new TutorialInfo("Welcome to [#FFFF00xALPHAx] Pyramid Scheme[].\nThe Pharaoh has tasked you, his favorite overseer, to help grow his burial tomb.", Area.Type.MGMT, new Rectangle(0, 0, 0, 0)));
 
-        screens.add(new TutorialInfo("We have 30 years until the eclipse that is foretelling his passing.", Area.Type.WOODS,
+        screens.add(new TutorialInfo("An ancient prophecy says:\n'Pharaoh will reach the afterlife when the sun is hidden by the moon.'\nThere are 30 years until the eclipse.", Area.Type.WOODS,
                 new Rectangle(40, 280, 100, 100)));
 
-        screens.add(new TutorialInfo("When it reaches the sun here the game is over.", Area.Type.PYRAMID,
+        screens.add(new TutorialInfo("When the moon reaches the sun,\nthe [#FF0000xALPHAx] game is over[].", Area.Type.PYRAMID,
                 new Rectangle(495, 320, 85, 85)));
 
         //Management Tutorial Section
@@ -68,7 +66,7 @@ public class TutorialManager {
         info.mgmtScreen = Manage.Type.UPGRADES;
         screens.add(info);
 
-        info = new TutorialInfo("From this screen you can upgrade you work areas to hold me resources and slaves.", Area.Type.MGMT,
+        info = new TutorialInfo("From this screen you can upgrade your work areas to hold more resources and slaves.", Area.Type.MGMT,
                 expandRectangle(AreaMgmt.bounds));
         info.pos = new Vector2(150, 150);
         screens.add(info);
@@ -78,7 +76,7 @@ public class TutorialManager {
         info.mgmtScreen = Manage.Type.RESOURCES;
         screens.add(info);
 
-        info = new TutorialInfo("This screen lets you sell your goods for [YELLOW] Gold[].", Area.Type.MGMT,
+        info = new TutorialInfo("This screen lets you sell goods for [#FFFF00xALPHAx] Gold[].", Area.Type.MGMT,
                 expandRectangle(AreaMgmt.bounds));
         info.pos = new Vector2(150, 150);
         screens.add(info);
@@ -88,7 +86,7 @@ public class TutorialManager {
         info.mgmtScreen = Manage.Type.WORKERS;
         screens.add(info);
 
-        info = new TutorialInfo("Spend your [YELLOW] gold[] here to get skilled workers", Area.Type.MGMT,
+        info = new TutorialInfo("Spend [#FFFF00xALPHAx] gold[] here to get skilled workers", Area.Type.MGMT,
                 expandRectangle(AreaMgmt.bounds));
         info.pos = new Vector2(150, 150);
         screens.add(info);
@@ -98,49 +96,49 @@ public class TutorialManager {
         info.mgmtScreen = Manage.Type.PHAROAH;
         screens.add(info);
 
-        info = new TutorialInfo("Watch out for the Pharaohs anger. \n\n You wouldn't like him when he is angry.", Area.Type.MGMT,
+        info = new TutorialInfo("Watch out for the Pharaoh's anger. \n\n You wouldn't like him when he is angry.", Area.Type.MGMT,
                 expandRectangle(AreaMgmt.bounds));
         info.pos = new Vector2(150, 150);
         screens.add(info);
 
         //Woods Tutorial Section
-        screens.add(new TutorialInfo("Here is your Woods\nYou get here by selecting this button", Area.Type.WOODS,
+        screens.add(new TutorialInfo("Here is the [#00FF00xALPHAx] Forest[]\nYou get here by selecting this button", Area.Type.WOODS,
                 expandRectangle(NavigationLayout.AreaButtons.get(Area.Type.WOODS).Bounds)));
 
-        info = new TutorialInfo("You can see how many slaves you have, how effecetive they are and how many resources you have stored up.", Area.Type.WOODS,
+        info = new TutorialInfo("You can see how many slaves you have, how effective they are and how many resources you have stored up.", Area.Type.WOODS,
                 expandRectangle(LudumDare34.GameScreen.resourceManager.getResourceInfo(ResourceManager.Resources.WOOD).bgPB.bounds));
         info.pos = new Vector2(Config.width/2, 150);
         screens.add(info);
 
-        info = new TutorialInfo("Wood is used to upgrade each working area.", Area.Type.WOODS,
+        info = new TutorialInfo("[#00FF00xALPHAx] Wood[] is used to [#00FF00xALPHAx] upgrade[] each working area.", Area.Type.WOODS,
                 expandRectangle(LudumDare34.GameScreen.resourceManager.getResourceInfo(ResourceManager.Resources.WOOD).bgPB.bounds));
         info.pos = new Vector2(Config.width/2, 150);
         screens.add(info);
 
-        info = new TutorialInfo("When your slaves get lazy, you will have to 'motivate' them", Area.Type.WOODS,
+        info = new TutorialInfo("When your slaves get lazy, you will have to [#FF0000xALPHAx] 'motivate'[] them to keep their efficiency high", Area.Type.WOODS,
                 expandRectangle(MotivationGame.gameArea));
         info.pos = new Vector2(Config.width/2, 150);
         screens.add(info);
 
         //Food Tutorial Section
-        screens.add(new TutorialInfo("Here is your Farms\nYou get here by selecting this button", Area.Type.FIELD,
+        screens.add(new TutorialInfo("Here is the [#00FF00xALPHAx] Farm[]\nYou get here by selecting this button", Area.Type.FIELD,
                 expandRectangle(NavigationLayout.AreaButtons.get(Area.Type.FIELD).Bounds)));
 
-        info = new TutorialInfo("Food is used to create more slaves.  When you have enough stocked up a new slave will be born.", Area.Type.FIELD,
+        info = new TutorialInfo("[#00FF00xALPHAx] Food[] is used to create more [#00FF00xALPHAx] slaves[].  When you have enough stocked up a new slave will be born.", Area.Type.FIELD,
                 expandRectangle(LudumDare34.GameScreen.resourceManager.getResourceInfo(ResourceManager.Resources.FOOD).bgPB.bounds));
         info.pos = new Vector2(Config.width/2, 150);
         screens.add(info);
 
         //Quarry Tutorial Section
-        screens.add(new TutorialInfo("Here is your Quarry\nYou get here by selecting this button.", Area.Type.QUARRY,
+        screens.add(new TutorialInfo("Here is the [#00FF00xALPHAx] Mine[]\nYou get here by selecting this button.", Area.Type.QUARRY,
                 expandRectangle(NavigationLayout.AreaButtons.get(Area.Type.QUARRY).Bounds)));
 
-        info = new TutorialInfo("Stones are converted to building blocks for the pyramid.", Area.Type.QUARRY,
+        info = new TutorialInfo("[#00FF00xALPHAx] Stones[] are converted to building blocks for the pyramid.", Area.Type.QUARRY,
                 expandRectangle(LudumDare34.GameScreen.resourceManager.getResourceInfo(ResourceManager.Resources.STONE).bgPB.bounds));
         info.pos = new Vector2(Config.width/2, 150);
         screens.add(info);
 
-        info = new TutorialInfo("Speaking of the Pyramid", Area.Type.QUARRY, new Rectangle());
+        info = new TutorialInfo("Speaking of the [#FFD700xALPHAx] Pyramid[]", Area.Type.QUARRY, new Rectangle());
         screens.add(info);
 
         //Pyramid Tutorial Section
@@ -148,7 +146,7 @@ public class TutorialManager {
                 expandRectangle(new Rectangle(Config.width - 50, Config.height/2 - 190/2, 50, 190))));
 
 
-        info = new TutorialInfo("Good Luck out there. Grow the biggest pyramid", Area.Type.MGMT,
+        info = new TutorialInfo("Good Luck out there.\n[#FFD700xALPHAx] Grow the world's largest pyramid[]", Area.Type.MGMT,
                 expandRectangle(NavigationLayout.AreaButtons.get(Area.Type.MGMT).Bounds));
         info.mgmtScreen = Manage.Type.SLAVES;
         screens.add(info);

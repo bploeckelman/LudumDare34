@@ -10,6 +10,7 @@ import lando.systems.ld34.resources.ResourceManager;
 import lando.systems.ld34.screens.GameScreen;
 import lando.systems.ld34.uielements.ProgressBar;
 import lando.systems.ld34.utils.Assets;
+import lando.systems.ld34.utils.SoundManager;
 import lando.systems.ld34.utils.Utils;
 
 /**
@@ -73,6 +74,7 @@ public class ManagePharoah extends Manage {
             resources.getResourceInfo(ResourceManager.Resources.SLAVES).slaves--;
             game.currentAnger = 0;
             game.addNotification("Pharaoh has been appeased,\nfor now...");
+            SoundManager.chosenWisely.play(0.2f);
         }
     }
 
